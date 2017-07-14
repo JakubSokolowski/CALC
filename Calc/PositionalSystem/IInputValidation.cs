@@ -8,7 +8,7 @@ namespace Calc.PositionalSystem
 {
     interface IInputValidation
     {
-        bool isValidRadix(int radix);
-        bool isValidString(String str, int radix);
+        bool IsValidRadix(int radix);
+        bool IsValidString(String str, int radix);
     }
 }

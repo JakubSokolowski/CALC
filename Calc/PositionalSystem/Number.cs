@@ -39,16 +39,25 @@ namespace Calc.PositionalSystem
             
         }
 
-        public String IntegerPartValueString { get { return integerPartValueString; } }
-        public String FractionalPartValueString { get { return fractionalPartValueString; } }
+        public String IntegerPartValueString { get { return integerPartValueString; } private set { integerPartValueString = value; } }
+        public String FractionalPartValueString { get { return fractionalPartValueString; } private set { fractionalPartValueString = value; } }
         public String BaseValueString
         {
             get { return integerPartValueString + '.' + fractionalPartValueString; }
             private set
             {
-                string[] parts = value.Split('.');
-                integerPartValueString = parts[0];
-                fractionalPartValueString = parts[1];
+                if(value.Contains("."))
+                {
+                    string[] parts = value.Split('.');
+                    integerPartValueString = parts[0];
+                    fractionalPartValueString = parts[1];
+                }
+                else
+                {
+                    IntegerPartValueString = value;
+                    fractionalPartValueString = "0";
+                }
+               
             }
         }     
     }
