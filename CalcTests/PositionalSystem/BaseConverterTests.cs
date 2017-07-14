@@ -10,53 +10,117 @@ namespace Calc.PositionalSystem.Tests
 {
     [TestClass()]
     public class BaseConverterTests
-    {       
+    {
+        #region InputValidationTests
         [TestMethod()]
-        public void isValidRadixTest_ValidRadix_Pass()
+        public void IsValidRadix_ValidRadix_Pass()
         {
             int radix = 16;
             bool expected = true;
-            bool actual = BaseConverter.isValidRadix(radix);
+            bool actual = BaseConverter.IsValidRadix(radix);
             Assert.AreEqual(expected, actual);           
         }
 
         [TestMethod()]
-        public void isValidRadix_InvalidRadix_Fail()
+        public void IsValidRadix_InvalidRadix_Fail()
         {
             int radix = -5;
             bool expected = false;
-            bool actual = BaseConverter.isValidRadix(radix);
+            bool actual = BaseConverter.IsValidRadix(radix);
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
-        public void isValidStringTest_ValidString_Pass()
+        public void IsValidString_ValidString_Pass()
         {
             string str = "-FFFFA.6556A";
             int radix = 16;
             bool expected = true;
-            bool actual = BaseConverter.isValidString(str, radix);
+            bool actual = BaseConverter.IsValidString(str, radix);
             Assert.AreEqual(expected, actual);
         }
         
         [TestMethod()]
-        public void isValidStringTest_InvalidString_Fail()
+        public void IsValidString_InvalidString_Fail()
         {
             string str = "ZZZa asd1  sad";
             int radix = 10;
             bool expected = false;
-            bool actual = BaseConverter.isValidString(str, radix);
+            bool actual = BaseConverter.IsValidString(str, radix);
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
-        public void isValidStringTest_InvalidRadixForStr_Fail()
+        public void IsValidString_InvalidRadixForStr_Fail()
         {
             string str = "AABFBAA.FF";
             int radix = 15;
             bool expected = false;
-            bool actual = BaseConverter.isValidString(str, radix);
+            bool actual = BaseConverter.IsValidString(str, radix);
             Assert.AreEqual(expected, actual);
         }
+        [TestMethod()]
+        public void IsValidString_MultipleSign_Fail()
+        {
+            string str = "--1234.-230";
+            int radix = 10;
+            bool expected = false;
+            bool actual = BaseConverter.IsValidString(str, radix);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void IsValidString_MultipleDot_Fail()
+        {
+            string str = "1234..230";
+            int radix = 10;
+            bool expected = false;
+            bool actual = BaseConverter.IsValidString(str, radix);
+            Assert.AreEqual(expected, actual);
+        }
+        #endregion
+
+        #region ConverterTests
+        [TestMethod()]
+        public void Convert_ValidNumberToBinary_Pass()
+        {
+            string expected = "11001.0";
+            int radix = 2;
+            BaseConverter conv = new BaseConverter();
+            string result = conv.Convert(25, radix).BaseValueString;
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod()]
+        public void Convert_ValidNegativeNumberToBinary_Pass()
+        {
+            string expected = "-11001.0";
+            int radix = 2;
+            BaseConverter conv = new BaseConverter();
+            string result = conv.Convert(-25, radix).BaseValueString;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void Convert_ValidBinaryStrToDecimal_Pass()
+        {
+            string input = "11010";       
+            double expected = 26.0;
+
+            BaseConverter conv = new BaseConverter();
+            double result = conv.Convert(input, 2, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void Convert_ValidNegativeBinaryStrToDecimal_Pass()
+        {
+            string input = "-11010";
+            double expected = -26.0;
+
+            BaseConverter conv = new BaseConverter();
+            double result = conv.Convert(input, 2, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+
+        #endregion
     }
 }
