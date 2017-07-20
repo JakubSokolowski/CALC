@@ -7,26 +7,14 @@ using System.Threading.Tasks;
 
 namespace Calc.PositionalSystem
 {
-    public class BaseConverter 
+    public static class BaseConverter 
     {
        
         private static String digitRepresentationString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        private int formatPrecision;
-        List<Tuple<Number, Number>> history;
+        private static int formatPrecision;  
 
-        public BaseConverter()
-        {
-            FormatPrecision = 5;
-            history = new List<Tuple<Number, Number>>(20);
-        }
-        public BaseConverter(int precision)
-        {
-            FormatPrecision = precision;
-            history = new List<Tuple<Number, Number>>(20);
-        }
-
-        public Number Convert(long decimalValue, int resultRadix)
+        public static Number ConvertToBase(long decimalValue, int resultRadix)
         {
             if (IsValidRadix(resultRadix))
             {
@@ -36,7 +24,7 @@ namespace Calc.PositionalSystem
             else
                 throw new ArgumentException("Radix is invalid");            
         }
-        public Number Convert(double decimalValue, int resultRadix)
+        public static Number ConvertToBase(double decimalValue, int resultRadix)
         {
             if (IsValidRadix(resultRadix))
             {
@@ -51,16 +39,16 @@ namespace Calc.PositionalSystem
             else throw new ArgumentException("Radix is invalid");
                    
         }
-        public Number Convert(Number number, int resultRadix)
+        public static Number ConvertToBase(Number number, int resultRadix)
         {
-            return Convert(number.DecimalValue, number.Radix);
+            return ConvertToBase(number.DecimalValue, number.Radix);
         }
-        public Number Convert(string inputStr, int inputRadix, int resultRadix)
+        public static Number ConvertToBase(string inputStr, int inputRadix, int resultRadix)
         {
             if (IsValidRadix(inputRadix) && IsValidRadix(resultRadix))
             {
                 if (IsValidString(inputStr, inputRadix))
-                {
+                {                 
                     string integerStr, fractionalStr;
                     long integerPart;
                     double fractionalPart, decimalValue;
@@ -77,9 +65,13 @@ namespace Calc.PositionalSystem
 
                         integerPart = ArbitraryBaseToDecimal(integerStr, inputRadix);
                         fractionalPart = ArbitraryFractionToDecimal(fractionalStr, inputRadix);
+
+                        if (integerPart < 0)
+                            fractionalPart *= -1;
+
                         decimalValue = (double)integerPart + fractionalPart;
 
-                        inputInDecimal = new Number(10, decimalValue, decimalValue.ToString(GetRoundingFormat()));                        
+                        inputInDecimal = new Number(10, decimalValue, decimalValue.ToString());                        
                     }
                     else
                     {
@@ -87,26 +79,25 @@ namespace Calc.PositionalSystem
                         inputInDecimal = new Number(10, (double)integerPart, integerPart.ToString());
                     }
 
-                    // Convert to another base if needed
+                    // ConvertToBase to another base if needed
 
                     if (resultRadix == 10)
                         return inputInDecimal;
                     else
-                        return Convert(inputInDecimal, resultRadix);
-                   
+                        return ConvertToBase(inputInDecimal, resultRadix);                   
                 }
                 else throw new ArgumentException("Input Str is invalid");                
             }
             else throw new ArgumentException("Radix is invalid");
         }
 
-        private bool IsFloatingPointStr(string str) { return str.Contains("."); }
-        private string GetRoundingFormat() { return "0." + new string('#', FormatPrecision); }
+        private static bool IsFloatingPointStr(string str) { return str.Contains("."); }
+        private static string GetRoundingFormat() { return "0." + new string('#', FormatPrecision); }
 
 
-        public int FormatPrecision { get { return formatPrecision; } set { formatPrecision = value; ; } }      
+        public static int FormatPrecision { get { return formatPrecision; } set { formatPrecision = value; ; } }      
 
-        private long ArbitraryBaseToDecimal(string valueString, int radix)
+        private static long ArbitraryBaseToDecimal(string valueString, int radix)
         {
             if (IsValidRadix(radix))
             {
@@ -134,7 +125,7 @@ namespace Calc.PositionalSystem
                 throw new ArgumentException("The radix " + radix + " must be in range 2-" + (digitRepresentationString.Length - 1));
         }
 
-        private double ArbitraryFractionToDecimal(string fractionStr, int radix)
+        private static double ArbitraryFractionToDecimal(string fractionStr, int radix)
         {
             double decimalFraction = 0.0;
             double exponent = 1.0;
@@ -146,7 +137,7 @@ namespace Calc.PositionalSystem
             return decimalFraction;
         }
 
-        private string DecimalFractionToArbitraryBase(double fraction, int radix)
+        private static string DecimalFractionToArbitraryBase(double fraction, int radix)
         {
             StringBuilder builder = new StringBuilder();
 
@@ -159,12 +150,14 @@ namespace Calc.PositionalSystem
                 number = fractionPart * radix;
                 fractionPart = number % 1;
                 wholePart = (int)(number - fractionPart);
+                if (wholePart < 1)
+                    wholePart *= -1;
                 builder.Append(digitRepresentationString.ElementAt(wholePart));
             }
             return builder.ToString();
         }
 
-        private string DecimalIntegerToArbitraryBase(long decimalNumber, int radix)
+        private static string DecimalIntegerToArbitraryBase(long decimalNumber, int radix)
         {
             int bitsInLong = 64;
 
@@ -194,7 +187,7 @@ namespace Calc.PositionalSystem
             return result;
         }
 
-        private static string GetRepresentationRegexPattern(int radix)
+        private static  string GetRepresentationRegexPattern(int radix)
         {
             String regex;
 
