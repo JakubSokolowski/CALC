@@ -85,9 +85,8 @@ namespace Calc.PositionalSystem.Tests
         public void Convert_ValidNumberToBinary_Pass()
         {
             string expected = "11001.0";
-            int radix = 2;
-            BaseConverter conv = new BaseConverter();
-            string result = conv.Convert(25, radix).BaseValueString;
+            int radix = 2;       
+            string result = BaseConverter.ConvertToBase(25, radix).BaseValueString;
             Assert.AreEqual(expected, result);
         }
 
@@ -95,19 +94,16 @@ namespace Calc.PositionalSystem.Tests
         public void Convert_ValidNegativeNumberToBinary_Pass()
         {
             string expected = "-11001.0";
-            int radix = 2;
-            BaseConverter conv = new BaseConverter();
-            string result = conv.Convert(-25, radix).BaseValueString;
+            int radix = 2;         
+            string result = BaseConverter.ConvertToBase(-25, radix).BaseValueString;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
         public void Convert_ValidBinaryStrToDecimal_Pass()
         {
             string input = "11010";       
-            double expected = 26.0;
-
-            BaseConverter conv = new BaseConverter();
-            double result = conv.Convert(input, 2, 10).DecimalValue;
+            double expected = 26.0;           
+            double result = BaseConverter.ConvertToBase(input, 2, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
@@ -115,9 +111,7 @@ namespace Calc.PositionalSystem.Tests
         {
             string input = "-11010";
             double expected = -26.0;
-
-            BaseConverter conv = new BaseConverter();
-            double result = conv.Convert(input, 2, 10).DecimalValue;
+            double result = BaseConverter.ConvertToBase(input, 2, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
 
