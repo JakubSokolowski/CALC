@@ -43,6 +43,7 @@
     <Compile Include="PositionalSystem\BaseConverter.cs" />
     <Compile Include="PositionalSystem\IBaseConversion.cs" />
     <Compile Include="PositionalSystem\IInputValidation.cs" />
+    <Compile Include="PositionalSystem\IMathOperations.cs" />
     <Compile Include="PositionalSystem\Number.cs" />
     <Compile Include="PositionalSystem\Operation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

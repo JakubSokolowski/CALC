@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calc", "Calc\Calc.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcTests", "CalcTests\CalcTests.csproj", "{D3C43826-E85D-404A-BE11-C8285AF60C44}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calc.Sandbox", "Calc.Sandbox\Calc.Sandbox.csproj", "{420C49C3-D3A2-437A-BBE2-17B359F2643E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D3C43826-E85D-404A-BE11-C8285AF60C44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3C43826-E85D-404A-BE11-C8285AF60C44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3C43826-E85D-404A-BE11-C8285AF60C44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{420C49C3-D3A2-437A-BBE2-17B359F2643E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{420C49C3-D3A2-437A-BBE2-17B359F2643E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{420C49C3-D3A2-437A-BBE2-17B359F2643E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{420C49C3-D3A2-437A-BBE2-17B359F2643E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -16,6 +16,7 @@ namespace Calc.PositionalSystem
             Division,
             Inverse,
             SquareRoot,
+            Conversion,
         }
 
         OperationName name;
