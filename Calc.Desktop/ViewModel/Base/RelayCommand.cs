@@ -4,7 +4,7 @@ using System.Windows.Input;
 namespace Calc.Desktop.ViewModel
 {
     /// <summary>
-    /// A basic command that runs an Action
+    /// A basic command that runs an Action. Checking git 
     /// </summary>
     public class RelayCommand : ICommand
     {
