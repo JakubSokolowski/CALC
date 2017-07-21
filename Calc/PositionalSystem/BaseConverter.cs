@@ -9,8 +9,7 @@ namespace Calc.PositionalSystem
 {
     public static class BaseConverter 
     {
-       
-        private static String digitRepresentationString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private static BaseRepresentation baseRepresentation = new BaseRepresentation(256);
 
         private static int formatPrecision;  
 
@@ -99,6 +98,8 @@ namespace Calc.PositionalSystem
 
         private static long ArbitraryBaseToDecimal(string valueString, int radix)
         {
+            baseRepresentation.CurrentRadix = radix;            
+
             if (IsValidRadix(radix))
             {
                 if (IsValidString(valueString, radix))
@@ -112,26 +113,34 @@ namespace Calc.PositionalSystem
                         mult = -1;
                     }
 
-                    int exponent = valueString.Length - 1;
+                    var strList = RepresentationStringToStringList(valueString, radix);
+
+                    int exponent = strList.Count - 1;
                     for (int i = 0; i <= exponent; i++)
-                        result += (long)digitRepresentationString.IndexOf(valueString.ElementAt(i)) * (long)Math.Pow(radix, exponent - i);
-                    
+                        result += (long)baseRepresentation.GetValue(strList.ElementAt(i)) * (long)Math.Pow(radix, exponent - i);
+                    //result += (long)digitRepresentationString.IndexOf(valueString.ElementAt(i)) * (long)Math.Pow(radix, exponent - i);
+
                     return result * mult;
                 }
                 else                
                     throw new System.ArgumentException("The characters in numberString " + valueString + " do not match the radix " + radix);              
             }
             else
-                throw new ArgumentException("The radix " + radix + " must be in range 2-" + (digitRepresentationString.Length - 1));
+                throw new ArgumentException("The radix " + radix + " must be in range 2- 256");
         }
 
         private static double ArbitraryFractionToDecimal(string fractionStr, int radix)
         {
             double decimalFraction = 0.0;
             double exponent = 1.0;
-            for (int i = 0; i < fractionStr.Length; i++)
+
+            var strList = RepresentationStringToStringList(fractionStr, radix);
+            baseRepresentation.CurrentRadix = radix;
+
+            for (int i = 0; i < strList.Count; i++)
             {
-                decimalFraction += (double)digitRepresentationString.IndexOf(fractionStr.ElementAt(i)) * Math.Pow(radix, exponent * -1);
+                //decimalFraction += (double)digitRepresentationString.IndexOf(fractionStr.ElementAt(i)) * Math.Pow(radix, exponent * -1);
+                decimalFraction += (double)baseRepresentation.GetValue(strList.ElementAt(i)) * Math.Pow(radix, exponent * -1);
                 exponent++;
             }
             return decimalFraction;
@@ -140,6 +149,7 @@ namespace Calc.PositionalSystem
         private static string DecimalFractionToArbitraryBase(double fraction, int radix)
         {
             StringBuilder builder = new StringBuilder();
+            baseRepresentation.CurrentRadix = radix;
 
             double number, fractionPart;
             int wholePart;
@@ -152,33 +162,35 @@ namespace Calc.PositionalSystem
                 wholePart = (int)(number - fractionPart);
                 if (wholePart < 1)
                     wholePart *= -1;
-                builder.Append(digitRepresentationString.ElementAt(wholePart));
+                builder.Append(baseRepresentation.GetDigit(wholePart));
+                if (radix > 36)
+                    builder.Append(" ");
             }
             return builder.ToString();
         }
 
         private static string DecimalIntegerToArbitraryBase(long decimalNumber, int radix)
         {
-            int bitsInLong = 64;
-
-            if (radix < 2 || radix > digitRepresentationString.Length)
-                throw new ArgumentException("The radix must be >= 2 and <= " + digitRepresentationString.Length);
+            if (radix < 2 || radix > BaseRepresentation.MAX_AVALIBLE_RADIX)
+                throw new ArgumentException("The radix must be >= 2 and <= " + BaseRepresentation.MAX_AVALIBLE_RADIX);
             if (decimalNumber == 0)
                 return "0";
 
-            int index = bitsInLong - 1;
             long currentNumber = Math.Abs(decimalNumber);
+            baseRepresentation.CurrentRadix = radix;
 
-            char[] charArray = new char[bitsInLong];
+            StringBuilder sb = new StringBuilder();
 
             while (currentNumber != 0)
             {
-                int remainder = (int)(currentNumber % radix);
-                charArray[index--] = digitRepresentationString.ElementAt(remainder);
+                int remainder = (int)(currentNumber % radix);              
+                sb.Append(baseRepresentation.GetDigit(remainder));
+                if (radix > 36)
+                    sb.Append(" ");
                 currentNumber = currentNumber / radix;
             }
 
-            String result = new String(charArray, index + 1, bitsInLong - index - 1);
+            String result = new string(sb.ToString().ToCharArray().Reverse().ToArray());            
 
             if (decimalNumber < 0)
             {
@@ -189,25 +201,32 @@ namespace Calc.PositionalSystem
 
         private static  string GetRepresentationRegexPattern(int radix)
         {
-            String regex;
+            String regex = " ";
+            baseRepresentation.CurrentRadix = radix;
 
             if (radix <= 10)
             {
                 // All characters that optionally start with -, are between 0-given number and have . in between
                 regex = "^-?[0-#]+([.][0-#]+)?$";
-                regex = regex.Replace('#', digitRepresentationString.ElementAt(radix - 1));
-            }
+                regex = regex.Replace('#', baseRepresentation.GetDigit(radix-1)[0]);
+            } 
             else
+            if(radix > 10 && radix <=36 )
             {
                 regex = "^-?[0-9A-#]+([.][0-9A-#]+)?$";
-                regex = regex.Replace('#', digitRepresentationString.ElementAt(radix - 1));
+                regex = regex.Replace('#', baseRepresentation.GetDigit(radix-1)[0]);
+            }
+            else
+            if(radix > 36)
+            {
+                regex = "^-[0-9]?$";
             }
             return regex;
         }
 
         public static bool IsValidRadix(int radix)
         {
-            return radix >= 2 && radix < digitRepresentationString.Length;
+            return radix >= 2 && radix < BaseRepresentation.MAX_AVALIBLE_RADIX;
         }
 
         public static bool IsValidString(string str, int radix)
@@ -215,6 +234,20 @@ namespace Calc.PositionalSystem
             Regex regex = new Regex(GetRepresentationRegexPattern(radix));
             Match match = regex.Match(str);
             return match.Success;
+        }
+
+        public static List<String> RepresentationStringToStringList(string str, int radix)
+        {
+            var strList = new List<String>();
+            if(radix <= 36)
+            {
+                strList = str.ToCharArray().Select(x => x.ToString()).ToList();
+            }
+            else
+            {
+                strList = str.Split(' ').ToList();
+            }
+            return strList;
         }
     }
 }
