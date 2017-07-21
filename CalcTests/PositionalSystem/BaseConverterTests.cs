@@ -115,6 +115,23 @@ namespace Calc.PositionalSystem.Tests
             Assert.AreEqual(expected, result);
         }
 
+        [TestMethod()]
+        public void Convert_ValidBase64ToDecimal_Pass()
+        {
+            string input = "-01 01";
+            double expected = -65;
+            double result = BaseConverter.ConvertToBase(input, 64, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void Convert_DecimalToBase64_Pass()
+        {
+            int input = 67;
+            string expected = "01 03.0";
+            string result = BaseConverter.ConvertToBase(input, 64).BaseValueString;
+            Assert.AreEqual(expected, result);
+        }
+
         #endregion
     }
 }
