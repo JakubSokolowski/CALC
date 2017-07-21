@@ -8,7 +8,7 @@ namespace Calc.PositionalSystem
 {
     public class BaseRepresentation
     {
-        public const int MAX_AVALIBLE_RADIX = 256;
+        public const int MAX_AVALIBLE_RADIX = 99;
         private int currentRadix = 10;
         readonly Dictionary<string, int> digitToIndexMap = new Dictionary<string, int>();
         readonly Dictionary<string, int> digitToIndexUpToBase36Map = new Dictionary<string, int>();

@@ -183,14 +183,22 @@ namespace Calc.PositionalSystem
 
             while (currentNumber != 0)
             {
-                int remainder = (int)(currentNumber % radix);              
-                sb.Append(baseRepresentation.GetDigit(remainder));
+                int remainder = (int)(currentNumber % radix);
                 if (radix > 36)
+                {
+                    sb.Append(baseRepresentation.GetDigit(remainder).ToCharArray().Reverse().ToArray());
                     sb.Append(" ");
+                    currentNumber = currentNumber / radix;
+                    continue;
+                }
+                sb.Append(baseRepresentation.GetDigit(remainder));              
+                    
                 currentNumber = currentNumber / radix;
             }
 
-            String result = new string(sb.ToString().ToCharArray().Reverse().ToArray());            
+            String result = new string(sb.ToString().ToCharArray().Reverse().ToArray());
+            if (radix > 36)
+                result = result.Substring(1);
 
             if (decimalNumber < 0)
             {
@@ -219,6 +227,8 @@ namespace Calc.PositionalSystem
             else
             if(radix > 36)
             {
+                //^[0-9]{2}$
+                // /^\d{2}$/
                 regex = "^-[0-9]?$";
             }
             return regex;
@@ -231,9 +241,29 @@ namespace Calc.PositionalSystem
 
         public static bool IsValidString(string str, int radix)
         {
-            Regex regex = new Regex(GetRepresentationRegexPattern(radix));
-            Match match = regex.Match(str);
-            return match.Success;
+            if(radix <=36)
+            {
+                Regex regex = new Regex(GetRepresentationRegexPattern(radix));
+                Match match = regex.Match(str);
+                return match.Success;
+            }
+            else
+            {
+                if (str[0] == '-')
+                    str = str.Substring(1);
+                var strList = str.Split(' ').ToList();
+                foreach(var num in strList)
+                {
+                    if (Int32.TryParse(num, out int x))
+                    {
+                        if (x >= radix)
+                            return false;
+                    }
+                    else
+                        return false;
+                }
+                return true;
+            }           
         }
 
         public static List<String> RepresentationStringToStringList(string str, int radix)
