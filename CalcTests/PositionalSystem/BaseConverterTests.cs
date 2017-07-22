@@ -81,56 +81,236 @@ namespace Calc.PositionalSystem.Tests
         #endregion
 
         #region ConverterTests
-        [TestMethod()]
-        public void Convert_ValidNumberToBinary_Pass()
-        {
-            string expected = "11001.0";
-            int radix = 2;       
-            string result = BaseConverter.ConvertToBase(25, radix).BaseValueString;
-            Assert.AreEqual(expected, result);
-        }
+
+        // Test cases for number conversion :
+        //
+        // 1. Positive Decimal to base Number
+        // 2. Negative Decimal to base Number
+        // 3. Floating Point Decimal to base Number
+        // 4. Negative Floating Point Decimal to base Number
+        // 5. Positive base Number to Decimal
+        // 6. Negative base Number to Decimal
+        // 7. Floating Point base Number to Decimal
+        // 8. Negative Floating Point base nUmber to Decimal
+
+        #region Converting Binary
 
         [TestMethod()]
-        public void Convert_ValidNegativeNumberToBinary_Pass()
+        public void ToBase_PositveDecimalToBinary_Pass()
         {
+            int input = 25;
+            string expected = "11001.0";
+            int radix = 2;       
+            string result = BaseConverter.ToBase(input, radix).BaseValueString;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_NegativeDecimalToBinary_Pass()
+        {
+            int input = -25;
             string expected = "-11001.0";
             int radix = 2;         
-            string result = BaseConverter.ConvertToBase(-25, radix).BaseValueString;
+            string result = BaseConverter.ToBase(input, radix).BaseValueString;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
-        public void Convert_ValidBinaryStrToDecimal_Pass()
+        public void ToBase_PositiveFloatingPointDecimalToBinary_Pass()
         {
-            string input = "11010";       
-            double expected = 26.0;           
-            double result = BaseConverter.ConvertToBase(input, 2, 10).DecimalValue;
+            double input = 25.5;
+            string expected = "11001.1";
+            int radix = 2;
+            string result = BaseConverter.ToBase(input, radix).BaseValueString;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
-        public void Convert_ValidNegativeBinaryStrToDecimal_Pass()
+        public void ToBase_NegativeFloatingPointDecimalToBinary_Pass()
+        {
+            double input = -25.5;
+            string expected = "-11001.1";
+            int radix = 2;
+            string result = BaseConverter.ToBase(input, radix).BaseValueString;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_PositiveBinaryToDecimal_Pass()
+        {
+            string input = "11010";
+            double expected = 26.0;
+            double result = BaseConverter.ToBase(input, 2, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_NegativeBinaryToDecimal_Pass()
         {
             string input = "-11010";
             double expected = -26.0;
-            double result = BaseConverter.ConvertToBase(input, 2, 10).DecimalValue;
+            double result = BaseConverter.ToBase(input, 2, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_PositiveFloatingPointBinaryToDecimal_Pass()
+        {
+            string input = "11010.1";
+            double expected = 26.5;
+            double result = BaseConverter.ToBase(input, 2, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_NegativeFloatingPointBinaryToDecimal_Pass()
+        {
+            string input = "-11010.1";
+            double expected = -26.5;
+            double result = BaseConverter.ToBase(input, 2, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
 
+
+        #endregion
+
+        #region Converting Hexadecimal
+
         [TestMethod()]
-        public void Convert_ValidBase64ToDecimal_Pass()
+        public void ToBase_PositveDecimalToHex_Pass()
         {
-            string input = "-01 01";
-            double expected = -65;
-            double result = BaseConverter.ConvertToBase(input, 64, 10).DecimalValue;
+            int input = 255;
+            string expected = "FF.0";
+            int radix = 16;
+            string result = BaseConverter.ToBase(input, radix).BaseValueString;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
-        public void Convert_DecimalToBase64_Pass()
+        public void ToBase_NegativeDecimalToHex_Pass()
         {
-            int input = 67;
-            string expected = "01 03.0";
-            string result = BaseConverter.ConvertToBase(input, 64).BaseValueString;
+            int input = -255;
+            string expected = "-FF.0";
+            int radix = 16;
+            string result = BaseConverter.ToBase(input, radix).BaseValueString;
             Assert.AreEqual(expected, result);
         }
+        [TestMethod()]
+        public void ToBase_PositiveFloatingPointDecimalToHex_Pass()
+        {
+            double input = 255.5;
+            string expected = "FF.8";
+            int radix = 16;
+            string result = BaseConverter.ToBase(input, radix).BaseValueString;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_NegativeFloatingPointDecimalToHex_Pass()
+        {
+            double input = -255.5;
+            string expected = "-FF.8";
+            int radix = 16;
+            string result = BaseConverter.ToBase(input, radix).BaseValueString;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_PositiveHexToDecimal_Pass()
+        {
+            string input = "FF";
+            double expected = 255;
+            double result = BaseConverter.ToBase(input, 16, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_NegativeHexToDecimal_Pass()
+        {
+            string input = "-FF";
+            double expected = -255;
+            double result = BaseConverter.ToBase(input, 16, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_PositiveFloatingPointHexToDecimal_Pass()
+        {
+            string input = "FF.8";
+            double expected = 255.5;
+            double result = BaseConverter.ToBase(input, 16, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_NegativeFloatingPointHexToDecimal_Pass()
+        {
+            string input = "-FF.8";
+            double expected = -255.5;
+            double result = BaseConverter.ToBase(input, 16, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+
+        #endregion
+
+        #region Converting Base 64
+
+        [TestMethod()]
+        public void ToBase_PositveDecimalToBase64_Pass()
+        {
+            int input = 100;
+            string expected = "01 36.00";
+            int radix = 64;
+            string result = BaseConverter.ToBase(input, radix).BaseValueString;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_NegativeDecimalToBase64_Pass()
+        {
+            int input = -100;
+            string expected = "-01 36.00";
+            int radix = 64;
+            string result = BaseConverter.ToBase(input, radix).BaseValueString;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_PositiveFloatingPointDecimalToBase64_Pass()
+        {
+            double input = 100.5;
+            string expected = "01 36.32";
+            int radix = 64;
+            string result = BaseConverter.ToBase(input, radix).BaseValueString;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_NegativeFloatingPointDecimalToBase64_Pass()
+        {
+            double input = -100.5;
+            string expected = "-01 36.32";
+            int radix = 64;
+            string result = BaseConverter.ToBase(input, radix).BaseValueString;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_PositiveBase64ToDecimal_Pass()
+        {
+            string input = "01 36";
+            double expected = 100;
+            double result = BaseConverter.ToBase(input, 64, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_NegativeBase64ToDecimal_Pass()
+        {
+            string input = "-01 36";
+            double expected = -100;
+            double result = BaseConverter.ToBase(input, 64, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_PositiveFloatingPointBase64ToDecimal_Pass()
+        {
+            string input = "01 36.32";
+            double expected = 100.5;
+            double result = BaseConverter.ToBase(input, 64, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod()]
+        public void ToBase_NegativeFloatingPointBase64ToDecimal_Pass()
+        {
+            string input = "-01 36.32";
+            double expected = -100.5;
+            double result = BaseConverter.ToBase(input, 64, 10).DecimalValue;
+            Assert.AreEqual(expected, result);
+        }
+        #endregion
 
         #endregion
     }
