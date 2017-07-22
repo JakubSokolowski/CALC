@@ -40,7 +40,6 @@ namespace Calc.PositionalSystem
             {
                 fractionalPartDecimalValue = value % 1;
                 integerPartDecimalValue = (long)( value - fractionalPartDecimalValue );
-
             }
             
         }
@@ -60,7 +59,10 @@ namespace Calc.PositionalSystem
                 else
                 {
                     IntegerPartValueString = value;
-                    fractionalPartValueString = "0";
+                    if (Radix > 36)
+                        fractionalPartValueString = "00";
+                    else
+                        fractionalPartValueString = "0";
                 }               
             }
         }
@@ -70,22 +72,22 @@ namespace Calc.PositionalSystem
         public static Number operator + (Number left, Number right)
         {
             double result = checked(left.DecimalValue + right.DecimalValue);
-            return BaseConverter.ConvertToBase(result, left.Radix);
+            return BaseConverter.ToBase(result, left.Radix);
         }
         public static Number operator - (Number left, Number right)
         {
             double result = checked(left.DecimalValue - right.DecimalValue);
-            return BaseConverter.ConvertToBase(result, left.Radix);
+            return BaseConverter.ToBase(result, left.Radix);
         }
         public static Number operator * (Number left, Number right)
         {
             double result = checked(left.DecimalValue * right.DecimalValue);
-            return BaseConverter.ConvertToBase(result, left.Radix);
+            return BaseConverter.ToBase(result, left.Radix);
         }
         public static Number operator / (Number left, Number right)
         {
             double result = checked(left.DecimalValue / right.DecimalValue);
-            return BaseConverter.ConvertToBase(result, right.Radix);
+            return BaseConverter.ToBase(result, right.Radix);
         }
   
         

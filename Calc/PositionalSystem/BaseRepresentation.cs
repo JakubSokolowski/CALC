@@ -6,14 +6,18 @@ using System.Threading.Tasks;
 
 namespace Calc.PositionalSystem
 {
+    /// <summary>
+    /// Represents all the digits and their respective values in given base
+    /// </summary>
     public class BaseRepresentation
-    {
-        public const int MAX_AVALIBLE_RADIX = 99;
+    {       
         private int currentRadix = 10;
-        readonly Dictionary<string, int> digitToIndexMap = new Dictionary<string, int>();
-        readonly Dictionary<string, int> digitToIndexUpToBase36Map = new Dictionary<string, int>();
+        readonly Dictionary<string, int> digitToValue = new Dictionary<string, int>();
+        readonly Dictionary<string, int> digitToValueUpToBase36 = new Dictionary<string, int>();
 
-        public int CurrentRadix
+        public const int MAX_BASE = 99;
+
+        public int CurrentBase
         {
             get { return currentRadix; }
             set
@@ -21,7 +25,24 @@ namespace Calc.PositionalSystem
                 if (IsValidRadix(value))
                     currentRadix = value;
                 else
-                    throw new ArgumentException("Radix must be between 2 and " + MAX_AVALIBLE_RADIX.ToString());
+                    throw new ArgumentException("Base must be between 2 and " + MAX_BASE.ToString());
+            }
+        }
+
+        public BaseRepresentation()
+        {
+            String digitRepresentationString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (int i = 0; i < 36; i++)
+            {
+                digitToValueUpToBase36.Add(digitRepresentationString.ElementAt(i).ToString(), i);
+            }
+
+            for (int i = 0; i < MAX_BASE; i++)
+            {
+                string key = i.ToString();
+                if (i < 10)
+                    key = "0" + key;
+                digitToValue.Add(key, i);
             }
         }
 
@@ -32,7 +53,7 @@ namespace Calc.PositionalSystem
                 String digitRepresentationString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 for (int i = 0; i < 36; i++)
                 {
-                    digitToIndexUpToBase36Map.Add(digitRepresentationString.ElementAt(i).ToString(), i);
+                    digitToValueUpToBase36.Add(digitRepresentationString.ElementAt(i).ToString(), i);
                 }               
                
                 for (int i = 0; i < maxRadix; i++)
@@ -40,34 +61,28 @@ namespace Calc.PositionalSystem
                     string key = i.ToString();
                     if (i < 10)
                         key = "0" + key;
-                    digitToIndexMap.Add(key, i);
+                    digitToValue.Add(key, i);
                 }               
             }
             else
-                throw new ArgumentException("Radix must be between 2 and " + MAX_AVALIBLE_RADIX.ToString());          
+                throw new ArgumentException("Radix must be between 2 and " + MAX_BASE.ToString());          
         }
 
-        public BaseRepresentation() { }
+      
 
         public string GetDigit(int value)
         {
-            if(currentRadix <= 36)
-            {
-                return digitToIndexUpToBase36Map.FirstOrDefault(x => x.Value == value).Key;
-            }
-            else
-            {
-                return digitToIndexMap.FirstOrDefault(x => x.Value == value).Key;
-            }           
+            if(currentRadix <= 36)            
+                return digitToValueUpToBase36.FirstOrDefault(x => x.Value == value).Key;            
+            else            
+                return digitToValue.FirstOrDefault(x => x.Value == value).Key;                    
         }
 
         public int GetValue(string key)
         {
-            if(currentRadix <= 36)
-            {
-                return digitToIndexUpToBase36Map[key];
-            }
-            return digitToIndexMap[key];
+            if(currentRadix <= 36)            
+                return digitToValueUpToBase36[key];            
+            return digitToValue[key];
         }
 
         private bool IsValidRadix(int radix) { return (radix >= 2 && radix <= 256); }
