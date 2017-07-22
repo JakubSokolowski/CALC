@@ -10,10 +10,11 @@ namespace Calc.PositionalSystem
     /// <summary>
     /// Converts numbers to arbitrary base.
     /// </summary>
-    public static class BaseConverter     {
+    public static class BaseConverter
+    {
 
         #region Private Members
-
+        
         private static BaseRepresentation representation = new BaseRepresentation();        
         private static int formatPrecision;
 
@@ -37,7 +38,7 @@ namespace Calc.PositionalSystem
         /// <param name="resultBase"> The base of the result of conversion</param>
         /// <returns><see cref="Number"/></returns>
         public static Number ToBase(double decimalValue, int resultBase)
-        {
+        {           
             if (IsValidRadix(resultBase))
             {
                 double fractionValue = decimalValue % 1;
@@ -73,9 +74,8 @@ namespace Calc.PositionalSystem
             {
                 if (IsValidString(inputStr, inputBase))
                 {                 
-                    string integerStr, fractionalStr;
-                    long integerPart;
-                    double fractionalPart, decimalValue;
+                    string integerStr, fractionalStr;                 
+                    double fractionalPart, decimalValue, integerPart;
 
                     Number inputInDecimal;
 
@@ -118,8 +118,14 @@ namespace Calc.PositionalSystem
         #endregion  
 
         #region Converting Integer Part
-
-        private static long ArbitraryBaseToDecimal(string valueString, int radix)
+        
+        /// <summary>
+        /// Converts V
+        /// </summary>
+        /// <param name="valueString"></param>
+        /// <param name="radix"></param>
+        /// <returns></returns>
+        private static double ArbitraryBaseToDecimal(string valueString, int radix)
         {    
             if (IsValidRadix(radix))
             {
@@ -127,7 +133,7 @@ namespace Calc.PositionalSystem
                 {
                     representation.CurrentBase = radix;
 
-                    long result = 0;
+                    double result = 0.0;
                     int mult = 1;
 
                     if (valueString.ElementAt(0) == '-')
@@ -140,20 +146,20 @@ namespace Calc.PositionalSystem
 
                     int exponent = strList.Count - 1;
                     for (int i = 0; i <= exponent; i++)
-                        result += (long)representation.GetValue(strList.ElementAt(i)) * (long)Math.Pow(radix, exponent - i);                   
+                        result += representation.GetValue(strList.ElementAt(i)) * Math.Pow(radix, exponent - i);                   
 
                     return result * mult;
                 }
                 else                
-                    throw new System.ArgumentException("The characters in numberString " + valueString + " do not match the radix " + radix);              
+                    throw new System.ArgumentException("The characters in numberString " + valueString + " do not match the systemBase " + radix);              
             }
             else
-                throw new ArgumentException("The radix " + radix + " must be in range 2- 256");
+                throw new ArgumentException("The systemBase " + radix + " must be in range 2- 256");
         }
         private static string DecimalIntegerToArbitraryBase(long decimalNumber, int radix)
         {
             if (radix < 2 || radix > BaseRepresentation.MAX_BASE)
-                throw new ArgumentException("The radix must be >= 2 and <= " + BaseRepresentation.MAX_BASE);
+                throw new ArgumentException("The systemBase must be >= 2 and <= " + BaseRepresentation.MAX_BASE);
             if (decimalNumber == 0)
                 return "0";
 
@@ -228,6 +234,7 @@ namespace Calc.PositionalSystem
                 number = fractionPart * radix;
                 fractionPart = number % 1;
                 wholePart = (int)(number - fractionPart);
+
                 if (wholePart < 1)
                     wholePart *= -1;
                 string str = representation.GetDigit(wholePart);
