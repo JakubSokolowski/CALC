@@ -109,7 +109,7 @@ namespace Calc.PositionalSystem
         
         #endregion     
 
-        #region Math Operations       
+        #region Math Operations Without Steps      
 
         /// <summary>
         /// Returns <see cref="Number"/> which decimal value is the sum of <paramref name="left"/> and <paramref name="right"/>.
@@ -123,7 +123,6 @@ namespace Calc.PositionalSystem
             double result = checked(left.DecimalValue + right.DecimalValue);
             return BaseConverter.ToBase(result, left.Radix);
         }
-
         /// <summary>
         /// Returns <see cref="Number"/> which decimal value is the difference of <paramref name="left"/> and <paramref name="right"/>.
         /// The base of result is the same as base of <paramref name="left"/> argument.
@@ -136,7 +135,6 @@ namespace Calc.PositionalSystem
             double result = checked(left.DecimalValue - right.DecimalValue);
             return BaseConverter.ToBase(result, left.Radix);
         }
-
         /// <summary>
         /// Returns <see cref="Number"/> which decimal value is the product of <paramref name="left"/> and <paramref name="right"/>.
         /// The base of result is the same as base of <paramref name="left"/> argument.
@@ -149,7 +147,6 @@ namespace Calc.PositionalSystem
             double result = checked(left.DecimalValue * right.DecimalValue);
             return BaseConverter.ToBase(result, left.Radix);
         }
-
         /// <summary>
         /// Returns <see cref="Number"/> which decimal value is the quotient of <paramref name="left"/> and <paramref name="right"/>.
         /// The base of result is the same as base of <paramref name="left"/> argument.
@@ -161,6 +158,28 @@ namespace Calc.PositionalSystem
         {
             double result = checked(left.DecimalValue / right.DecimalValue);
             return BaseConverter.ToBase(result, right.Radix);
+        }
+
+        /// <summary>
+        /// Returns the square root of specified <see cref="Number"/>
+        /// </summary>
+        /// <param name="num">The arbitrary base <see cref="Number"/> to be squared</param>
+        /// <returns>The square root of <paramref name="num"/></returns>
+        public static Number Sqrt(Number num)
+        {
+            double result = Math.Sqrt(num.DecimalValue);
+            return BaseConverter.ToBase(result, num.Radix);
+        }
+        /// <summary>
+        /// Returns the specified <see cref="Number"/> raised to specified <paramref name="power"/>
+        /// </summary>
+        /// <param name="num">The arbitrary base <see cref="Number"/></param>
+        /// <param name="power"></param>
+        /// <returns></returns>
+        public static Number Pow(Number num, double power)
+        {
+            double result = Math.Pow(num.DecimalValue, power);
+            return BaseConverter.ToBase(result, num.Radix);
         }
 
         #endregion
