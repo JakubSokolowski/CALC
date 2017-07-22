@@ -12,6 +12,7 @@ namespace Calc.PositionalSystem.Tests
     public class NumberTests
     {
         #region Math Operations Tests
+
         // Math Operation Test Cases for operations with 2 operands
         // 1. Two positive values
         // 2. Two negative values
@@ -28,8 +29,8 @@ namespace Calc.PositionalSystem.Tests
         {
             var left = 10;
             var right = 20.5;
-            var num1 = BaseConverter.ConvertToBase(left, 10);
-            var num2 = BaseConverter.ConvertToBase(right, 16);
+            var num1 = BaseConverter.ToBase(left, 10);
+            var num2 = BaseConverter.ToBase(right, 16);
             var num3 = num1 + num2;
 
             var expected = 30.5;
@@ -42,8 +43,8 @@ namespace Calc.PositionalSystem.Tests
         {
             var left = -10.0;
             var right = -20.5;
-            var num1 = BaseConverter.ConvertToBase(left, 10);
-            var num2 = BaseConverter.ConvertToBase(right, 16);
+            var num1 = BaseConverter.ToBase(left, 10);
+            var num2 = BaseConverter.ToBase(right, 16);
             var num3 = num1 + num2;
 
             var expected = -30.5;
@@ -57,8 +58,8 @@ namespace Calc.PositionalSystem.Tests
 
             var left = -10.0;
             var right = 20.5;
-            var num1 = BaseConverter.ConvertToBase(left,10);
-            var num2 = BaseConverter.ConvertToBase(right,10);
+            var num1 = BaseConverter.ToBase(left,10);
+            var num2 = BaseConverter.ToBase(right,10);
             var num3 = num1 + num2;
 
             var expected = 10.5;
@@ -71,8 +72,8 @@ namespace Calc.PositionalSystem.Tests
         {
             var left = 10;
             var right = 0.0;
-            var num1 = BaseConverter.ConvertToBase(left, 10);
-            var num2 = BaseConverter.ConvertToBase(right, 10);
+            var num1 = BaseConverter.ToBase(left, 10);
+            var num2 = BaseConverter.ToBase(right, 10);
             var num3 = num1 + num2;
 
             var expected = 10.0;
@@ -85,8 +86,8 @@ namespace Calc.PositionalSystem.Tests
         {
             var left = -10;
             var right = 0;
-            var num1 = BaseConverter.ConvertToBase(left, 10);
-            var num2 = BaseConverter.ConvertToBase(right, 10);
+            var num1 = BaseConverter.ToBase(left, 10);
+            var num2 = BaseConverter.ToBase(right, 10);
             var num3 = num1 + num2;
 
             var expected = -10;
@@ -99,8 +100,8 @@ namespace Calc.PositionalSystem.Tests
         {
             var left = 0;
             var right = 0;
-            var num1 = BaseConverter.ConvertToBase(left, 10);
-            var num2 = BaseConverter.ConvertToBase(right, 10);
+            var num1 = BaseConverter.ToBase(left, 10);
+            var num2 = BaseConverter.ToBase(right, 10);
             var num3 = num1 + num2;
 
             var expected = 0.0;
@@ -114,8 +115,8 @@ namespace Calc.PositionalSystem.Tests
         {
             var left = long.MaxValue;
             var right = long.MaxValue;
-            var num1 = BaseConverter.ConvertToBase(left, 10);
-            var num2 = BaseConverter.ConvertToBase(right, 10);
+            var num1 = BaseConverter.ToBase(left, 10);
+            var num2 = BaseConverter.ToBase(right, 10);
             var num3 = num1 + num2;
         }
 
@@ -127,8 +128,8 @@ namespace Calc.PositionalSystem.Tests
         {
             var left = 20.5;
             var right = 10.5;
-            var num1 = BaseConverter.ConvertToBase(left, 10);
-            var num2 = BaseConverter.ConvertToBase(right, 16);
+            var num1 = BaseConverter.ToBase(left, 10);
+            var num2 = BaseConverter.ToBase(right, 16);
             var num3 = num1 - num2;
 
             var expected = 10.0;
@@ -141,8 +142,8 @@ namespace Calc.PositionalSystem.Tests
         {
             var left = -10.0;
             var right = -20.5;
-            var num1 = BaseConverter.ConvertToBase(left, 10);
-            var num2 = BaseConverter.ConvertToBase(right, 16);
+            var num1 = BaseConverter.ToBase(left, 10);
+            var num2 = BaseConverter.ToBase(right, 16);
             var num3 = num1 - num2;
 
             var expected = 10.5;
@@ -156,8 +157,8 @@ namespace Calc.PositionalSystem.Tests
 
             var left = -10.0;
             var right = 20.5;
-            var num1 = BaseConverter.ConvertToBase(left, 10);
-            var num2 = BaseConverter.ConvertToBase(right, 10);
+            var num1 = BaseConverter.ToBase(left, 10);
+            var num2 = BaseConverter.ToBase(right, 10);
             var num3 = num1 - num2;
 
             var expected = -30.5;
@@ -170,8 +171,8 @@ namespace Calc.PositionalSystem.Tests
         {
             var left = 10;
             var right = 0.0;
-            var num1 = BaseConverter.ConvertToBase(left, 10);
-            var num2 = BaseConverter.ConvertToBase(right, 10);
+            var num1 = BaseConverter.ToBase(left, 10);
+            var num2 = BaseConverter.ToBase(right, 10);
             var num3 = num1 - num2;
 
             var expected = 10.0;
@@ -184,8 +185,8 @@ namespace Calc.PositionalSystem.Tests
         {
             var left = -10;
             var right = 0;
-            var num1 = BaseConverter.ConvertToBase(left, 10);
-            var num2 = BaseConverter.ConvertToBase(right, 10);
+            var num1 = BaseConverter.ToBase(left, 10);
+            var num2 = BaseConverter.ToBase(right, 10);
             var num3 = num1 - num2;
 
             var expected = -10;
@@ -198,8 +199,8 @@ namespace Calc.PositionalSystem.Tests
         {
             var left = 0;
             var right = 0;
-            var num1 = BaseConverter.ConvertToBase(left, 10);
-            var num2 = BaseConverter.ConvertToBase(right, 10);
+            var num1 = BaseConverter.ToBase(left, 10);
+            var num2 = BaseConverter.ToBase(right, 10);
             var num3 = num1 - num2;
 
             var expected = 0.0;
@@ -213,8 +214,8 @@ namespace Calc.PositionalSystem.Tests
         {
             var left = long.MinValue + 100;
             var right = 10000;
-            var num1 = BaseConverter.ConvertToBase(left, 10);
-            var num2 = BaseConverter.ConvertToBase(right, 10);
+            var num1 = BaseConverter.ToBase(left, 10);
+            var num2 = BaseConverter.ToBase(right, 10);
             var num3 = num1 - num2;
         }
 
