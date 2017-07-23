@@ -17,9 +17,72 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Window}">
-                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}" Background="Gray">
-                            <Grid Background="Red">
+                        <!-- Outline with the Dropshadow margin -->
+                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+                            
+                            <!-- Main Window Outline -->
+                            <Grid>
                                 
+                                <!-- Opacity Mask for Corners on Grid -->
+                                <Border x:Name="Container"
+                                        Background="{StaticResource BackgroundLightBrush}"
+                                        CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"/>
+
+                                <!--  Window Border with Dropshadow -->
+                                <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"
+                                        Background="{Binding ForegroundLightBrush, FallbackValue=White}">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Opacity="0.2"/>
+                                    </Border.Effect>
+                                </Border>
+                                
+                                <!-- The main content -->
+                                <Grid>
+                                    
+                                    <!-- Corner Clipping -->
+                                    <Grid.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=Container}"/>
+                                    </Grid.OpacityMask>
+                                    <Grid.RowDefinitions>
+                                        <!-- Title Bar -->
+                                        <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue = 42}"/>
+                                        <!-- Drop shadpw -->
+                                        <RowDefinition Height="Auto"/>
+                                        <!-- Window Content-->
+                                        <RowDefinition Height="*"/>                                        
+                                    </Grid.RowDefinitions>
+                                    
+                                    <!-- Title Bar -->
+                                    <Grid Grid.Column="0" Panel.ZIndex="1" Margin="0, 0, 0, 535" Grid.RowSpan="3">
+                                        
+                                        <Grid.ColumnDefinitions>
+                                            <!-- Icon -->
+                                            <ColumnDefinition Width="Auto"/>
+                                            <!-- Title -->
+                                            <ColumnDefinition Width="*"/>
+                                            <!-- Windows Button -->
+                                            <ColumnDefinition Width="Auto"/>                                            
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <!-- Icon -->
+                                        <Button  Style="{StaticResource SystemIcon}" Command="{Binding MenuCommand}">
+                                            <Image Source="/Images/Logo/temp-chip-small.png"/>
+                                        </Button>
+
+                                        <!-- Title -->
+                                        <Viewbox Grid.Column="1" Margin="0">
+                                            <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Title, FallbackValue='CompArch Calculator'}"/>
+                                        </Viewbox>
+                                        
+                                        <!-- Window Buttons -->
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                            <Button Style="{StaticResource WindowControlButton}" Content="_" Command="{Binding MinimizeCommand}"/>
+                                            <Button Style="{StaticResource WindowControlButton}" Content="[ ]"  Command="{Binding MaximizeCommand}"/>
+                                            <Button Style="{StaticResource WindowCloseButton}" Content="x"  Command="{Binding CloseCommand}"/>
+                                        </StackPanel>
+
+                                    </Grid>
+                                </Grid>
                             </Grid>
                         </Border>
                     </ControlTemplate>
@@ -31,10 +94,12 @@
         <WindowChrome 
             ResizeBorderThickness="{Binding ResizeBorderThickness}"
             CaptionHeight="{Binding TitleHeight}"
+            CornerRadius="0"   
             GlassFrameThickness="0"
             />
     </WindowChrome.WindowChrome>
-    <Grid>        
+    <Grid>
+        <Button Content="Test"/>
 
     </Grid> 
 </Window>

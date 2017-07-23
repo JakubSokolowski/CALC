@@ -1,5 +1,8 @@
 ﻿
+using System;
+using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Calc.Desktop.ViewModel
 {
@@ -10,6 +13,8 @@ namespace Calc.Desktop.ViewModel
         /// The window this view model controls
         /// </summary>
         private Window mWindow;
+
+       
 
         /// <summary>
         /// The margin around the window to allow for a drop shadow
@@ -74,8 +79,17 @@ namespace Calc.Desktop.ViewModel
         /// <summary>
         /// The height of the title bar / caption bar
         /// </summary>
-        public int TitleHeight { get; set; } = 30;
+        public int TitleHeight { get; set; } = 42;
 
+        public GridLength TitleHeightGridLenght { get { return new GridLength(WindowRadius + ResizeBorder ); } }
+
+        #endregion
+
+        #region Commands
+        public ICommand MinimizeCommand { get; set; }
+        public ICommand MaximizeCommand { get; set; }
+        public ICommand CloseCommand { get; set; }
+        public ICommand MenuCommand { get; set; }
         #endregion
 
         #region Constructor
@@ -95,9 +109,33 @@ namespace Calc.Desktop.ViewModel
                 OnPropertyChanged(nameof(OuterMarginSize));
                 OnPropertyChanged(nameof(OuterMarginSizeThickness));
                 OnPropertyChanged(nameof(WindowRadius));
-                OnPropertyChanged(nameof(WindowCornerRadius));
+                OnPropertyChanged(nameof(WindowCornerRadius));         
+
             };
+
+            // Create Commands
+
+            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
+            MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
+            CloseCommand = new RelayCommand(() => mWindow.Close());
+            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
+
+          
+
+
         }
         #endregion
+
+        #region Private Helpers
+
+        private Point GetMousePosition()
+        {
+            var position = Mouse.GetPosition(mWindow);
+            return new Point(position.X + mWindow.Left, position.Y + mWindow.Top);
+
+        }
+
+        #endregion
+
     }
 }
