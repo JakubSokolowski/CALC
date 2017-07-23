@@ -28,6 +28,8 @@ namespace Calc.Desktop.ViewModel
 
         #region Public Properties
 
+        public double WindowMinimumWidth { get; set; } = 400;
+        public double WindowMinimumHeight { get; set; } = 400;
         /// <summary>
         /// The size of the resize border around the window
         /// </summary>
@@ -81,7 +83,7 @@ namespace Calc.Desktop.ViewModel
         /// </summary>
         public int TitleHeight { get; set; } = 42;
 
-        public GridLength TitleHeightGridLenght { get { return new GridLength(WindowRadius + ResizeBorder ); } }
+        public GridLength TitleHeightGridLenght { get { return new GridLength(TitleHeight + ResizeBorder ); } }
 
         #endregion
 
@@ -118,8 +120,7 @@ namespace Calc.Desktop.ViewModel
             MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
             MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => mWindow.Close());
-            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
-
+            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));         
           
 
 
@@ -132,7 +133,6 @@ namespace Calc.Desktop.ViewModel
         {
             var position = Mouse.GetPosition(mWindow);
             return new Point(position.X + mWindow.Left, position.Y + mWindow.Top);
-
         }
 
         #endregion
