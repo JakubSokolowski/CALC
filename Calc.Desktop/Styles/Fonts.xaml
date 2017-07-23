@@ -6,15 +6,17 @@
     <FontFamily x:Key="RobotoThin">pack://application;,,,/Fonts/#Roboto Th</FontFamily>
     <FontFamily x:Key="RobotoRegular">pack://application;,,,/Fonts/#Roboto</FontFamily>
     <FontFamily x:Key="RobotoLight">pack://application;,,,/Fonts/#Roboto Lt</FontFamily>
+    <FontFamily x:Key="LatoRegular">pack://application;,,,/Fonts/#Lato</FontFamily>
+    <FontFamily x:Key="LatoThin">pack://application;,,,/Fonts/#Lato Thin</FontFamily>
 
     <!--Set the default font family to RobotoThin for lowest level we can - Control -->
     <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
-        <Setter Property="FontFamily" Value="{StaticResource RobotoThin}"/>
+        <Setter Property="FontFamily" Value="{StaticResource LatoThin}"/>
     </Style>
 
     <!--Text block, does not inherit from Control, needs seperate style-->    
     <Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlockStyle">
-        <Setter Property="FontFamily" Value="{StaticResource RobotoThin}"/>
+        <Setter Property="FontFamily" Value="{StaticResource LatoThin}"/>
     </Style>
 
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}"/>
