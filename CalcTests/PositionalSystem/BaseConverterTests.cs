@@ -101,7 +101,7 @@ namespace Calc.PositionalSystem.Tests
             int input = 25;
             string expected = "11001.0";
             int radix = 2;       
-            string result = BaseConverter.ToBase(input, radix).BaseValueString;
+            string result = BaseConverter.ToBase(input, radix).ValueInBase;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
@@ -109,27 +109,33 @@ namespace Calc.PositionalSystem.Tests
         {
             int input = -25;
             string expected = "-11001.0";
+            string expectedComplement = "(1)00111.0";
             int radix = 2;         
-            string result = BaseConverter.ToBase(input, radix).BaseValueString;
-            Assert.AreEqual(expected, result);
+            Number result = BaseConverter.ToBase(input, radix);
+            Assert.AreEqual(expected, result.ValueInBase);
+            Assert.AreEqual(expectedComplement, result.Complement);
         }
         [TestMethod()]
         public void ToBase_PositiveFloatingPointDecimalToBinary_Pass()
         {
             double input = 25.5;
             string expected = "11001.1";
+            string expectedComplement = "(0)11001.1";
             int radix = 2;
-            string result = BaseConverter.ToBase(input, radix).BaseValueString;
-            Assert.AreEqual(expected, result);
+            Number result = BaseConverter.ToBase(input, radix);
+            Assert.AreEqual(expected, result.ValueInBase);
+            Assert.AreEqual(expectedComplement, result.Complement);
         }
         [TestMethod()]
         public void ToBase_NegativeFloatingPointDecimalToBinary_Pass()
         {
             double input = -25.5;
             string expected = "-11001.1";
+            string expectedComplement = "(1)00110.1";
             int radix = 2;
-            string result = BaseConverter.ToBase(input, radix).BaseValueString;
-            Assert.AreEqual(expected, result);
+            Number result = BaseConverter.ToBase(input, radix);
+            Assert.AreEqual(expected, result.ValueInBase);
+            Assert.AreEqual(expectedComplement, result.Complement);
         }
         [TestMethod()]
         public void ToBase_PositiveBinaryToDecimal_Pass()
@@ -175,7 +181,7 @@ namespace Calc.PositionalSystem.Tests
             int input = 255;
             string expected = "FF.0";
             int radix = 16;
-            string result = BaseConverter.ToBase(input, radix).BaseValueString;
+            string result = BaseConverter.ToBase(input, radix).ValueInBase;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
@@ -184,7 +190,7 @@ namespace Calc.PositionalSystem.Tests
             int input = -255;
             string expected = "-FF.0";
             int radix = 16;
-            string result = BaseConverter.ToBase(input, radix).BaseValueString;
+            string result = BaseConverter.ToBase(input, radix).ValueInBase;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
@@ -193,7 +199,7 @@ namespace Calc.PositionalSystem.Tests
             double input = 255.5;
             string expected = "FF.8";
             int radix = 16;
-            string result = BaseConverter.ToBase(input, radix).BaseValueString;
+            string result = BaseConverter.ToBase(input, radix).ValueInBase;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
@@ -202,7 +208,7 @@ namespace Calc.PositionalSystem.Tests
             double input = -255.5;
             string expected = "-FF.8";
             int radix = 16;
-            string result = BaseConverter.ToBase(input, radix).BaseValueString;
+            string result = BaseConverter.ToBase(input, radix).ValueInBase;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
@@ -247,36 +253,44 @@ namespace Calc.PositionalSystem.Tests
         {
             int input = 100;
             string expected = "01 36.00";
+            string expectedComplement = "(00)01 36.00";
             int radix = 64;
-            string result = BaseConverter.ToBase(input, radix).BaseValueString;
-            Assert.AreEqual(expected, result);
+            Number result = BaseConverter.ToBase(input, radix);
+            Assert.AreEqual(expected, result.ValueInBase);
+            Assert.AreEqual(expectedComplement, result.Complement);
         }
         [TestMethod()]
         public void ToBase_NegativeDecimalToBase64_Pass()
         {
             int input = -100;
             string expected = "-01 36.00";
+            string expectedComplement = "(63)62 28.00";
             int radix = 64;
-            string result = BaseConverter.ToBase(input, radix).BaseValueString;
-            Assert.AreEqual(expected, result);
+            Number result = BaseConverter.ToBase(input, radix);
+            Assert.AreEqual(expected, result.ValueInBase);
+            Assert.AreEqual(expectedComplement, result.Complement);
         }
         [TestMethod()]
         public void ToBase_PositiveFloatingPointDecimalToBase64_Pass()
         {
             double input = 100.5;
             string expected = "01 36.32";
+            string expectedComplement = "(00)01 36.32";
             int radix = 64;
-            string result = BaseConverter.ToBase(input, radix).BaseValueString;
-            Assert.AreEqual(expected, result);
+            Number result = BaseConverter.ToBase(input, radix);
+            Assert.AreEqual(expected, result.ValueInBase);
+            Assert.AreEqual(expectedComplement, result.Complement);
         }
         [TestMethod()]
         public void ToBase_NegativeFloatingPointDecimalToBase64_Pass()
         {
             double input = -100.5;
             string expected = "-01 36.32";
+            string expectedComplement = "(63)62 27.32";
             int radix = 64;
-            string result = BaseConverter.ToBase(input, radix).BaseValueString;
-            Assert.AreEqual(expected, result);
+            Number result = BaseConverter.ToBase(input, radix);
+            Assert.AreEqual(expected, result.ValueInBase);
+            Assert.AreEqual(expectedComplement, result.Complement);
         }
         [TestMethod()]
         public void ToBase_PositiveBase64ToDecimal_Pass()
