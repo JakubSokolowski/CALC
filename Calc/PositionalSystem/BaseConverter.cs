@@ -16,7 +16,7 @@ namespace Calc.PositionalSystem
         #region Private Members
         
         private static BaseRepresentation representation = new BaseRepresentation();        
-        private static int formatPrecision;
+        private static int formatPrecision = 10;
 
         #endregion
 
@@ -25,7 +25,7 @@ namespace Calc.PositionalSystem
         /// <summary>
         /// Specifies how many decimal places will Converted numbers have
         /// </summary>
-        public static int FormatPrecision { get { return formatPrecision; } set { formatPrecision = value; } }       
+        public static int FormatPrecision { get { return formatPrecision; } set { formatPrecision = value; } }      
 
         #endregion    
 
@@ -41,13 +41,16 @@ namespace Calc.PositionalSystem
         {           
             if (IsValidRadix(resultBase))
             {
+                // Split the value to integer part and fraction part
                 double fractionValue = decimalValue % 1;
                 long integerValue = (long)(decimalValue - fractionValue);
 
+                // Convert each part
                 string fractionalStr = DecimalFractionToArbitraryBase(fractionValue, resultBase);
                 string integerStr = DecimalIntegerToArbitraryBase(integerValue, resultBase);
 
-                return new Number(resultBase, decimalValue, integerStr + '.' + fractionalStr);
+                string result = integerStr + '.' + fractionalStr;
+                return new Number(resultBase, decimalValue, result, GetComplement(result, resultBase));
             }
             else throw new ArgumentException("Radix is invalid");
                    
@@ -79,35 +82,39 @@ namespace Calc.PositionalSystem
 
                     Number inputInDecimal;
 
-                    // First, convert the input to Decimal
+                    // First, convert the input Number to Decimal
           
                     if(IsFloatingPointStr(inputStr))
                     {
+                        // Split the whole value into integer part and fraction part strings
                         string[] valueParts = inputStr.Split('.');
                         integerStr = valueParts[0];
                         fractionalStr = valueParts[1];
 
+                        // Convert each part
                         integerPart = ArbitraryBaseToDecimal(integerStr, inputBase);
                         fractionalPart = ArbitraryFractionToDecimal(fractionalStr, inputBase);
 
+                        // Make the fractionalPart negative if the integer part is also negative
+                        // This is needed when both parts are added together to create whole value
                         if (integerPart < 0)
                             fractionalPart *= -1;
 
                         decimalValue = (double)integerPart + fractionalPart;
 
-                        inputInDecimal = new Number(10, decimalValue, decimalValue.ToString());                        
+                        inputInDecimal = new Number(10, decimalValue, decimalValue.ToString(), GetComplement(decimalValue.ToString(), resultBase));                        
                     }
                     else
                     {
+                        // Not a floating point number, convert only the integer part.
                         integerPart = ArbitraryBaseToDecimal(inputStr, inputBase);
-                        inputInDecimal = new Number(10, (double)integerPart, integerPart.ToString());
-                    }
-
-                    // ToBase to another base if needed
+                        inputInDecimal = new Number(10, (double)integerPart, integerPart.ToString(), GetComplement(integerPart.ToString(), resultBase));
+                    }                    
 
                     if (resultBase == 10)
-                        return inputInDecimal;
+                        return inputInDecimal;                   
                     else
+                        // Convert to result Base
                         return ToBase(inputInDecimal, resultBase);                   
                 }
                 else throw new ArgumentException("Input Str is invalid");                
@@ -120,7 +127,7 @@ namespace Calc.PositionalSystem
         #region Converting Integer Part
         
         /// <summary>
-        /// Converts V
+        /// Converts value string of specified base to decimal
         /// </summary>
         /// <param name="valueString"></param>
         /// <param name="radix"></param>
@@ -131,23 +138,39 @@ namespace Calc.PositionalSystem
             {
                 if (IsValidString(valueString, radix))
                 {
+                    // Set the base of representation before converting
                     representation.CurrentBase = radix;
 
                     double result = 0.0;
                     int mult = 1;
-
+                    
+                    // While converting, the numbers are assumed to be unsigned
+                    // Detect and remember if number was negative
                     if (valueString.ElementAt(0) == '-')
                     {
                         valueString = valueString.Substring(1);
                         mult = -1;
                     }
 
+                    // Digits at positions in some representation are represented by multiple characters,
+                    // so it's necessary to convert valueString to list of strings
                     var strList = RepresentationStringToStringList(valueString, radix);
+
+                    // The value at each position is calculated by taking the value of digit 
+                    // and multiplying it by the base of number to the power of exponent
+
+                    // The exponents at positions are as follows:
+                    // For number 253
+                    // Exponents:  ...2 1 0
+                    // Digits:        5 3 1
+                    // So the starting value of exponent is the count of elements in lis -1
 
                     int exponent = strList.Count - 1;
                     for (int i = 0; i <= exponent; i++)
+                        // Decrease value of by 1 exponent after each iteration
                         result += representation.GetValue(strList.ElementAt(i)) * Math.Pow(radix, exponent - i);                   
 
+                    // Make the number negative, if needed
                     return result * mult;
                 }
                 else                
@@ -156,12 +179,23 @@ namespace Calc.PositionalSystem
             else
                 throw new ArgumentException("The systemBase " + radix + " must be in range 2- 256");
         }
+        /// <summary>
+        /// Converts decimal number to valueString in specified base
+        /// </summary>
+        /// <param name="decimalNumber"></param>
+        /// <param name="radix"></param>
+        /// <returns>The string representation of <paramref name="decimalNumber"/> in specified base</returns>
         private static string DecimalIntegerToArbitraryBase(long decimalNumber, int radix)
         {
             if (radix < 2 || radix > BaseRepresentation.MAX_BASE)
-                throw new ArgumentException("The systemBase must be >= 2 and <= " + BaseRepresentation.MAX_BASE);
+                throw new ArgumentException("The base must be >= 2 and <= " + BaseRepresentation.MAX_BASE);
+
             if (decimalNumber == 0)
+            {
+                if (radix > 36)
+                    return "00";
                 return "0";
+            }               
 
             long currentNumber = Math.Abs(decimalNumber);
             representation.CurrentBase = radix;
@@ -170,11 +204,24 @@ namespace Calc.PositionalSystem
 
             while (currentNumber != 0)
             {
+                // Reminder of the division of number by base is value at specified position of number in this base
                 int remainder = (int)(currentNumber % radix);
                 if (radix > 36)
                 {
+                    // Reverse the each digit before adding. It's needed for bases higher than 36
+                    // The digits at positions are calculated from the smallest to biggest position
+                    // and the order in number is from biggest to smallest, so after appending all positions
+                    // whole number string must be reversed. That creates problem for bases, where the digits
+                    // contain 2 characters. For example, let's say that the result of conversion to base 64 is 04 15 06.
+                    // The number will be later reversed - 60 51 40, but we need to reverse digits, not 
+                    // all the characters - the right result would be 06 15 04. If we reverse each digit first in 04 15 06, 
+                    // before the final reverse we will have 40 51 60, and after we will have proper result 06 15 04
+
                     sb.Append(representation.GetDigit(remainder).ToCharArray().Reverse().ToArray());
+                    // The String with 2 characters are more readible if there is space in between digits
                     sb.Append(" ");
+                    
+                    // The result of division, without reminder is passed to the next iteration of loop
                     currentNumber = currentNumber / radix;
                     continue;
                 }
@@ -183,7 +230,10 @@ namespace Calc.PositionalSystem
                 currentNumber = currentNumber / radix;
             }
 
+            // Reverse the string 
             String result = new string(sb.ToString().ToCharArray().Reverse().ToArray());
+
+            // There will be additional space at the front for some bases, remove it
             if (radix > 36)
                 result = result.Substring(1);
 
@@ -198,6 +248,12 @@ namespace Calc.PositionalSystem
 
         #region Converting Fractional Part
 
+        /// <summary>
+        /// Converts string that represents fraction in specified base to it's value in decimal
+        /// </summary>
+        /// <param name="fractionStr"></param>
+        /// <param name="radix"></param>
+        /// <returns></returns>
         private static double ArbitraryFractionToDecimal(string fractionStr, int radix)
         {
             double decimalFraction = 0.0;
@@ -205,7 +261,15 @@ namespace Calc.PositionalSystem
 
             var strList = RepresentationStringToStringList(fractionStr, radix);
             representation.CurrentBase = radix;
-          
+
+            // The value at each position is calculated by taking the value of digit 
+            // and multiplying it by the base of number to the power of exponent
+
+            // The exponents at positions in fraction are as follows:
+            // For fraction  0.253
+            // Exponents:  0  . -1 -2 -3   
+            // Digits:     0  .  5  3  1
+
             for (int i = 0; i < strList.Count; i++)
             {               
                 decimalFraction += (double)representation.GetValue(strList.ElementAt(i)) * Math.Pow(radix, exponent * -1);
@@ -213,6 +277,12 @@ namespace Calc.PositionalSystem
             }
             return decimalFraction;
         }
+        /// <summary>
+        /// Converts decimal fraction to it's string representation in specified base
+        /// </summary>
+        /// <param name="fraction">The fraction in decimal</param>
+        /// <param name="radix">The radix</param>
+        /// <returns></returns>
         private static string DecimalFractionToArbitraryBase(double fraction, int radix)
         {
             if(fraction == 0.0)
@@ -229,7 +299,7 @@ namespace Calc.PositionalSystem
             int wholePart;
 
             fractionPart = fraction;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < FormatPrecision; i++)
             {
                 number = fractionPart * radix;
                 fractionPart = number % 1;
@@ -249,7 +319,7 @@ namespace Calc.PositionalSystem
 
         #region Helper Methods for Converting
 
-        public static List<String> RepresentationStringToStringList(string str, int radix)
+        public static List<string> RepresentationStringToStringList(string str, int radix)
         {
             var strList = new List<String>();
             if (radix <= 36)
@@ -264,7 +334,7 @@ namespace Calc.PositionalSystem
         }
         private static bool IsFloatingPointStr(string str) { return str.Contains("."); }
 
-        private static String RemoveTrailingZeros(string str)
+        private static string RemoveTrailingZeros(string str)
         {
             int lenght = str.Length - 1;
             for (int i = str.Length - 1; i >= 0; i--)
@@ -282,6 +352,90 @@ namespace Calc.PositionalSystem
 
         #region Floating Point Numbers Precision
         private static string GetRoundingFormat() { return "0." + new string('#', FormatPrecision); }
+        #endregion
+
+        #region Number Complement
+
+        private static string GetComplement(string number, int radix)
+        {
+            representation.CurrentBase = radix;
+
+            string prefix = "";
+
+            if (number[0] == '-')
+            {
+                prefix = "(" + (radix - 1).ToString() + ")";
+                number = number.Substring(1);
+            }               
+            else
+            {
+                if(radix > 36)
+                    return "(00)" + number;
+                return "(0)" + number;
+            }
+                
+
+            int dotIndex = number.IndexOf('.');
+
+            if (radix > 36)
+                number = number.Replace(".", " ");
+            else
+                number = number.Replace(".", String.Empty);
+
+
+            var strList = RepresentationStringToStringList(number, radix);
+            strList.RemoveAll(x => x == " ");
+
+            for(int i = 0; i < strList.Count; i++)
+                strList[i] = GetDigitComplement(strList[i], radix);
+
+            var complement = new StringBuilder(IncrementNumber(strList, radix));
+
+            if(dotIndex < 0)
+            {
+                if(radix > 36)
+                     return prefix + complement.ToString() + "00";
+                else
+                    return prefix + complement.ToString() + "0";
+            }
+           
+            if (radix > 36)           
+                complement.Remove(dotIndex, 1);            
+          
+            complement.Insert(dotIndex, ".");
+            return prefix + complement.ToString();
+        }
+
+        private static string GetDigitComplement(string digit, int radix)
+        {
+            return representation.GetDigit(radix - 1 - representation.GetValue(digit));
+        }
+        private static string IncrementNumber(List<string> number, int radix)
+        {  
+            representation.CurrentBase = radix;
+
+            for(int i = number.Count-1; i != 0; i--)
+            {
+                int value = representation.GetValue(number.ElementAt(i));
+
+                if (value == radix - 1)
+                {
+                    number[i] = representation.GetDigit(0);
+                    continue;
+                }
+                else
+                {
+                    number[i] = representation.GetDigit(value + 1);
+                    break;
+                }
+            }
+
+            if (radix > 36)
+                return string.Join(" ", number);
+            else
+                return string.Join(String.Empty, number);
+           
+        }
         #endregion
 
         #region Input Validation
