@@ -11,11 +11,10 @@ namespace Calc.PositionalSystem
 
         private int systemBase;
 
-        private double integerPartDecimalValue;
-        private double fractionalPartDecimalValue;
+        private double valueInDecimal;  
+        private string valueInBase;
 
-        private String integerPartValueString;
-        private String fractionalPartValueString;
+        private string valueInBaseComplement;
 
         #endregion
 
@@ -29,57 +28,32 @@ namespace Calc.PositionalSystem
         /// <summary>
         /// The integer part of number in decimal system.
         /// </summary>
-        public double IntegerPartDecimalValue { get { return integerPartDecimalValue; } }
+        public double IntegerPartDecimalValue { get { return valueInDecimal - FractionPartDecimalValue; } }
         /// <summary>
         /// The fraction part of number in decimal system.
         /// </summary>
-        public double FractionalPartDecimalValue { get { return fractionalPartDecimalValue; } }
+        public double FractionPartDecimalValue { get { return valueInDecimal % 1; } }
         /// <summary>
         /// The decimal value of Number.
         /// </summary>
-        public double DecimalValue
-        {
-            get { return (double)integerPartDecimalValue + fractionalPartDecimalValue; }
-            private set
-            {
-                fractionalPartDecimalValue = value % 1;
-                integerPartDecimalValue = (long)(value - fractionalPartDecimalValue);
-            }
-
-        }
+        public double DecimalValue  { get { return valueInDecimal; } private set { valueInDecimal = value; } }
 
         /// <summary>
         /// The integer part of Number in given positional System, represented by String
         /// </summary>
-        public String IntegerPartValueString { get { return integerPartValueString; } private set { integerPartValueString = value; } }
+        public string IntegerPartBaseValue { get { return valueInBase.Split('.')[0]; } }
         /// <summary>
         /// The fraction part of Number in given base, represented by String. This field does not contain the delimeter.
         /// </summary>
-        public String FractionalPartValueString { get { return fractionalPartValueString; } private set { fractionalPartValueString = value; } }
+        public string FractionPartBaseValue { get { return valueInBase.Split('.')[1]; } }
         /// <summary>
         /// The string representing value of number in given base. Field concats strings IntegerPart, FractionalPart and adds the . delimeter in between
         /// </summary>
-        public String BaseValueString
-        {
-            get { return integerPartValueString + '.' + fractionalPartValueString; }
-            private set
-            {
-                if (value.Contains("."))
-                {
-                    string[] parts = value.Split('.');
-                    integerPartValueString = parts[0];
-                    fractionalPartValueString = parts[1];
-                }
-                else
-                {
-                    IntegerPartValueString = value;
-                    if (Radix > 36)
-                        fractionalPartValueString = "00";
-                    else
-                        fractionalPartValueString = "0";
-                }
-            }
-        }
+        public string ValueInBase { get { return valueInBase; } private set { valueInBase = value; } }
+
+        public string Complement { get { return valueInBaseComplement ; } set { valueInBaseComplement = value; } }
+        public string ComplementIntegerPart { get { return Complement.Split('.')[0]; } }
+        public string ComplementFractionPart { get { return Complement.Split('.')[1]; } }
 
         #endregion Fields
 
@@ -92,22 +66,24 @@ namespace Calc.PositionalSystem
         {
             Radix = 10;
             DecimalValue = 0.0;
-            BaseValueString = "0.0";
+            ValueInBase = "0.0";
         }
         /// <summary>
         /// Constructs <see cref="Number"/> in given base, with it's radix, decimal Value and string value in said base
         /// </summary>
         /// <param name="radix">The radix of a number</param>
         /// <param name="decimalValue">The decimal value of a number</param>
-        /// <param name="baseSystemValueStr">The string value of number in given base</param>
-        public Number(int radix, double decimalValue, string baseSystemValueStr)
+        /// <param name="baseSystemValueStr">The string value of number in given base</param>  
+
+        public Number(int radix, double decimalValue, string baseSystemValueStr, string complement)
         {
             Radix = radix;
             DecimalValue = decimalValue;
-            BaseValueString = baseSystemValueStr;
+            ValueInBase = baseSystemValueStr;
+            Complement = complement;
         }
-        
-        #endregion     
+
+        #endregion
 
         #region Math Operations Without Steps      
 
@@ -184,6 +160,12 @@ namespace Calc.PositionalSystem
 
         #endregion
 
+        #region Math Operations With Steps
+
+        #endregion
+
         public object Clone() { Number clone = (Number)this.MemberwiseClone(); return clone; }
+
+        
     }
 }
