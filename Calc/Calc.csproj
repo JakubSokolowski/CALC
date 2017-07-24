@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PositionalSystem\BaseConverter.cs" />
+    <Compile Include="PositionalSystem\BaseRepresentation.cs" />
     <Compile Include="PositionalSystem\IBaseConversion.cs" />
     <Compile Include="PositionalSystem\IInputValidation.cs" />
     <Compile Include="PositionalSystem\IMathOperations.cs" />
