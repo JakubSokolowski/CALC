@@ -69,4 +69,18 @@
         </Style.Triggers>
     </Style>
 
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
+        
+        <Setter Property="Background" Value="{StaticResource ForegroundMainBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource VeryLightGrayBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"/>
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}"/>
+        <Setter Property="Padding" Value="50 10"/>
+        <Setter Property="Margin" Value="0 10"/>
+
+        
+
+    </Style>
+
 </ResourceDictionary>

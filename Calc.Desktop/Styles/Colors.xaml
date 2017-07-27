@@ -17,4 +17,8 @@
     <Color x:Key="ForegroundLight">#ffffff</Color>
     <SolidColorBrush x:Key="ForegroundLightBrush" Color="{StaticResource ForegroundLight}" />
 
+    <Color x:Key="VeryLightGray">#d3d3d3</Color>
+    <SolidColorBrush x:Key="VeryLightGrayBrush" Color="{StaticResource VeryLightGray}"/>
+
+
 </ResourceDictionary>
