@@ -40,13 +40,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PositionalSystem\BaseConverter.cs" />
-    <Compile Include="PositionalSystem\BaseRepresentation.cs" />
-    <Compile Include="PositionalSystem\IBaseConversion.cs" />
+    <Compile Include="PositionalSystem\BaseConversion\BaseConverter.cs" />
+    <Compile Include="PositionalSystem\BaseConversion\BaseDigits.cs" />
+    <Compile Include="PositionalSystem\BaseConversion\BaseRepresentation.cs" />
+    <Compile Include="PositionalSystem\ComplementConversion\BaseComplement.cs" />
+    <Compile Include="PositionalSystem\ComplementConversion\ComplementConverter.cs" />
+    <Compile Include="PositionalSystem\ConversionHelpers.cs" />
+    <Compile Include="PositionalSystem\FloatConversion\DoubleRepresentation.cs" />
+    <Compile Include="PositionalSystem\FloatConversion\FloatConverter.cs" />
+    <Compile Include="PositionalSystem\FloatConversion\FloatingPointRepresentation.cs" />
+    <Compile Include="PositionalSystem\BaseConversion\IBaseConversion.cs" />
+    <Compile Include="PositionalSystem\FloatConversion\IFloatingPointValidation.cs" />
     <Compile Include="PositionalSystem\IInputValidation.cs" />
     <Compile Include="PositionalSystem\IMathOperations.cs" />
     <Compile Include="PositionalSystem\Number.cs" />
+    <Compile Include="PositionalSystem\NumberConverter.cs" />
     <Compile Include="PositionalSystem\Operation.cs" />
+    <Compile Include="PositionalSystem\FloatConversion\SingleRepresentation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
