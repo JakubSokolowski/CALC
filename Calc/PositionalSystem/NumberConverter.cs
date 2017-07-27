@@ -26,8 +26,7 @@ namespace Calc.PositionalSystem
             var sRep = fc.ToSingle((float)value);
             var dRep = fc.ToDouble(value);
             return new Number(baseRep, sRep, dRep);
-        }
-    
+        }    
 
         public static Number ToBase(string valueString, int inputBase, int resultBase)
         {
@@ -36,8 +35,5 @@ namespace Calc.PositionalSystem
             var dRep = fc.ToDouble(baseRep.DecimalValue);
             return new Number(baseRep, sRep, dRep);
         }
-
-       
-
     }
 }
