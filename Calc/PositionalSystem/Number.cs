@@ -6,15 +6,13 @@ namespace Calc.PositionalSystem
     /// Represents number in positional system of arbitrary base. 
     /// </summary>
     public class Number : ICloneable
-    {       
-        #region Private Members
+    {
+        #region Private Members 
 
-        private int systemBase;
-
-        private double valueInDecimal;  
-        private string valueInBase;
-
-        private string valueInBaseComplement;
+        private BaseComplement complement;
+        private BaseRepresentation baseRep;
+        private SingleRepresentation singleRep;
+        private DoubleRepresentation doubleRep;      
 
         #endregion
 
@@ -23,37 +21,40 @@ namespace Calc.PositionalSystem
         /// <summary>
         /// The Radix of number, represented by decimal integer.
         /// </summary>
-        public int Radix { get { return systemBase; } private set { systemBase = value; } }
+        public int Radix { get { return baseRep.Radix; } private set { baseRep.Radix = value; } }
 
         /// <summary>
         /// The integer part of number in decimal system.
         /// </summary>
-        public double IntegerPartDecimalValue { get { return valueInDecimal - FractionPartDecimalValue; } }
+        public double IntegerPartDecimalValue { get { return baseRep.IntegerPartDecimalValue- baseRep.FractionPartDecimalValue; } }
         /// <summary>
         /// The fraction part of number in decimal system.
         /// </summary>
-        public double FractionPartDecimalValue { get { return valueInDecimal % 1; } }
+        public double FractionPartDecimalValue { get { return baseRep.DecimalValue % 1; } }
         /// <summary>
         /// The decimal value of Number.
         /// </summary>
-        public double DecimalValue  { get { return valueInDecimal; } private set { valueInDecimal = value; } }
+        public double DecimalValue  { get { return baseRep.DecimalValue; } private set { baseRep.DecimalValue = value; } }
 
         /// <summary>
         /// The integer part of Number in given positional System, represented by String
         /// </summary>
-        public string IntegerPartBaseValue { get { return valueInBase.Split('.')[0]; } }
+        public string IntegerPartBaseValue { get { return baseRep.IntegerPartBaseValue; } }
         /// <summary>
         /// The fraction part of Number in given base, represented by String. This field does not contain the delimeter.
         /// </summary>
-        public string FractionPartBaseValue { get { return valueInBase.Split('.')[1]; } }
+        public string FractionPartBaseValue { get { return baseRep.FractionPartBaseValue; } }
         /// <summary>
         /// The string representing value of number in given base. Field concats strings IntegerPart, FractionalPart and adds the . delimeter in between
         /// </summary>
-        public string ValueInBase { get { return valueInBase; } private set { valueInBase = value; } }
+        public string ValueInBase { get { return baseRep.ValueInBase; } private set { baseRep.ValueInBase = value; } }
 
-        public string Complement { get { return valueInBaseComplement ; } set { valueInBaseComplement = value; } }
+        public string Complement { get { return complement.Prefix + complement.Value ; }}
         public string ComplementIntegerPart { get { return Complement.Split('.')[0]; } }
-        public string ComplementFractionPart { get { return Complement.Split('.')[1]; } }
+        public string ComplementFractionPart { get { return Complement.Split('.')[1]; } }      
+        
+        public string SingleBinaryString { get => singleRep.BinaryString; }
+        public string DoubleBinaryString { get => doubleRep.BinaryString; }
 
         #endregion Fields
 
@@ -75,14 +76,20 @@ namespace Calc.PositionalSystem
         /// <param name="decimalValue">The decimal value of a number</param>
         /// <param name="baseSystemValueStr">The string value of number in given base</param>  
 
-        public Number(int radix, double decimalValue, string baseSystemValueStr, string complement)
+         public Number(int radix, double decimalValue, string baseSystemValueStr, BaseComplement comp)
         {
             Radix = radix;
             DecimalValue = decimalValue;
             ValueInBase = baseSystemValueStr;
-            Complement = complement;
+            complement = comp;
         }
 
+        public Number(BaseRepresentation bRep, SingleRepresentation sRep, DoubleRepresentation dRep)
+        {
+            baseRep = bRep;
+            singleRep = sRep;
+            doubleRep = dRep;
+        }
         #endregion
 
         #region Math Operations Without Steps      
@@ -97,7 +104,7 @@ namespace Calc.PositionalSystem
         public static Number operator + (Number left, Number right)
         {
             double result = checked(left.DecimalValue + right.DecimalValue);
-            return BaseConverter.ToBase(result, left.Radix);
+            return NumberConverter.ToBase(result, left.Radix);
         }
         /// <summary>
         /// Returns <see cref="Number"/> which decimal value is the difference of <paramref name="left"/> and <paramref name="right"/>.
@@ -109,7 +116,7 @@ namespace Calc.PositionalSystem
         public static Number operator - (Number left, Number right)
         {
             double result = checked(left.DecimalValue - right.DecimalValue);
-            return BaseConverter.ToBase(result, left.Radix);
+            return NumberConverter.ToBase(result, left.Radix);
         }
         /// <summary>
         /// Returns <see cref="Number"/> which decimal value is the product of <paramref name="left"/> and <paramref name="right"/>.
@@ -121,7 +128,7 @@ namespace Calc.PositionalSystem
         public static Number operator * (Number left, Number right)
         {
             double result = checked(left.DecimalValue * right.DecimalValue);
-            return BaseConverter.ToBase(result, left.Radix);
+            return NumberConverter.ToBase(result, left.Radix);
         }
         /// <summary>
         /// Returns <see cref="Number"/> which decimal value is the quotient of <paramref name="left"/> and <paramref name="right"/>.
@@ -133,7 +140,7 @@ namespace Calc.PositionalSystem
         public static Number operator / (Number left, Number right)
         {
             double result = checked(left.DecimalValue / right.DecimalValue);
-            return BaseConverter.ToBase(result, right.Radix);
+            return NumberConverter.ToBase(result, right.Radix);
         }
 
         /// <summary>
@@ -144,7 +151,7 @@ namespace Calc.PositionalSystem
         public static Number Sqrt(Number num)
         {
             double result = Math.Sqrt(num.DecimalValue);
-            return BaseConverter.ToBase(result, num.Radix);
+            return NumberConverter.ToBase(result, num.Radix);
         }
         /// <summary>
         /// Returns the specified <see cref="Number"/> raised to specified <paramref name="power"/>
@@ -155,7 +162,7 @@ namespace Calc.PositionalSystem
         public static Number Pow(Number num, double power)
         {
             double result = Math.Pow(num.DecimalValue, power);
-            return BaseConverter.ToBase(result, num.Radix);
+            return NumberConverter.ToBase(result, num.Radix);
         }
 
         #endregion
