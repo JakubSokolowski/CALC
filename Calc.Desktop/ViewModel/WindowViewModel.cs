@@ -1,4 +1,5 @@
 ﻿
+using Calc.PositionalSystem;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -28,8 +29,8 @@ namespace Calc.Desktop.ViewModel
 
         #region Public Properties
 
-        public double WindowMinimumWidth { get; set; } = 400;
-        public double WindowMinimumHeight { get; set; } = 400;
+        public double WindowMinimumWidth { get; set; } = 550;
+        public double WindowMinimumHeight { get; set; } = 600;
         /// <summary>
         /// The size of the resize border around the window
         /// </summary>
@@ -39,6 +40,8 @@ namespace Calc.Desktop.ViewModel
         /// The size of the resize border around the window, taking into account the outer margin
         /// </summary>
         public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder + OuterMarginSize); } }
+
+        public Thickness InnerContentPadding { get { return new Thickness(ResizeBorder); } }
 
         /// <summary>
         /// Allows a drop shadow and, hides the border when fullscreen
@@ -85,6 +88,11 @@ namespace Calc.Desktop.ViewModel
 
         public GridLength TitleHeightGridLenght { get { return new GridLength(TitleHeight + ResizeBorder ); } }
 
+        /// <summary>
+        /// The current page of the application
+        /// </summary>
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Welcome;
+
         #endregion
 
         #region Commands
@@ -92,6 +100,7 @@ namespace Calc.Desktop.ViewModel
         public ICommand MaximizeCommand { get; set; }
         public ICommand CloseCommand { get; set; }
         public ICommand MenuCommand { get; set; }
+
         #endregion
 
         #region Constructor
