@@ -56,7 +56,12 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="PositionalSystem\BaseConverterTests.cs" />
+    <Compile Include="PositionalSystem\BaseConversion\BaseDigitsTests.cs" />
+    <Compile Include="PositionalSystem\BaseConversion\BaseRepresentationTests.cs" />
+    <Compile Include="PositionalSystem\BaseConversion\BaseConverterTests.cs" />
+    <Compile Include="PositionalSystem\FloatConversion\DoubleRepresentationTests.cs" />
+    <Compile Include="PositionalSystem\FloatConversion\FloatConverterTests.cs" />
+    <Compile Include="PositionalSystem\FloatConversion\SingleRepresentationTests.cs" />
     <Compile Include="PositionalSystem\NumberTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
