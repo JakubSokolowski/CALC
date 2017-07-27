@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen"
         x:Name="AppWindow"
         Icon="Images/Logo/temp-chip-small.png"
-        Title="Computer Architecture Calculator" 
+        Title="CALC" 
         Height="600" Width="900"
         MinWidth="{Binding WindowMinimumWidth}"
         MinHeight="{Binding WindowMinimumHeight}">
@@ -50,9 +50,7 @@
                                     <Grid.RowDefinitions>
                                         
                                         <!-- Title Bar -->
-                                        <RowDefinition Height="{Binding TitleHeightGridLenght, FallbackValue = 42}"/>   
-                                        <!-- Drop Shadow -->
-                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="{Binding TitleHeightGridLenght, FallbackValue = 42}"/>                                      
                                         <!-- Window Content-->
                                         <RowDefinition Height="*"/> 
                                         
@@ -78,8 +76,16 @@
                                         </Button>
 
                                         <!-- Title -->
-                                        <Viewbox Grid.Column="1" Margin="4">
-                                            <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Title, FallbackValue='CompArch Calculator'}"/>
+                                        <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="3">
+                                            <StackPanel>
+                                                <TextBlock FontFamily="{StaticResource LatoThin}" FontSize="{StaticResource FontSizeLarge}" TextAlignment="Center" Margin="0, 0, 0, 0" >
+                                                    <Run Text="C" Foreground="{StaticResource ForegroundMainBrush}"/>
+                                                    <Run Text="A" Foreground="{StaticResource ForegroundMainBrush}"/>
+                                                    <Run Text="L" Foreground="{StaticResource ForegroundMainBrush}"/>
+                                                    <Run Text="C" Foreground="{StaticResource ForegroundMainBrush}"/>
+                                                </TextBlock>
+                                                <TextBlock FontFamily="{StaticResource LatoThin}" Foreground="{StaticResource ForegroundMainBrush}" Text="Computer Architecture Learning Calculator" TextAlignment="Center"/>
+                                            </StackPanel>
                                         </Viewbox>
                                         
                                         <!-- Window Buttons -->
@@ -89,9 +95,12 @@
                                             <Button Style="{StaticResource WindowCloseButton}" Content="x"  Command="{Binding CloseCommand}"/>
                                         </StackPanel>
 
-                                    </Grid>
-                                    <Border>
-                                        
+                                    </Grid>                                  
+                                   
+                                    
+                                    <!-- Page Content -->
+                                    <Border Grid.Row="1" Padding="{Binding InnerContentPadding}">
+                                        <ContentPresenter Content="{TemplateBinding Content}"/>
                                     </Border>
                                 </Grid>
                             </Grid>
@@ -109,8 +118,8 @@
             GlassFrameThickness="0"
             />
     </WindowChrome.WindowChrome>
-    <Grid>
-        
-
+    <Grid Background="{StaticResource ForegroundLightBrush}">
+        <Frame x:Name="MainFrame" Content="{Binding CurrentPage , Converter={local:ApplicationPageValueConverter}}"/>
     </Grid> 
 </Window>
+ 
