@@ -17,8 +17,24 @@
     <Color x:Key="ForegroundLight">#ffffff</Color>
     <SolidColorBrush x:Key="ForegroundLightBrush" Color="{StaticResource ForegroundLight}" />
 
-    <Color x:Key="VeryLightGray">#d3d3d3</Color>
+    
+    <!-- Gray Color Scheme -->
+
+    <Color x:Key="White">#ffffff</Color>
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
+
+    <Color x:Key="VeryLightGray">#e5e5e5</Color>
     <SolidColorBrush x:Key="VeryLightGrayBrush" Color="{StaticResource VeryLightGray}"/>
 
+    <Color x:Key="LightGray">#cccccc</Color>
+    <SolidColorBrush x:Key="LightGrayBrush" Color="{StaticResource LightGray}"/>
 
+    <Color x:Key="Gray">#b2b2b2</Color>
+    <SolidColorBrush x:Key="GrayBrush" Color="{StaticResource Gray}"/>
+
+    <Color x:Key="DarkGray">#999999</Color>
+    <SolidColorBrush x:Key="DarkGrayBrush" Color="{StaticResource DarkGray}"/>
+
+    <!-- Space Gray Color Scheme -->
+   
 </ResourceDictionary>
