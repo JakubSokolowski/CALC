@@ -25,6 +25,12 @@ namespace Calc.Desktop.ViewModel
         /// The radius of edges of the window
         /// </summary>
         private int mWindowRadius = 10;
+
+
+        /// <summary>
+        /// The last known dock position
+        /// </summary>
+        private WindowDockPosition mDockPosition = WindowDockPosition.Undocked;
         #endregion
 
         #region Public Properties
@@ -129,9 +135,18 @@ namespace Calc.Desktop.ViewModel
             MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
             MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => mWindow.Close());
-            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));         
-          
+            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
 
+            // Fix window resize issue
+
+            var resizer = new WindowResizer(mWindow);
+
+            resizer.WindowDockChanged += (dock) =>
+            {
+                mDockPosition = dock;
+
+                WindowResized();
+            };
 
         }
         #endregion
@@ -144,6 +159,20 @@ namespace Calc.Desktop.ViewModel
             return new Point(position.X + mWindow.Left, position.Y + mWindow.Top);
         }
 
+
+        /// <summary>
+        /// If the window resizes to a special position (docked or maximized)
+        /// this will update all required property change events to set the borders and radius values
+        /// </summary>
+        private void WindowResized()
+        {
+            // Fire off events for all properties that are affected by a resize         
+            OnPropertyChanged(nameof(ResizeBorderThickness));
+            OnPropertyChanged(nameof(OuterMarginSize));
+            OnPropertyChanged(nameof(OuterMarginSizeThickness));
+            OnPropertyChanged(nameof(WindowRadius));
+            OnPropertyChanged(nameof(WindowCornerRadius));
+        }
         #endregion
 
     }
