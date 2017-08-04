@@ -1,11 +1,7 @@
-﻿
-using Calc.PositionalSystem;
-using System;
-using System.Runtime.InteropServices;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
-namespace Calc.Desktop.ViewModel
+namespace Calc.Desktop
 {
     public class WindowViewModel : BaseViewModel
     {
@@ -14,7 +10,6 @@ namespace Calc.Desktop.ViewModel
         /// The window this view model controls
         /// </summary>
         private Window mWindow;
-
        
 
         /// <summary>
