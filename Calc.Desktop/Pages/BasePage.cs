@@ -11,7 +11,7 @@ namespace Calc.Desktop
     {
         private VM mViewModel;
 
-        public AnimationStyles LoadAnimation { get; set; } = AnimationStyles.SlideAndFadeFromBottom;
+        public AnimationStyles LoadAnimation { get; set; } = AnimationStyles.FadeIn;
         public AnimationStyles UnloadAnimation { get; set; } = AnimationStyles.SlideAndFadeOutToBottom;
 
 
@@ -62,6 +62,9 @@ namespace Calc.Desktop
                 case AnimationStyles.SlideAndFadeFromBottom:
                     await this.SlideAndFadeInFromTheBottom(this.SlideTimeSeconds);
                     break;
+                case AnimationStyles.FadeIn:
+                    await this.FadeIn(this.SlideTimeSeconds);
+                    break;
             }
         }
 
@@ -74,6 +77,9 @@ namespace Calc.Desktop
             {
                 case AnimationStyles.SlideAndFadeOutToBottom:
                     await this.SlideAndFadeOutToBottom(this.SlideTimeSeconds);
+                    break;
+                case AnimationStyles.FadeIn:
+                    await this.FadeOut(this.SlideTimeSeconds);
                     break;
             }
         }
