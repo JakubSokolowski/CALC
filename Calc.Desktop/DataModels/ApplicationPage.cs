@@ -14,7 +14,10 @@ namespace Calc.Desktop
         /// <summary>
         /// The Initial Welcome Page
         /// </summary>
-        Welcome = 0,
+        Welcome ,
+        BaseConverterMenu ,
+        BaseConverter ,
+        MenuPage ,
 
     }
 }
