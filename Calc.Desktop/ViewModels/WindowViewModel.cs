@@ -31,7 +31,7 @@ namespace Calc.Desktop
         #region Public Properties
 
         public double WindowMinimumWidth { get; set; } = 550;
-        public double WindowMinimumHeight { get; set; } = 600;
+        public double WindowMinimumHeight { get; set; } = 400;
         /// <summary>
         /// The size of the resize border around the window
         /// </summary>
@@ -92,7 +92,9 @@ namespace Calc.Desktop
         /// <summary>
         /// The current page of the application
         /// </summary>
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Welcome;
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.BaseConverterMenu;
+
+        public ApplicationPage MenuPage { get; set; } = ApplicationPage.Welcome;
 
         #endregion
 
