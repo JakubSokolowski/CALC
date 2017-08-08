@@ -9,6 +9,7 @@
     <FontFamily x:Key="RobotoLight">pack://application;,,,/Fonts/#Roboto Lt</FontFamily>
     <FontFamily x:Key="LatoRegular">pack://application;,,,/Fonts/#Lato</FontFamily>
     <FontFamily x:Key="LatoThin">pack://application;,,,/Fonts/#Lato Thin</FontFamily>
+    <FontFamily x:Key="FontAwesome">pack://application;,,,/Fonts/#FontAwesome</FontFamily>
 
     <!--Set the default font family to RobotoThin for lowest level we can - Control -->
     <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
@@ -30,5 +31,13 @@
     <system:Double x:Key="FontSizeRegular">20</system:Double>
     <system:Double x:Key="FontSizeSmall">14</system:Double>
     <system:Double x:Key="FontSizeLarge">30</system:Double>
+    
+    <!-- FontAwesome Icons -->
+
+    <system:String x:Key="FontAwesomeExchange">&#xf0ec;</system:String>
+    <system:String x:Key="FontAwesomeCalculator">&#xf1ec;</system:String>
+    <system:String x:Key="FontAwesomeCog">&#xf013;</system:String>
+
+
 
 </ResourceDictionary>
