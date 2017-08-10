@@ -12,7 +12,7 @@ namespace Calc.PositionalSystem
         private static ComplementConverter cc = new ComplementConverter();
         private static BaseConverter bc = new BaseConverter();
 
-        public static  Number ToBase(Number num, int resultBase)
+        public static Number ToBase(Number num, int resultBase)
         {
             var baseRep = bc.ToBase(num.DecimalValue, resultBase);
             var sRep = fc.ToSingle((float)num.DecimalValue);

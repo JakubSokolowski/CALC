@@ -1,0 +1,36 @@
+﻿<local:BasePage x:TypeArguments="local:BaseConverterViewModel" x:Class="Calc.Desktop.BaseConverterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Calc.Desktop"
+      mc:Ignorable="d" 
+      x:Name="Page"
+      d:DesignHeight="500" d:DesignWidth="500"
+      Title="BaseConverterPage">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Background="{StaticResource LightGrayBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBox FontSize="35" Margin="50,10,50,10" Height="40" Grid.Row="0" Text="{Binding InputString}"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" >
+                <TextBox FontSize="35" Margin="50,0,0,0" Width="50" Height="40" Grid.Row="0" Text="{Binding InputBase}"/>
+                <TextBox FontSize="35" Margin="25,0,0,0" Width="50" Height="40" Grid.Row="0" Text="{Binding OutputBase}"/>
+               
+            </StackPanel>
+            <TextBox FontSize="35" Margin="50,10,50,10" Height="40" Grid.Row="2" Text="{Binding OutputString}"/>
+            <TextBox FontSize="35" Margin="50,10,50,10" Height="40" Grid.Row="3" Text="{Binding Complement}"/>
+            <TextBlock FontSize="35" Margin="50,10,50,10" Height="40" Grid.Row="4" Text="{Binding ErrorMessage}"/>
+   
+        </Grid>
+    </ScrollViewer>
+     
+
+</local:BasePage> 

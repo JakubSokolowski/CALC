@@ -17,6 +17,12 @@ namespace Calc.Desktop
             {
                 case ApplicationPage.Welcome:
                     return new WelcomePage();
+                case ApplicationPage.BaseConverterMenu:
+                    return new BaseConverterMenuPage();
+                case ApplicationPage.MenuPage:
+                    return new MenuPage();
+                case ApplicationPage.BaseConverter:
+                    return new BaseConverterPage();
                 default:
                     Debugger.Break();
                     return null;

@@ -4,21 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Calc.PositionalSystem;
+using System.Diagnostics;
+
 namespace Calc.Sandbox
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var num = "-30.0";
-            var num2 = "-10.0";
+            var conv = new BaseConverter();
 
-            var test1 = BaseConverter.ConvertToBase(num, 10 ,10);
-            var test2 = BaseConverter.ConvertToBase(num2, 10, 10);
+            var timer = new Stopwatch();
 
-            var test3 = test1 / test2;
+            int reps = 10000;
 
-            System.Console.WriteLine(test3.DecimalValue);
+            timer.Start();
+            for(int i = 0; i < reps; i++)
+            {
+                var num = conv.ToBase(i, 16);
+            }
+            timer.Stop();
+
+            System.Console.WriteLine(reps.ToString() + " conversions took " + timer.ElapsedMilliseconds.ToString());
             System.Console.ReadLine();
          }
     }

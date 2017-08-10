@@ -14,84 +14,149 @@ namespace Calc.PositionalSystem
 
         public BaseComplement GetComplement(string number, int radix)
         {
+            if(IsNegativeNumberString(number))            
+                return GetNegativeNumberComplement(number, radix);            
+            else            
+                return GetPositiveNumberComplement(number, radix); 
+        }
+
+        public BaseComplement GetPositiveNumberComplement(string number, int radix)
+        {            
+            string prefix = GetPrefix(number, radix);
+            string value = number;
+            string sufix = GetSufix(number, radix);
+
+            return new BaseComplement(value + sufix, prefix);
+        }
+
+        public BaseComplement GetNegativeNumberComplement(string number, int radix)
+        {
             representation.CurrentBase = radix;
 
-            string prefix = "";
+            string prefix = GetPrefix(number,radix);
+            string value = number.Substring(1);
+            string sufix = GetSufix(number, radix);
+            int delimeterIndex;
 
-            if (number[0] == '-')
-            {
-                prefix = "(" + (radix - 1).ToString() + ")";
-                number = number.Substring(1);
-            }
-            else
-            {
-                if (radix > 36)
-                    return new BaseComplement(number, "(00)");
-                return new BaseComplement(number, "(0)");
-            }
+            var strList = PrepareForComplementCalculation(value, radix, out delimeterIndex);
+            var complement = CalculateComplement(ref strList, radix);
+            complement = RestoreDelimeter(complement, radix, delimeterIndex);
 
+            return new BaseComplement(complement + sufix, prefix);
+        }
 
-            int dotIndex = number.IndexOf('.');
+        public string GetSufix(string number, int radix)
+        {
+            if (IsFloatingPointNumberString(number))
+                return String.Empty;
+            return radix > 36 ? ".00" : ".0";
+        }
 
+        public string GetPrefix(string number, int radix)
+        {   
+            if(IsNegativeNumberString(number))            
+                return "(" + (radix - 1).ToString() + ")";
+            
             if (radix > 36)
-                number = number.Replace(".", " ");
-            else
-                number = number.Replace(".", String.Empty);
+                return "(00)";
 
-
-            var strList = ConversionHelpers.RepresentationStringToStringList(number, radix);
-            strList.RemoveAll(x => x == " ");
-
-            for (int i = 0; i < strList.Count; i++)
-                strList[i] = GetDigitComplement(strList[i], radix);
-
-            var complement = new StringBuilder(IncrementNumber(strList, radix));
-
-            if (dotIndex < 0)
-            {
-                if (radix > 36)
-                    return new BaseComplement(complement.ToString() + "00", prefix);
-                else
-                    return new BaseComplement(complement.ToString() + "0", prefix);
-            }
-
-            if (radix > 36)
-                complement.Remove(dotIndex, 1);
-
-            complement.Insert(dotIndex, ".");
-            return new BaseComplement(complement.ToString(), prefix);
+            return "(0)";
         }
 
         public string GetDigitComplement(string digit, int radix)
         {
             return representation.GetDigit(radix - 1 - representation.GetValue(digit));
         }
-        public string IncrementNumber(List<string> number, int radix)
+
+        public string IncrementNumber(List<string> digitList, int radix)
         {
             representation.CurrentBase = radix;
 
-            for (int i = number.Count - 1; i != 0; i--)
+            for (int i = digitList.Count - 1; i >= 0; i--)
             {
-                int value = representation.GetValue(number.ElementAt(i));
+                int value = representation.GetValue(digitList.ElementAt(i));
 
-                if (value == radix - 1)
+                if (value == (radix - 1))
                 {
-                    number[i] = representation.GetDigit(0);
+                    digitList[i] = representation.GetDigit(0);
                     continue;
                 }
                 else
                 {
-                    number[i] = representation.GetDigit(value + 1);
+                    digitList[i] = representation.GetDigit(value + 1);
                     break;
                 }
             }
 
             if (radix > 36)
-                return string.Join(" ", number);
+                return string.Join(" ", digitList);
             else
-                return string.Join(String.Empty, number);
+                return string.Join(String.Empty, digitList);
 
         }
+
+        #region Input Checks
+
+        public bool IsFloatingPointNumberString(string number)
+        {
+            return number.Contains(".");
+        }
+
+        public bool IsNegativeNumberString(string number)
+        {
+            return number[0] == '-';
+        }
+
+        #endregion
+
+        #region Helpers
+
+        public string RemoveDelimeter(string number, int radix, out int delimeterIndex)
+        {
+            // When calculating the number complement, the position of delimeter
+            // does not matter, and the delimeter must be removed from string, but after
+            // the delimeter must put in the right place, so remember its index            
+
+            delimeterIndex = number.IndexOf('.');
+
+            // If number is not floating point, delimeter goes after last character in string
+            if (delimeterIndex < 0)
+                delimeterIndex = number.Length - 1;
+
+            if (radix > 36)
+                number = number.Replace(".", " ");
+            else
+                number = number.Replace(".", String.Empty);
+
+            return number;
+        }
+       
+        public List<string> PrepareForComplementCalculation(string number, int radix, out int delimeterIndex)
+        {
+            var value = RemoveDelimeter(number, radix, out delimeterIndex);
+            var strList = ConversionHelpers.RepresentationStringToStringList(value, radix);
+            strList.RemoveAll(x => x == " ");
+            return strList;
+        }
+
+        public string CalculateComplement(ref List<string> strList, int radix)
+        {
+            for (int i = 0; i < strList.Count; i++)
+                strList[i] = GetDigitComplement(strList[i], radix);
+
+            return IncrementNumber(strList, radix);
+        }
+
+        public string RestoreDelimeter(string complement, int radix, int delimeterIndex)
+        {
+            var sb = new StringBuilder(complement);
+            if (radix > 36)
+                sb.Remove(delimeterIndex, 1);
+            sb.Insert(delimeterIndex, ".");
+            return sb.ToString();
+        }
+        #endregion
+
         #endregion
     }
 }

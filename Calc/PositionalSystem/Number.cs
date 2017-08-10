@@ -9,7 +9,7 @@ namespace Calc.PositionalSystem
     {
         #region Private Members 
 
-        private BaseComplement complement;
+       
         private BaseRepresentation baseRep;
         private SingleRepresentation singleRep;
         private DoubleRepresentation doubleRep;      
@@ -49,9 +49,9 @@ namespace Calc.PositionalSystem
         /// </summary>
         public string ValueInBase { get { return baseRep.ValueInBase; } private set { baseRep.ValueInBase = value; } }
 
-        public string Complement { get { return complement.Prefix + complement.Value ; }}
-        public string ComplementIntegerPart { get { return Complement.Split('.')[0]; } }
-        public string ComplementFractionPart { get { return Complement.Split('.')[1]; } }      
+        public string Complement { get { return baseRep.Complement; } }
+        public string ComplementIntegerPart { get { return baseRep.ComplementIntegerPart; } }
+        public string ComplementFractionPart { get { return baseRep.ComplementFractionPart; } }      
         
         public string SingleBinaryString { get => singleRep.BinaryString; }
         public string DoubleBinaryString { get => doubleRep.BinaryString; }
@@ -68,21 +68,7 @@ namespace Calc.PositionalSystem
             Radix = 10;
             DecimalValue = 0.0;
             ValueInBase = "0.0";
-        }
-        /// <summary>
-        /// Constructs <see cref="Number"/> in given base, with it's radix, decimal Value and string value in said base
-        /// </summary>
-        /// <param name="radix">The radix of a number</param>
-        /// <param name="decimalValue">The decimal value of a number</param>
-        /// <param name="baseSystemValueStr">The string value of number in given base</param>  
-
-         public Number(int radix, double decimalValue, string baseSystemValueStr, BaseComplement comp)
-        {
-            Radix = radix;
-            DecimalValue = decimalValue;
-            ValueInBase = baseSystemValueStr;
-            complement = comp;
-        }
+        }       
 
         public Number(BaseRepresentation bRep, SingleRepresentation sRep, DoubleRepresentation dRep)
         {

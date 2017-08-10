@@ -11,7 +11,7 @@
         x:Name="AppWindow"
         Icon="Images/Logo/temp-chip-small.png"
         Title="CALC" 
-        Height="600" Width="900"
+        Height="650" Width="950"
         MinWidth="{Binding WindowMinimumWidth}"
         MinHeight="{Binding WindowMinimumHeight}">
 
@@ -118,8 +118,8 @@
             GlassFrameThickness="0"
             />
     </WindowChrome.WindowChrome>
-    <Grid Background="{StaticResource BackgroundLightBrush}">
-        <Frame x:Name="MainFrame" Content="{Binding CurrentPage , Converter={local:ApplicationPageValueConverter}}"/>
-    </Grid> 
+    <Border Background="{StaticResource BackgroundLightBrush}"> 
+        <Frame Grid.Column ="1" x:Name="MainFrame" Content="{Binding CurrentPage , Converter={local:ApplicationPageValueConverter}}" />  
+    </Border>    
 </Window>
  

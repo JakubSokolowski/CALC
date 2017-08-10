@@ -13,7 +13,7 @@ namespace Calc.Desktop
             var slideAnimation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = new Thickness(0, offset, 0, -offset),
+                From = new Thickness(0, offset - 50, 0, -offset + 50),
                 To = new Thickness(0),
                 DecelerationRatio = decelerationRatio,
             };
@@ -29,7 +29,7 @@ namespace Calc.Desktop
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
                 From = new Thickness(0),
-                To = new Thickness(0, offset, 0, -offset),
+                To = new Thickness(0, offset , 0, -offset),
                 DecelerationRatio = decelerationRatio,
             };
 

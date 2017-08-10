@@ -11,7 +11,7 @@ namespace Calc.Desktop
 
         public ICommand StartCommand { get; set; }
         public ApplicationPage MenuPage { get; set; } = ApplicationPage.MenuPage;
-        public ApplicationPage BaseConverterPage { get; set; } = ApplicationPage.Welcome;
+        public ApplicationPage BaseConverterPage { get; set; } = ApplicationPage.BaseConverter;
 
 
         #endregion
