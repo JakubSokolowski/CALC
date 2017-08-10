@@ -43,8 +43,8 @@ namespace Calc.PositionalSystem
         public string ValueInBase { get { return valueInBase; }  set { valueInBase = value; } }
 
         public string Complement { get { return complement.Prefix + complement.Value; } }
-        public string ComplementIntegerPart { get { return Complement.Split('.')[0]; } }
-        public string ComplementFractionPart { get { return Complement.Split('.')[1]; } }
+        public string ComplementIntegerPart { get { return complement.IntegerPart; } }
+        public string ComplementFractionPart { get { return complement.FractionPart; } }
 
 
         public BaseRepresentation(int radix, double decimalValue, string baseSystemValueStr, BaseComplement comp)
