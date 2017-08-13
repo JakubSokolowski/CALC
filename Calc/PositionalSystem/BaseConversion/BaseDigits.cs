@@ -105,17 +105,25 @@ namespace Calc.PositionalSystem
 
         public string GetDigit(int value)
         {
-            if (currentRadix <= 36)
-                return digitToValueUpToBase36.FirstOrDefault(x => x.Value == value).Key;
-            else
-                return digitToValue.FirstOrDefault(x => x.Value == value).Key;
+            if(value < currentRadix)
+            {
+                if (currentRadix <= 36)
+                    return digitToValueUpToBase36.FirstOrDefault(x => x.Value == value).Key;
+                else
+                    return digitToValue.FirstOrDefault(x => x.Value == value).Key;
+            }
+            throw new ArgumentException("The requested digit is not in range 0 - " + (currentRadix-1).ToString());
+           
         }
 
         public int GetValue(string key)
         {
+            int value;
             if (currentRadix <= 36)
-                return digitToValueUpToBase36[key];
-            return digitToValue[key];
+                value = digitToValueUpToBase36[key];
+            else
+                value = digitToValue[key];           
+            return value;
         }
 
         #endregion
