@@ -25,6 +25,19 @@ namespace Calc.PositionalSystem.Tests
         }
 
         [TestMethod()]
+        public void GetComplement_PositiveDecimalNumberWithZeroFloatingPart_Pass()
+        {
+            ComplementConverter conv = new ComplementConverter();
+            string input = "200.0";
+            int radix = 10;
+            string expectedValue = "200.0";
+            string expectedPrefix = "(0)";
+            BaseComplement complement = conv.GetComplement(input, radix);
+            Assert.AreEqual(expectedValue, complement.Value);
+            Assert.AreEqual(expectedPrefix, complement.Prefix);
+        }
+
+        [TestMethod()]
         public void GetComplement_NegativeDecimalNumber_Pass()
         {
             ComplementConverter conv = new ComplementConverter();
@@ -38,7 +51,7 @@ namespace Calc.PositionalSystem.Tests
         }
 
         [TestMethod()]
-        public void GetComplement_PositiveDecimalNumberWithZeroFloatingPart_Pass()
+        public void GetComplement_NegativeDecimalNumberWithZeroFloatingPart_Pass()
         {
             ComplementConverter conv = new ComplementConverter();
             string input = "-200.0";
@@ -74,6 +87,8 @@ namespace Calc.PositionalSystem.Tests
         {
 
         }
+
+        #region Positive Number Complement
 
         [TestMethod()]
         public void GetPositiveNumberComplement_PositiveNumberNoFloatingPart_Pass()
@@ -126,5 +141,42 @@ namespace Calc.PositionalSystem.Tests
             Assert.AreEqual(expectedValue, complement.Value);
             Assert.AreEqual(expectedPrefix, complement.Prefix);
         }
+
+        #endregion
+
+        #region Input Checks
+
+        [TestMethod()]
+        public void IsFloatingPointNumberString_MultipleInputs_Pass()
+        {
+            ComplementConverter conv = new ComplementConverter();
+
+            string number = "10.24";
+            bool expected = true;
+            bool actual = conv.IsFloatingPointNumberString(number);
+            Assert.AreEqual(expected, actual);
+
+            number = "-10.24";
+            expected = true;
+            actual = conv.IsFloatingPointNumberString(number);
+            Assert.AreEqual(expected, actual);
+
+            number = "10";
+            expected = false;
+            actual = conv.IsFloatingPointNumberString(number);
+            Assert.AreEqual(expected, actual);
+
+            number = "-10";
+            expected = false;
+            actual = conv.IsFloatingPointNumberString(number);
+            Assert.AreEqual(expected, actual);
+
+            number = "AAFFQ asdeq";
+            expected = false;
+            actual = conv.IsFloatingPointNumberString(number);
+            Assert.AreEqual(expected, actual);
+        }
     }
+
+    #endregion
 }
