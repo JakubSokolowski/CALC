@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Calc.Desktop"
       mc:Ignorable="d" 
       x:Name="Page"
-      d:DesignHeight="500" d:DesignWidth="500"
+      d:DesignHeight="500" d:DesignWidth="700"
       Title="BaseConverterPage">
 
     <Border BorderThickness="0 0.2 0 0">
@@ -34,6 +34,9 @@
                         <TextBox Style="{StaticResource UnderlinedTextBox}" Width="60" Height="40" Text="{Binding OutputBase}"/>                        
                     </StackPanel>
                     <Button Style="{StaticResource TextOnlyButton}" FontSize ="{StaticResource FontSizeLarge}" Foreground="{StaticResource LightGrayBrush}" Content ="Convert" Command="{Binding ConvertCommand}"/>
+                    <Button Style="{StaticResource TransparentIconButton}" Foreground="{StaticResource LightGrayBrush}" Content ="{StaticResource FontAwesomeExchange}" Command="{Binding GoBackInHistoryCommand}"/>
+                    <Button Style="{StaticResource TransparentIconButton}" Foreground="{StaticResource LightGrayBrush}" Content ="{StaticResource FontAwesomeExchange}" Command="{Binding GoForwardInHistoryCommand}"/>
+
 
 
                 </StackPanel>
