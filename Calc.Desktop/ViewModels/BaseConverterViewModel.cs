@@ -74,15 +74,21 @@ namespace Calc.Desktop
         }
         public void GoBackInHistory()
         {
-            mHistory.GoBackInHistory();
-            var entry = mHistory.CurrentEntry;
-            FillTextBoxes(entry.Item1, entry.Item2);
+            if(mHistory.CanBrowseHistory)
+            {
+                mHistory.GoBackInHistory();
+                var entry = mHistory.CurrentEntry;
+                FillTextBoxes(entry.Item1, entry.Item2);
+            }
         }
         public void GoForwardinHistory()
         {
-            mHistory.GoForwardInHistory();
-            var entry = mHistory.CurrentEntry;
-            FillTextBoxes(entry.Item1, entry.Item2);
+            if(mHistory.CanBrowseHistory)
+            {
+                mHistory.GoForwardInHistory();
+                var entry = mHistory.CurrentEntry;
+                FillTextBoxes(entry.Item1, entry.Item2);
+            }
         }
 
         #endregion
@@ -134,6 +140,7 @@ namespace Calc.Desktop
             OutputBase = OutputNumber.Radix.ToString();
         }
 
+       
         #endregion
 
     }

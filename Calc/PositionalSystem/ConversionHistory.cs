@@ -32,10 +32,12 @@ namespace Calc.PositionalSystem
         }
         public int FirstEntryIndex { get => 0; }
         public int LastEntryIndex { get => mHistory.Count - 1; }
+        
 
 
         public int MaxSize { get; set; } = 10;
         public int Count { get => mHistory.Count; }
+        public bool CanBrowseHistory { get => mHistory.Count > 1; }
 
         #endregion
 
@@ -65,7 +67,11 @@ namespace Calc.PositionalSystem
                 return mHistory.Last();
             }
         }
-        public Tuple<Number, Number> CurrentEntry { get => mHistory.ElementAt(CurrentEntryIndex); }
+        public Tuple<Number, Number> CurrentEntry
+        {   
+         
+            get => mHistory.ElementAt(CurrentEntryIndex);
+        }
 
         public void GoBackInHistory()
         {
