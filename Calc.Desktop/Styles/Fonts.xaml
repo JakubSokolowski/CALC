@@ -37,6 +37,8 @@
     <system:String x:Key="FontAwesomeExchange">&#xf0ec;</system:String>
     <system:String x:Key="FontAwesomeCalculator">&#xf1ec;</system:String>
     <system:String x:Key="FontAwesomeCog">&#xf013;</system:String>
+    <system:String x:Key="FontAwesomeGoForward">&#xf013;</system:String>
+    <system:String x:Key="FontAwesomeGoBack">&#xf013;</system:String>
 
 
 
