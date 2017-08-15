@@ -16,7 +16,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Frame Padding="0" Grid.Column="0" x:Name="MenuFrame" Content="{Binding MenuPage, Converter={local:ApplicationPageValueConverter}}"/>
-            <Frame Padding="0" Grid.Column="1" Background="{StaticResource GrayBrush}" x:Name="BaseConverterFrame" Content="{Binding BaseConverterPage, Converter={local:ApplicationPageValueConverter}}"/>
+
+            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <Frame Padding="0" Grid.Column="1" Background="{StaticResource GrayBrush}" x:Name="BaseConverterFrame" Content="{Binding BaseConverterPage, Converter={local:ApplicationPageValueConverter}}"/>
+            </ScrollViewer>
+            
             
             
         </Grid>        
