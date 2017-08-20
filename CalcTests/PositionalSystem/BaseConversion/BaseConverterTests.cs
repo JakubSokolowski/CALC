@@ -120,7 +120,7 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void ToBase_PositiveFloatingPointDecimalToBinary_Pass()
         {
-            double input = 25.5;
+            decimal input = 25.5m;
             string expected = "11001.1";
             string expectedComplement = "(0)11001.1";
             int radix = 2;
@@ -131,7 +131,7 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void ToBase_NegativeFloatingPointDecimalToBinary_Pass()
         {
-            double input = -25.5;
+            decimal input = -25.5m;
             string expected = "-11001.1";
             string expectedComplement = "(1)00110.1";
             int radix = 2;
@@ -143,32 +143,32 @@ namespace Calc.PositionalSystem.Tests
         public void ToBase_PositiveBinaryToDecimal_Pass()
         {
             string input = "11010";
-            double expected = 26.0;
-            double result = bc.ToBase(input, 2, 10).DecimalValue;
+            decimal expected = 26.0m;
+            decimal result = bc.ToBase(input, 2, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
         public void ToBase_NegativeBinaryToDecimal_Pass()
         {
             string input = "-11010";
-            double expected = -26.0;
-            double result = bc.ToBase(input, 2, 10).DecimalValue;
+            decimal expected = -26.0m;
+            decimal result = bc.ToBase(input, 2, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
         public void ToBase_PositiveFloatingPointBinaryToDecimal_Pass()
         {
             string input = "11010.1";
-            double expected = 26.5;
-            double result = bc.ToBase(input, 2, 10).DecimalValue;
+            decimal expected = 26.5m;
+            decimal result = bc.ToBase(input, 2, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
         public void ToBase_NegativeFloatingPointBinaryToDecimal_Pass()
         {
             string input = "-11010.1";
-            double expected = -26.5;
-            double result = bc.ToBase(input, 2, 10).DecimalValue;
+            decimal expected = -26.5m;
+            decimal result = bc.ToBase(input, 2, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
 
@@ -198,7 +198,7 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void ToBase_PositiveFloatingPointDecimalToHex_Pass()
         {
-            double input = 255.5;
+            decimal input = 255.5m;
             string expected = "FF.8";
             int radix = 16;
             string result = bc.ToBase(input, radix).ValueInBase;
@@ -207,7 +207,7 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void ToBase_NegativeFloatingPointDecimalToHex_Pass()
         {
-            double input = -255.5;
+            decimal input = -255.5m;
             string expected = "-FF.8";
             int radix = 16;
             string result = bc.ToBase(input, radix).ValueInBase;
@@ -217,32 +217,32 @@ namespace Calc.PositionalSystem.Tests
         public void ToBase_PositiveHexToDecimal_Pass()
         {
             string input = "FF";
-            double expected = 255;
-            double result = bc.ToBase(input, 16, 10).DecimalValue;
+            decimal expected = 255m;
+            decimal result = bc.ToBase(input, 16, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
         public void ToBase_NegativeHexToDecimal_Pass()
         {
             string input = "-FF";
-            double expected = -255;
-            double result = bc.ToBase(input, 16, 10).DecimalValue;
+            decimal expected = -255;
+            decimal result = bc.ToBase(input, 16, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
         public void ToBase_PositiveFloatingPointHexToDecimal_Pass()
         {
             string input = "FF.8";
-            double expected = 255.5;
-            double result = bc.ToBase(input, 16, 10).DecimalValue;
+            decimal expected = 255.5m;
+            decimal result = bc.ToBase(input, 16, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
         public void ToBase_NegativeFloatingPointHexToDecimal_Pass()
         {
             string input = "-FF.8";
-            double expected = -255.5;
-            double result = bc.ToBase(input, 16, 10).DecimalValue;
+            decimal expected = -255.5m;
+            decimal result = bc.ToBase(input, 16, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
 
@@ -275,7 +275,7 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void ToBase_PositiveFloatingPointDecimalToBase64_Pass()
         {
-            double input = 100.5;
+            decimal input = 100.5m;
             string expected = "01 36.32";
             string expectedComplement = "(00)01 36.32";
             int radix = 64;
@@ -286,7 +286,7 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void ToBase_NegativeFloatingPointDecimalToBase64_Pass()
         {
-            double input = -100.5;
+            decimal input = -100.5m;
             string expected = "-01 36.32";
             string expectedComplement = "(63)62 27.32";
             int radix = 64;
@@ -298,32 +298,32 @@ namespace Calc.PositionalSystem.Tests
         public void ToBase_PositiveBase64ToDecimal_Pass()
         {
             string input = "01 36";
-            double expected = 100;
-            double result = bc.ToBase(input, 64, 10).DecimalValue;
+            decimal expected = 100m;
+            decimal result = bc.ToBase(input, 64, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
         public void ToBase_NegativeBase64ToDecimal_Pass()
         {
             string input = "-01 36";
-            double expected = -100;
-            double result = bc.ToBase(input, 64, 10).DecimalValue;
+            decimal expected = -100m;
+            decimal result = bc.ToBase(input, 64, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
         public void ToBase_PositiveFloatingPointBase64ToDecimal_Pass()
         {
             string input = "01 36.32";
-            double expected = 100.5;
-            double result = bc.ToBase(input, 64, 10).DecimalValue;
+            decimal expected = 100.5m;
+            decimal result = bc.ToBase(input, 64, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
         [TestMethod()]
         public void ToBase_NegativeFloatingPointBase64ToDecimal_Pass()
         {
             string input = "-01 36.32";
-            double expected = -100.5;
-            double result = bc.ToBase(input, 64, 10).DecimalValue;
+            decimal expected = -100.5m;
+            decimal result = bc.ToBase(input, 64, 10).DecimalValue;
             Assert.AreEqual(expected, result);
         }
         #endregion
