@@ -17,7 +17,7 @@ namespace Calc.PositionalSystem
         
         private static BaseDigits digits = new BaseDigits();
         private static ComplementConverter comp = new ComplementConverter();
-        private int formatPrecision = 10;
+        private int formatPrecision = 20;
        
 
         #endregion
@@ -39,12 +39,12 @@ namespace Calc.PositionalSystem
         /// <param name="decimalValue"> The value that is converted</param>
         /// <param name="resultBase"> The base of the result of conversion</param>
         /// <returns><see cref="Number"/></returns>
-        public  BaseRepresentation ToBase(double decimalValue, int resultBase)
+        public  BaseRepresentation ToBase(decimal decimalValue, int resultBase)
         {           
             if (IsValidRadix(resultBase))
             {
                 // Split the value to integer part and fraction part
-                double fractionValue = decimalValue % 1;
+                decimal fractionValue = decimalValue % 1;
                 long integerValue = (long)(decimalValue - fractionValue);
 
                 // Convert each part
@@ -80,7 +80,7 @@ namespace Calc.PositionalSystem
                 if (IsValidString(inputStr, inputBase))
                 {                 
                     string integerStr, fractionalStr;                 
-                    double fractionalPart, decimalValue, integerPart;
+                    decimal fractionalPart, decimalValue, integerPart;
 
                     BaseRepresentation inputInDecimal;
 
@@ -102,7 +102,7 @@ namespace Calc.PositionalSystem
                         if (integerPart < 0)
                             fractionalPart *= -1;
 
-                        decimalValue = (double)integerPart + fractionalPart;
+                        decimalValue = (decimal)integerPart + fractionalPart;
 
                         inputInDecimal = new BaseRepresentation(10, decimalValue, decimalValue.ToString(), comp.GetComplement(decimalValue.ToString(), resultBase));                        
                     }
@@ -110,7 +110,7 @@ namespace Calc.PositionalSystem
                     {
                         // Not a floating point number, convert only the integer part.
                         integerPart = ArbitraryBaseToDecimal(inputStr, inputBase);
-                        inputInDecimal = new BaseRepresentation(10, (double)integerPart, integerPart.ToString(), comp.GetComplement(integerPart.ToString(), resultBase));
+                        inputInDecimal = new BaseRepresentation(10, integerPart, integerPart.ToString(), comp.GetComplement(integerPart.ToString(), resultBase));
                     }                    
 
                     if (resultBase == 10)
@@ -134,7 +134,7 @@ namespace Calc.PositionalSystem
         /// <param name="valueString"></param>
         /// <param name="radix"></param>
         /// <returns></returns>
-        private  double ArbitraryBaseToDecimal(string valueString, int radix)
+        private  decimal ArbitraryBaseToDecimal(string valueString, int radix)
         {    
             if (IsValidRadix(radix))
             {
@@ -143,7 +143,7 @@ namespace Calc.PositionalSystem
                     // Set the base of representation before converting
                     digits.CurrentBase = radix;
 
-                    double result = 0.0;
+                    decimal result = 0.0m;
                     int mult = 1;
                     
                     // While converting, the numbers are assumed to be unsigned
@@ -170,7 +170,7 @@ namespace Calc.PositionalSystem
                     int exponent = strList.Count - 1;
                     for (int i = 0; i <= exponent; i++)
                         // Decrease value of by 1 exponent after each iteration
-                        result += digits.GetValue(strList.ElementAt(i)) * Math.Pow(radix, exponent - i);                   
+                        result += (decimal)(digits.GetValue(strList.ElementAt(i)) * Math.Pow(radix, exponent - i));                   
 
                     // Make the number negative, if needed
                     return result * mult;
@@ -187,7 +187,7 @@ namespace Calc.PositionalSystem
         /// <param name="decimalNumber"></param>
         /// <param name="radix"></param>
         /// <returns>The string representation of <paramref name="decimalNumber"/> in specified base</returns>
-        private  string DecimalIntegerToArbitraryBase(long decimalNumber, int radix)
+        public string DecimalIntegerToArbitraryBase(long decimalNumber, int radix)
         {
             if (radix < 2 || radix > BaseDigits.MAX_BASE)
                 throw new ArgumentException("The base must be >= 2 and <= " + BaseDigits.MAX_BASE);
@@ -256,9 +256,9 @@ namespace Calc.PositionalSystem
         /// <param name="fractionStr"></param>
         /// <param name="radix"></param>
         /// <returns></returns>
-        private  double ArbitraryFractionToDecimal(string fractionStr, int radix)
+        private decimal ArbitraryFractionToDecimal(string fractionStr, int radix)
         {
-            double decimalFraction = 0.0;
+            decimal decimalFraction = 0.0m;
             double exponent = 1.0;
 
             var strList = ConversionHelpers.RepresentationStringToStringList(fractionStr, radix);
@@ -274,7 +274,7 @@ namespace Calc.PositionalSystem
 
             for (int i = 0; i < strList.Count; i++)
             {               
-                decimalFraction += (double)digits.GetValue(strList.ElementAt(i)) * Math.Pow(radix, exponent * -1);
+                decimalFraction += (decimal)(digits.GetValue(strList.ElementAt(i)) * Math.Pow(radix, exponent * -1));
                 exponent++;
             }
             return decimalFraction;
@@ -285,9 +285,9 @@ namespace Calc.PositionalSystem
         /// <param name="fraction">The fraction in decimal</param>
         /// <param name="radix">The radix</param>
         /// <returns></returns>
-        private string DecimalFractionToArbitraryBase(double fraction, int radix)
+        private string DecimalFractionToArbitraryBase(decimal fraction, int radix)
         {
-            if(fraction == 0.0)
+            if(fraction == 0.0m)
             {
                 if (radix <= 36)
                     return "0";
@@ -297,7 +297,7 @@ namespace Calc.PositionalSystem
             StringBuilder builder = new StringBuilder();
             digits.CurrentBase = radix;
 
-            double number, fractionPart;
+            decimal number, fractionPart;
             int wholePart;
 
             fractionPart = fraction;

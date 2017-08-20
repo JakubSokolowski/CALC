@@ -5,7 +5,7 @@ namespace Calc.PositionalSystem
     {
         private int systemBase;
 
-        private double valueInDecimal;
+        private decimal valueInDecimal;
         private string valueInBase;     
 
         private BaseComplement complement;
@@ -19,15 +19,15 @@ namespace Calc.PositionalSystem
         /// <summary>
         /// The integer part of number in decimal system.
         /// </summary>
-        public double IntegerPartDecimalValue { get { return valueInDecimal - FractionPartDecimalValue; } }
+        public decimal IntegerPartDecimalValue { get { return valueInDecimal - FractionPartDecimalValue; } }
         /// <summary>
         /// The fraction part of number in decimal system.
         /// </summary>
-        public double FractionPartDecimalValue { get { return valueInDecimal % 1; } }
+        public decimal FractionPartDecimalValue { get { return valueInDecimal % 1; } }
         /// <summary>
         /// The decimal value of Number.
         /// </summary>
-        public double DecimalValue { get { return valueInDecimal; }  set { valueInDecimal = value; } }
+        public decimal DecimalValue { get { return valueInDecimal; }  set { valueInDecimal = value; } }
 
         /// <summary>
         /// The integer part of Number in given positional System, represented by String
@@ -47,7 +47,7 @@ namespace Calc.PositionalSystem
         public string ComplementFractionPart { get { return complement.FractionPart; } }
 
 
-        public BaseRepresentation(int radix, double decimalValue, string baseSystemValueStr, BaseComplement comp)
+        public BaseRepresentation(int radix, decimal decimalValue, string baseSystemValueStr, BaseComplement comp)
         {
             Radix = radix;
             DecimalValue = decimalValue;

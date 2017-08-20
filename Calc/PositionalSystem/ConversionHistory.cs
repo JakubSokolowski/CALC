@@ -67,11 +67,7 @@ namespace Calc.PositionalSystem
                 return mHistory.Last();
             }
         }
-        public Tuple<Number, Number> CurrentEntry
-        {   
-         
-            get => mHistory.ElementAt(CurrentEntryIndex);
-        }
+        public Tuple<Number, Number> CurrentEntry { get => mHistory.ElementAt(CurrentEntryIndex); }
 
         public void GoBackInHistory()
         {

@@ -26,15 +26,15 @@ namespace Calc.PositionalSystem
         /// <summary>
         /// The integer part of number in decimal system.
         /// </summary>
-        public double IntegerPartDecimalValue { get { return baseRep.IntegerPartDecimalValue- baseRep.FractionPartDecimalValue; } }
+        public decimal IntegerPartDecimalValue { get { return baseRep.IntegerPartDecimalValue- baseRep.FractionPartDecimalValue; } }
         /// <summary>
         /// The fraction part of number in decimal system.
         /// </summary>
-        public double FractionPartDecimalValue { get { return baseRep.DecimalValue % 1; } }
+        public decimal FractionPartDecimalValue { get { return baseRep.DecimalValue % 1; } }
         /// <summary>
         /// The decimal value of Number.
         /// </summary>
-        public double DecimalValue  { get { return baseRep.DecimalValue; } private set { baseRep.DecimalValue = value; } }
+        public decimal DecimalValue  { get { return baseRep.DecimalValue; } private set { baseRep.DecimalValue = value; } }
 
         /// <summary>
         /// The integer part of Number in given positional System, represented by String
@@ -66,7 +66,7 @@ namespace Calc.PositionalSystem
         public Number()
         {
             Radix = 10;
-            DecimalValue = 0.0;
+            DecimalValue = 0.0M;
             ValueInBase = "0.0";
         }       
 
@@ -89,7 +89,7 @@ namespace Calc.PositionalSystem
         /// <returns></returns>
         public static Number operator + (Number left, Number right)
         {
-            double result = checked(left.DecimalValue + right.DecimalValue);
+            decimal result = checked(left.DecimalValue + right.DecimalValue);
             return NumberConverter.ToBase(result, left.Radix);
         }
         /// <summary>
@@ -101,7 +101,7 @@ namespace Calc.PositionalSystem
         /// <returns></returns>
         public static Number operator - (Number left, Number right)
         {
-            double result = checked(left.DecimalValue - right.DecimalValue);
+            decimal result = checked(left.DecimalValue - right.DecimalValue);
             return NumberConverter.ToBase(result, left.Radix);
         }
         /// <summary>
@@ -113,7 +113,7 @@ namespace Calc.PositionalSystem
         /// <returns></returns>
         public static Number operator * (Number left, Number right)
         {
-            double result = checked(left.DecimalValue * right.DecimalValue);
+            decimal result = checked(left.DecimalValue * right.DecimalValue);
             return NumberConverter.ToBase(result, left.Radix);
         }
         /// <summary>
@@ -125,7 +125,7 @@ namespace Calc.PositionalSystem
         /// <returns></returns>
         public static Number operator / (Number left, Number right)
         {
-            double result = checked(left.DecimalValue / right.DecimalValue);
+            decimal result = checked(left.DecimalValue / right.DecimalValue);
             return NumberConverter.ToBase(result, right.Radix);
         }
 
@@ -136,7 +136,7 @@ namespace Calc.PositionalSystem
         /// <returns>The square root of <paramref name="num"/></returns>
         public static Number Sqrt(Number num)
         {
-            double result = Math.Sqrt(num.DecimalValue);
+            decimal result =(decimal) Math.Sqrt((double)num.DecimalValue);
             return NumberConverter.ToBase(result, num.Radix);
         }
         /// <summary>
@@ -147,7 +147,7 @@ namespace Calc.PositionalSystem
         /// <returns></returns>
         public static Number Pow(Number num, double power)
         {
-            double result = Math.Pow(num.DecimalValue, power);
+            decimal result =(decimal)( Math.Pow((double)num.DecimalValue, power));
             return NumberConverter.ToBase(result, num.Radix);
         }
 

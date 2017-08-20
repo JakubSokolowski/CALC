@@ -158,7 +158,7 @@ namespace Calc.PositionalSystem
                 strList[i] = GetDigitComplement(strList[i], radix);
 
             return IncrementNumber(strList, radix);
-        }      
+        }    
 
       
         #endregion

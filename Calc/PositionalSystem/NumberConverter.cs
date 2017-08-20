@@ -16,15 +16,15 @@ namespace Calc.PositionalSystem
         {
             var baseRep = bc.ToBase(num.DecimalValue, resultBase);
             var sRep = fc.ToSingle((float)num.DecimalValue);
-            var dRep = fc.ToDouble(num.DecimalValue);
+            var dRep = fc.ToDouble((double)num.DecimalValue);
             return new Number(baseRep,sRep,dRep);
         }
 
-        public static Number ToBase(double value, int resultBase)
+        public static Number ToBase(decimal value, int resultBase)
         {
             var baseRep = bc.ToBase(value, resultBase);
             var sRep = fc.ToSingle((float)value);
-            var dRep = fc.ToDouble(value);
+            var dRep = fc.ToDouble((double)value);
             return new Number(baseRep, sRep, dRep);
         }    
 
@@ -32,8 +32,13 @@ namespace Calc.PositionalSystem
         {
             var baseRep = bc.ToBase(valueString, inputBase, resultBase);
             var sRep = fc.ToSingle((float)baseRep.DecimalValue);
-            var dRep = fc.ToDouble(baseRep.DecimalValue);
+            var dRep = fc.ToDouble((double)baseRep.DecimalValue);
             return new Number(baseRep, sRep, dRep);
+        }
+
+        public static string MaxValueForBase(int radix)
+        {
+            return bc.DecimalIntegerToArbitraryBase(long.MaxValue - 1, radix);
         }
     }
 }
