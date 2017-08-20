@@ -1,0 +1,51 @@
+﻿<local:BasePage x:TypeArguments="local:FloatRepresentationViewModel" x:Class="Calc.Desktop.FloatRepresentationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Calc.Desktop"
+      mc:Ignorable="d" 
+      x:Name="Page"
+      d:DesignHeight="500" d:DesignWidth="700"
+      Title="FloatRepresentationPage">
+
+    <Border BorderThickness="0 0.2 0 0">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Background="{StaticResource WhiteBrush}">
+
+                <TextBlock Margin="50,50,0,0" Style="{StaticResource SmallText}" Text="Input Number"/>
+                <TextBox x:Name="InputNumberTextBox" Style="{StaticResource UnderlinedTextBox}" Margin="50,0,50,10" Height="40"  Text="{Binding InputString}" TextChanged="TextBox_TextChanged"/>
+                <TextBlock Margin="50,10,0,0" Style="{StaticResource SmallText}" Text="Input Number Complement"/>
+                <TextBox IsReadOnly="True" Style="{StaticResource UnderlinedTextBox}"  Margin="50,0,50,0" Height="40" Text="{Binding InputComplement}"/>
+
+               
+                <StackPanel  Orientation="Horizontal" >
+                    <StackPanel Margin="50,0,0,0">
+                        <TextBlock Style="{StaticResource SmallText}" Text="From Base"/>
+                        <TextBox Style="{StaticResource UnderlinedTextBox}" Width="60" Height="40" Text="{Binding InputBase}"/>
+                    </StackPanel>
+                    <Button Style="{StaticResource TransparentIconButton}" Foreground="{StaticResource LightGrayBrush}" Content ="{StaticResource FontAwesomeExchange}" Command="{Binding SwitchBaseCommand}"/>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SmallText}" Text="To Base"/>
+                        <TextBox Style="{StaticResource UnderlinedTextBox}" Width="60" Height="40" Text="{Binding OutputBase}"/>                        
+                    </StackPanel>
+                    <Button Style="{StaticResource TextOnlyButton}" FontSize ="{StaticResource FontSizeLarge}" Foreground="{StaticResource LightGrayBrush}" Content ="Convert" Command="{Binding ConvertCommand}"/>
+                    <Button Style="{StaticResource TransparentIconButton}" Foreground="{StaticResource LightGrayBrush}" Content ="{StaticResource FontAwesomeExchange}" Command="{Binding GoBackInHistoryCommand}"/>
+                    <Button Style="{StaticResource TransparentIconButton}" Foreground="{StaticResource LightGrayBrush}" Content ="{StaticResource FontAwesomeExchange}" Command="{Binding GoForwardInHistoryCommand}"/>
+
+
+
+                </StackPanel>
+
+                <TextBlock Margin="50,10,0,0" Style="{StaticResource SmallText}" Text="Output Number"/>
+                <TextBox  IsReadOnly="True" Style="{StaticResource UnderlinedTextBox}"  Margin="50,0,50,0" Height="40" Text="{Binding OutputString}"/>
+                <TextBlock Margin="50,10,0,0" Style="{StaticResource SmallText}" Text="Output Number Complement"/>
+                <TextBox   IsReadOnly="True" Style="{StaticResource UnderlinedTextBox}"  Margin="50,0,50,0" Height="40" Text="{Binding OutputComplement}"/>
+                <TextBlock Margin="50,10,50,10" Height="40" Grid.Row="4" Text="{Binding ErrorMessage}"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+  
+     
+
+</local:BasePage> 
