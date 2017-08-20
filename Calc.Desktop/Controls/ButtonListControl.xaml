@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Calc.Desktop.ButtonListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Calc.Desktop"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <local:ButtonListViewModel x:Name="ButtonListViewModel" x:Key="ButtonListViewModel"/>
+    </UserControl.Resources>
+    <Grid d:DataContext="{StaticResource ButtonListViewModel}" Background="{StaticResource ForegroundLightBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Buttons}" Name="ItemControButtons">
+                
+                <!-- Make all the items stack horizontally -->
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:SquareButton/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

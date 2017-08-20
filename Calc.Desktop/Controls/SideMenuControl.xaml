@@ -9,9 +9,9 @@
 
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
+            
             <Border  Background="{StaticResource GrayBrush}">
                 <Grid>
-
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -30,7 +30,6 @@
                             <Button Style="{StaticResource IconButton}" Content ="{StaticResource FontAwesomeExchange}"/>
                             <Button Style="{StaticResource IconButton}" Content ="{StaticResource FontAwesomeCalculator}"/>
                             <Button Style="{StaticResource IconButton}" Content ="0.8"/>
-
                         </StackPanel>
                         
                         <!-- Settings Button -->
