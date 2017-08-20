@@ -6,18 +6,15 @@ using System.Threading.Tasks;
 
 namespace Calc.Desktop
 {
-    /// <summary>
-    /// A page of Application
-    /// </summary>
+   
     public enum ApplicationPage
     {
-        /// <summary>
-        /// The Initial Welcome Page
-        /// </summary>
         Welcome ,
         BaseConverterMenu ,
         BaseConverter ,
         MenuPage ,
+        FloatRepresentationMenu ,
+        FloatRepresentation ,
 
     }
 }
