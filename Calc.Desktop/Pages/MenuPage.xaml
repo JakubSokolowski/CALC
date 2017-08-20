@@ -7,10 +7,16 @@
       mc:Ignorable="d" 
       x:Name="Page"
       d:DesignHeight="500" d:DesignWidth="250"
-      Title="MenuPage">
+      Title="MenuPage"      
+                >
+
 
     <local:SideMenuControl>
-        <Button Content="Test"/>
+        <Grid>
+            <StackPanel>
+               
+            </StackPanel>
+        </Grid>
     </local:SideMenuControl>
 
 </local:BasePage> 
