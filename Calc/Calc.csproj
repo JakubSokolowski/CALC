@@ -47,6 +47,7 @@
     <Compile Include="PositionalSystem\ComplementConversion\BaseComplement.cs" />
     <Compile Include="PositionalSystem\ComplementConversion\ComplementConverter.cs" />
     <Compile Include="PositionalSystem\ConversionHelpers.cs" />
+    <Compile Include="PositionalSystem\ConversionHistory.cs" />
     <Compile Include="PositionalSystem\FloatConversion\DoubleRepresentation.cs" />
     <Compile Include="PositionalSystem\FloatConversion\FloatConverter.cs" />
     <Compile Include="PositionalSystem\FloatConversion\FloatingPointRepresentation.cs" />
