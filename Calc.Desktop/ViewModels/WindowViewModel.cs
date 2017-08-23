@@ -92,7 +92,7 @@ namespace Calc.Desktop
         /// <summary>
         /// The current page of the application
         /// </summary>
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.BaseConverterMenu;
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.FloatRepresentationMenu;
 
         public ApplicationPage MenuPage { get; set; } = ApplicationPage.Welcome;
 
