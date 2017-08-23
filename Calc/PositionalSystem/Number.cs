@@ -56,6 +56,9 @@ namespace Calc.PositionalSystem
         public string SingleBinaryString { get => singleRep.BinaryString; }
         public string DoubleBinaryString { get => doubleRep.BinaryString; }
 
+
+        public SingleRepresentation SingleRep { get => singleRep; }
+        public DoubleRepresentation DoubleRep { get => doubleRep; }
         #endregion Fields
 
         #region Constructors
