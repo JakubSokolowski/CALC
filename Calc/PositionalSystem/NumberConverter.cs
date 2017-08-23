@@ -36,6 +36,16 @@ namespace Calc.PositionalSystem
             return new Number(baseRep, sRep, dRep);
         }
 
+        public static Number ToBase(SingleRepresentation representation, int resultBase)
+        {
+            return ToBase((decimal)representation.DecimalValue, resultBase);
+        }
+
+        public static Number ToBase(DoubleRepresentation representation, int resultBase)
+        {
+            return ToBase((decimal)representation.DecimalValue, resultBase);
+        }
+
         public static string MaxValueForBase(int radix)
         {
             return bc.DecimalIntegerToArbitraryBase(long.MaxValue - 1, radix);
