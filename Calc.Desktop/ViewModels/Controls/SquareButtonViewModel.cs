@@ -20,12 +20,13 @@ namespace Calc.Desktop
         public SquareButtonViewModel( )
         {
             SquareButtonCommand = new RelayCommand(() => FlipBit());
+            
         }
 
         public void FlipBit()
-        {
+        {            
             SingleCharContent = (SingleCharContent == "0") ? "1" : "0";
-          
+            Mediator.Instance.NotifyColleagues(ViewModelMessages.BitFlipped, SingleCharContent);
         }
     }
 }

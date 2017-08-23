@@ -11,13 +11,45 @@ namespace Calc.Desktop
 {
     public class ButtonListViewModel : BaseViewModel
     {
-        public BindingList<SquareButtonViewModel> Buttons { get; set; } 
-        
+
+        #region Private members
+
+        private string mListContent = "";
+
+        #endregion
+
+        #region Public Properties
+
+        public BindingList<SquareButtonViewModel> Buttons { get; set; }
+
+
+        public string ListContent
+        {
+            get => mListContent;
+            set
+            {
+                mListContent = value;
+            }
+        }
+
+        #endregion
+
+        #region Constructing
 
         public ButtonListViewModel()
         {
-           Buttons = new BindingList<SquareButtonViewModel>();
+            Buttons = new BindingList<SquareButtonViewModel>();
+            Mediator.Instance.Register((Object o) =>
+            {
+                RefreshList();
+                Mediator.Instance.NotifyColleagues(ViewModelMessages.RepresentationUpdated, ListContent);
+            },  ViewModelMessages.BitFlipped);
+
+            this.PropertyChanged += new PropertyChangedEventHandler(OnItemButtonPropertyChanged);
         }
+
+        #endregion
+
 
         public void AddButtons(int buttonCount)
         {
@@ -27,26 +59,34 @@ namespace Calc.Desktop
             }
         }
 
-        public void AddButtons(int buttonCount, string content)
+        public void AddButtons(int buttonCount, string content, int enumerationStart = 0)
         {
             for (int i = 0; i < buttonCount; i++)
             {
-                Buttons.Add(new SquareButtonViewModel { SingleCharContent = content, Tag = "DUPA" });
+                Buttons.Add(new SquareButtonViewModel { SingleCharContent = content, Tag = enumerationStart.ToString() });
+                enumerationStart++;
             }
         }
+
+        public void SetButtons(int newCount, string buttonContent)
+        {
+            
+        }
+
 
         public void WriteText(string text)
         {
             Buttons.Clear();
             for(int i = 0; i < text.Length;i++)
             {
-                var button = new SquareButtonViewModel();
-                button.SingleCharContent = text[i].ToString();
-                button.Tag = "AYY LMOA";
-                Buttons.Add(button);
-              
+                var button = new SquareButtonViewModel()
+                {
+                    SingleCharContent = text[i].ToString(),
+                };
+                Buttons.Add(button);              
             }
         }
+
         public string GetContent()
         {
             string content = "";
@@ -55,6 +95,19 @@ namespace Calc.Desktop
                 content += button.SingleCharContent;
             }
             return content;
+        }
+
+        private void OnItemButtonPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "Buttons")
+            {
+
+            }
+        }
+
+        private void RefreshList()
+        {
+            ListContent = GetContent();                   
         }
     }
 }
