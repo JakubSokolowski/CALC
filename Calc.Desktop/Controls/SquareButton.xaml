@@ -11,7 +11,7 @@
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
             <Grid>
-                <Button Height="14" Width="14" 
+                <Button Height="15" Width="15" 
                         Style="{StaticResource TextOnlyButton}" 
                         HorizontalContentAlignment="Center"
                         FontSize="18" Padding="0" Margin="0" Content="{Binding Path=SingleCharContent}"
