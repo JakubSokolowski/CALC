@@ -8,6 +8,7 @@ namespace Calc.PositionalSystem
 
         private float decimalValue;
         private static FloatConverter fConverter = new FloatConverter();
+     
 
         #endregion
 
@@ -49,6 +50,14 @@ namespace Calc.PositionalSystem
         protected override int ExponentLength { get; } = 8;
         protected override int MantissaLenght { get; } = 23;
         protected override int BinarStringLength { get; } = 32;
+
+        public override decimal ExponentEncoding => bConverter.ArbitraryBaseToDecimal(Exponent, 2);
+
+        public override decimal MantissaEncoding => NumberConverter.ToBase("0."+ Mantissa, 2, 10).DecimalValue;
+
+        public override decimal ExponentValue => ExponentEncoding - 127;
+
+        public override decimal MantissaValue => MantissaEncoding + 1;
 
         #endregion
 
