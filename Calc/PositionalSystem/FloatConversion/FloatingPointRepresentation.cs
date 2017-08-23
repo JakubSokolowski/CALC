@@ -21,11 +21,11 @@ namespace Calc.PositionalSystem
         protected abstract int ExponentLength { get; }
         protected abstract int MantissaLenght { get; }
         
-        public abstract decimal ExponentEncoding { get; }
-        public abstract decimal MantissaEncoding { get; }
+        public abstract double ExponentEncoding { get; }
+        public abstract double MantissaEncoding { get; }
 
-        public abstract decimal ExponentValue { get; }
-        public abstract decimal MantissaValue { get; }
+        public abstract double ExponentValue { get; }
+        public abstract double MantissaValue { get; }
 
     }
 }

@@ -51,13 +51,13 @@ namespace Calc.PositionalSystem
         protected override int MantissaLenght { get; } = 23;
         protected override int BinarStringLength { get; } = 32;
 
-        public override decimal ExponentEncoding => bConverter.ArbitraryBaseToDecimal(Exponent, 2);
+        public override double ExponentEncoding => bConverter.ArbitraryBaseToDecimal(Exponent, 2);
 
-        public override decimal MantissaEncoding => NumberConverter.ToBase("0."+ Mantissa, 2, 10).DecimalValue;
+        public override double MantissaEncoding => NumberConverter.ToBase("0."+ Mantissa, 2, 10).DecimalValue;
 
-        public override decimal ExponentValue => ExponentEncoding - 127;
+        public override double ExponentValue => ExponentEncoding - 127;
 
-        public override decimal MantissaValue => MantissaEncoding + 1;
+        public override double MantissaValue => MantissaEncoding + 1;
 
         #endregion
 

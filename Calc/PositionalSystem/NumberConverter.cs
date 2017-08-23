@@ -20,7 +20,7 @@ namespace Calc.PositionalSystem
             return new Number(baseRep,sRep,dRep);
         }
 
-        public static Number ToBase(decimal value, int resultBase)
+        public static Number ToBase(double value, int resultBase)
         {
             var baseRep = bc.ToBase(value, resultBase);
             var sRep = fc.ToSingle((float)value);
@@ -38,12 +38,12 @@ namespace Calc.PositionalSystem
 
         public static Number ToBase(SingleRepresentation representation, int resultBase)
         {
-            return ToBase((decimal)representation.DecimalValue, resultBase);
+            return ToBase(representation.DecimalValue, resultBase);
         }
 
         public static Number ToBase(DoubleRepresentation representation, int resultBase)
         {
-            return ToBase((decimal)representation.DecimalValue, resultBase);
+            return ToBase(representation.DecimalValue, resultBase);
         }
 
         public static string MaxValueForBase(int radix)
