@@ -4,7 +4,6 @@ namespace Calc.PositionalSystem
 {
     public class FloatConverter
     {
-
         #region Double Conversion
 
         public SingleRepresentation ToSingle(float f)
@@ -42,8 +41,6 @@ namespace Calc.PositionalSystem
 
         public string SingleToBinaryString(float f)
         {
-                 
-
             byte[] b = BitConverter.GetBytes(f);
             int i = BitConverter.ToInt32(b, 0);
             string result = Convert.ToString(i, 2);
@@ -65,5 +62,6 @@ namespace Calc.PositionalSystem
 
         #endregion
 
+       
     }
 }
