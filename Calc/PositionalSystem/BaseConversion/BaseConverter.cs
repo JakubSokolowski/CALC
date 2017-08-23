@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Text;
+using System.Numerics;
 
 
 
@@ -39,13 +40,13 @@ namespace Calc.PositionalSystem
         /// <param name="decimalValue"> The value that is converted</param>
         /// <param name="resultBase"> The base of the result of conversion</param>
         /// <returns><see cref="Number"/></returns>
-        public  BaseRepresentation ToBase(decimal decimalValue, int resultBase)
+        public BaseRepresentation ToBase(decimal decimalValue, int resultBase)
         {           
             if (IsValidRadix(resultBase))
             {
                 // Split the value to integer part and fraction part
                 decimal fractionValue = decimalValue % 1;
-                long integerValue = (long)(decimalValue - fractionValue);
+                decimal integerValue = (decimalValue - fractionValue);
 
                 // Convert each part
                 string fractionalStr = DecimalFractionToArbitraryBase(fractionValue, resultBase);
@@ -134,7 +135,7 @@ namespace Calc.PositionalSystem
         /// <param name="valueString"></param>
         /// <param name="radix"></param>
         /// <returns></returns>
-        private  decimal ArbitraryBaseToDecimal(string valueString, int radix)
+        public  decimal ArbitraryBaseToDecimal(string valueString, int radix)
         {    
             if (IsValidRadix(radix))
             {
@@ -187,7 +188,7 @@ namespace Calc.PositionalSystem
         /// <param name="decimalNumber"></param>
         /// <param name="radix"></param>
         /// <returns>The string representation of <paramref name="decimalNumber"/> in specified base</returns>
-        public string DecimalIntegerToArbitraryBase(long decimalNumber, int radix)
+        public string DecimalIntegerToArbitraryBase(decimal decimalNumber, int radix)
         {
             if (radix < 2 || radix > BaseDigits.MAX_BASE)
                 throw new ArgumentException("The base must be >= 2 and <= " + BaseDigits.MAX_BASE);
@@ -199,7 +200,7 @@ namespace Calc.PositionalSystem
                 return "0";
             }               
 
-            long currentNumber = Math.Abs(decimalNumber);
+            BigInteger currentNumber = (BigInteger) Math.Abs(decimalNumber);
             digits.CurrentBase = radix;
 
             StringBuilder sb = new StringBuilder();
@@ -256,7 +257,7 @@ namespace Calc.PositionalSystem
         /// <param name="fractionStr"></param>
         /// <param name="radix"></param>
         /// <returns></returns>
-        private decimal ArbitraryFractionToDecimal(string fractionStr, int radix)
+        public decimal ArbitraryFractionToDecimal(string fractionStr, int radix)
         {
             decimal decimalFraction = 0.0m;
             double exponent = 1.0;
@@ -285,7 +286,7 @@ namespace Calc.PositionalSystem
         /// <param name="fraction">The fraction in decimal</param>
         /// <param name="radix">The radix</param>
         /// <returns></returns>
-        private string DecimalFractionToArbitraryBase(decimal fraction, int radix)
+        public string DecimalFractionToArbitraryBase(decimal fraction, int radix)
         {
             if(fraction == 0.0m)
             {
@@ -353,7 +354,7 @@ namespace Calc.PositionalSystem
         /// </summary>
         /// <param name="inputBase">The base that specifies witch characters are avalible</param>
         /// <returns>Regex pattern that matches possible numbers in given base</returns>
-        private  string GetRepresentationRegexPattern(int inputBase)
+        public string GetRepresentationRegexPattern(int inputBase)
         {
             // Matching characters by regex is only supportet for bases 2 - 36 (10 digits and 26 alphabet characters)
             // Positions in higher bases are represented differently - not by characters but by numbers
