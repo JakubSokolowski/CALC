@@ -82,11 +82,21 @@
     <Compile Include="Animation\AnimationStyles.cs" />
     <Compile Include="Animation\PageAnimations.cs" />
     <Compile Include="Animation\StoryboardHelpers.cs" />
+    <Compile Include="Controls\ButtonListControl.xaml.cs">
+      <DependentUpon>ButtonListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SquareButton.xaml.cs">
+      <DependentUpon>SquareButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SideMenuControl.xaml.cs">
       <DependentUpon>SideMenuControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModels\ApplicationPage.cs" />
-    <Compile Include="Pages\BaseConverterMenuPage.cs" />
+    <Compile Include="Pages\BaseConverterMenuPage.xaml.cs" />
+    <Compile Include="Pages\FloatRepresentationMenuPage.xaml.cs" />
+    <Compile Include="Pages\FloatRepresentationPage.xaml.cs">
+      <DependentUpon>FloatRepresentationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\BaseConverterPage.xaml.cs">
       <DependentUpon>BaseConverterPage.xaml</DependentUpon>
@@ -96,18 +106,35 @@
     </Compile>
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\ValueConverter.cs" />
-    <Compile Include="ViewModels\BaseConverterViewModel.cs" />
-    <Compile Include="ViewModels\MenuViewModel.cs" />
-    <Compile Include="ViewModels\BaseConverterMenuViewModel.cs" />
+    <Compile Include="ViewModels\Mediator\Mediator.cs" />
+    <Compile Include="ViewModels\Mediator\MultiDictionary.cs" />
+    <Compile Include="ViewModels\Mediator\ViewModelMessages.cs" />
+    <Compile Include="ViewModels\Pages\BaseConverterViewModel.cs" />
+    <Compile Include="ViewModels\Controls\ButtonListViewModel.cs" />
+    <Compile Include="ViewModels\Controls\LinePosition.cs" />
+    <Compile Include="ViewModels\Controls\SquareButtonViewModel.cs" />
+    <Compile Include="ViewModels\Pages\FloatRepresentationMenuViewModel.cs" />
+    <Compile Include="ViewModels\Pages\FloatRepresentationViewModel.cs" />
+    <Compile Include="ViewModels\Pages\MenuViewModel.cs" />
+    <Compile Include="ViewModels\Pages\BaseConverterMenuViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
-    <Compile Include="ViewModels\WelcomeViewModel.cs" />
+    <Compile Include="ViewModels\TrulyObservableCollection.cs" />
+    <Compile Include="ViewModels\Pages\WelcomeViewModel.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Pages\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window\WindowResizer.cs" />
+    <Page Include="Controls\ButtonListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SquareButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\SideMenuControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -124,7 +151,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\FloatRepresentationMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\BaseConverterMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\FloatRepresentationPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

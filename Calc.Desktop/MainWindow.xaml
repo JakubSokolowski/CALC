@@ -118,6 +118,7 @@
             GlassFrameThickness="0"
             />
     </WindowChrome.WindowChrome>
+    
     <Border Background="{StaticResource BackgroundLightBrush}"> 
         <Frame Grid.Column ="1" x:Name="MainFrame" Content="{Binding CurrentPage , Converter={local:ApplicationPageValueConverter}}" />  
     </Border>    
