@@ -28,13 +28,13 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void Addition_TwoPositive_Pass()
         {
-            var left = 10m;
-            var right = 20.5m;
+            var left = 10;
+            var right = 20.5;
             var num1 = NumberConverter.ToBase(left, 10);
             var num2 = NumberConverter.ToBase(right, 16);
             var num3 = num1 + num2;
 
-            var expected = 30.5m;
+            var expected = 30.5;
 
             Assert.AreEqual(num3.DecimalValue, expected);
         }
@@ -42,13 +42,13 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void Addition_TwoNegative_Pass()
         {
-            var left = -10.0m;
-            var right = -20.5m;
+            var left = -10.0;
+            var right = -20.5;
             var num1 = NumberConverter.ToBase(left, 10);
             var num2 = NumberConverter.ToBase(right, 16);
             var num3 = num1 + num2;
 
-            var expected = -30.5m;
+            var expected = -30.5;
 
             Assert.AreEqual(num3.DecimalValue, expected);
         }
@@ -57,13 +57,13 @@ namespace Calc.PositionalSystem.Tests
         public void Addition_PositiveNegatice_Pass()
         {
 
-            var left = -10.0m;
-            var right = 20.5m;
+            var left = -10.0;
+            var right = 20.5;
             var num1 = NumberConverter.ToBase(left,10);
             var num2 = NumberConverter.ToBase(right,10);
             var num3 = num1 + num2;
 
-            var expected = 10.5m;
+            var expected = 10.5;
 
             Assert.AreEqual(num3.DecimalValue, expected);
         }
@@ -71,13 +71,13 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void Addition_PositiveZero_Pass()
         {
-            var left = 10m;
-            var right = 0.0m;
+            var left = 10;
+            var right = 0.0;
             var num1 = NumberConverter.ToBase(left, 10);
             var num2 = NumberConverter.ToBase(right, 10);
             var num3 = num1 + num2;
 
-            var expected = 10.0m;
+            var expected = 10.0;
 
             Assert.AreEqual(num3.DecimalValue, expected);
         }
@@ -85,13 +85,13 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void Addition_NegativeZero_Pass()
         {
-            var left = -10m;
-            var right = 0m;
+            var left = -10;
+            var right = 0;
             var num1 = NumberConverter.ToBase(left, 10);
             var num2 = NumberConverter.ToBase(right, 10);
             var num3 = num1 + num2;
 
-            var expected = -10m;
+            var expected = -10;
 
             Assert.AreEqual(num3.DecimalValue, expected);
         }
@@ -99,13 +99,13 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void Addition_TwoZeros_Pass()
         {
-            var left = 0m;
-            var right = 0m;
+            var left = 0;
+            var right = 0;
             var num1 = NumberConverter.ToBase(left, 10);
             var num2 = NumberConverter.ToBase(right, 10);
             var num3 = num1 + num2;
 
-            var expected = 0.0m;
+            var expected = 0.0;
 
             Assert.AreEqual(num3.DecimalValue, expected);
         }
@@ -127,13 +127,13 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void Substraction_TwoPositive_Pass()
         {
-            var left = 20.5m;
-            var right = 10.5m;
+            var left = 20.5;
+            var right = 10.5;
             var num1 = NumberConverter.ToBase(left, 10);
             var num2 = NumberConverter.ToBase(right, 16);
             var num3 = num1 - num2;
 
-            var expected = 10.0m;
+            var expected = 10.0;
 
             Assert.AreEqual(num3.DecimalValue, expected);
         }
@@ -141,13 +141,13 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void Substraction_TwoNegative_Pass()
         {
-            var left = -10.0m;
-            var right = -20.5m;
+            var left = -10.0;
+            var right = -20.5;
             var num1 = NumberConverter.ToBase(left, 10);
             var num2 = NumberConverter.ToBase(right, 16);
             var num3 = num1 - num2;
 
-            var expected = 10.5m;
+            var expected = 10.5;
 
             Assert.AreEqual(num3.DecimalValue, expected);
         }
@@ -155,14 +155,13 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void Substraction_PositiveNegatice_Pass()
         {
-
-            var left = -10.0m;
-            var right = 20.5m;
+            var left = -10.0;
+            var right = 20.5;
             var num1 = NumberConverter.ToBase(left, 10);
             var num2 = NumberConverter.ToBase(right, 10);
             var num3 = num1 - num2;
 
-            var expected = -30.5m;
+            var expected = -30.5;
 
             Assert.AreEqual(num3.DecimalValue, expected);
         }
@@ -170,13 +169,13 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void Substraction_PositiveZero_Pass()
         {
-            var left = 10m;
-            var right = 0.0m;
+            var left = 10;
+            var right = 0.0;
             var num1 = NumberConverter.ToBase(left, 10);
             var num2 = NumberConverter.ToBase(right, 10);
             var num3 = num1 - num2;
 
-            var expected = 10.0m;
+            var expected = 10.0;
 
             Assert.AreEqual(num3.DecimalValue, expected);
         }
@@ -184,13 +183,13 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void Substraction_NegativeZero_Pass()
         {
-            var left = -10m;
-            var right = 0m;
+            var left = -10;
+            var right = 0;
             var num1 = NumberConverter.ToBase(left, 10);
             var num2 = NumberConverter.ToBase(right, 10);
             var num3 = num1 - num2;
 
-            var expected = -10m;
+            var expected = -10;
 
             Assert.AreEqual(num3.DecimalValue, expected);
         }
@@ -198,13 +197,13 @@ namespace Calc.PositionalSystem.Tests
         [TestMethod()]
         public void Substraction_TwoZeros_Pass()
         {
-            var left = 0m;
-            var right = 0m;
+            var left = 0;
+            var right = 0;
             var num1 = NumberConverter.ToBase(left, 10);
             var num2 = NumberConverter.ToBase(right, 10);
             var num3 = num1 - num2;
 
-            var expected = 0.0m;
+            var expected = 0.0;
 
             Assert.AreEqual(num3.DecimalValue, expected);
         }
