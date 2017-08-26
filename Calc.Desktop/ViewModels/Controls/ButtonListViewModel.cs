@@ -1,28 +1,14 @@
 ﻿
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Calc.Desktop
 {
     public class ButtonListViewModel : BaseViewModel
     {
-
-        #region Private members
-
         private string mListContent = "";
 
-        #endregion
-
-        #region Public Properties
-
         public BindingList<SquareButtonViewModel> Buttons { get; set; }
-
-
         public string ListContent
         {
             get => mListContent;
@@ -30,36 +16,26 @@ namespace Calc.Desktop
             {
                 mListContent = value;
             }
-        }
-
-        #endregion
-
-        #region Constructing
+        }              
 
         public ButtonListViewModel()
         {
             Buttons = new BindingList<SquareButtonViewModel>();
             Mediator.Instance.Register((Object o) =>
             {
-                RefreshList();
+                RefreshButtonList();
                 Mediator.Instance.NotifyColleagues(ViewModelMessages.RepresentationUpdated, ListContent);
             },  ViewModelMessages.BitFlipped);
+        }           
 
-            this.PropertyChanged += new PropertyChangedEventHandler(OnItemButtonPropertyChanged);
-        }
+        // Adding
 
-        #endregion
-
-
-        public void AddButtons(int buttonCount)
+        public void AddButtonsToEnd(int buttonCount)
         {
             for (int i = 0; i < buttonCount; i++)
-            {
-                Buttons.Add(new SquareButtonViewModel());                
-            }
+                Buttons.Add(new SquareButtonViewModel());
         }
-
-        public void AddButtons(int buttonCount, string content, int enumerationStart = 0)
+        public void AddButtonsWithEnumeration(int buttonCount, string content, int enumerationStart)
         {
             for (int i = 0; i < buttonCount; i++)
             {
@@ -67,27 +43,56 @@ namespace Calc.Desktop
                 enumerationStart++;
             }
         }
-
-        public void SetButtons(int newCount, string buttonContent)
+        public void SetButtonCount(int newCount)
         {
-            
+            if (newCount < Buttons.Count)
+                RemoveButtonsFromEnd(Buttons.Count - newCount);
+            if (newCount > Buttons.Count)
+                AddButtonsToEnd(newCount - Buttons.Count);
         }
 
+        //Removing
 
-        public void WriteText(string text)
+        public void RemoveButtonsFromEnd(int buttonCount)
+        {
+            if (buttonCount > Buttons.Count)
+                throw new IndexOutOfRangeException("Attempted to reomve more buttons than there are");
+            for (int i = 0; i < buttonCount; i++)
+                Buttons.RemoveAt(Buttons.Count - 1);
+        }
+        public void RemoveAllButtons()
         {
             Buttons.Clear();
-            for(int i = 0; i < text.Length;i++)
-            {
-                var button = new SquareButtonViewModel()
-                {
-                    SingleCharContent = text[i].ToString(),
-                };
-                Buttons.Add(button);              
-            }
         }
 
-        public string GetContent()
+        // Changing
+        
+        public void WriteOnButtons(string text)
+        {            
+            SetButtonCount(text.Length);
+            ChangeListText(text);
+        }       
+        public void ClearButtonContent()
+        {
+            SetAllButtonsContent("");
+        }
+        public void SetAllButtonsContent(string newContent)
+        {
+            foreach (var button in Buttons)
+                button.SingleCharContent = newContent[0].ToString();
+        }
+        public void ChangeListText(string newText)
+        {
+            for (int i = 0; i < newText.Length; i++)            
+                Buttons[i].SingleCharContent = newText[i].ToString();           
+        }      
+        public void ChangeSingleButtonContent(int index, string newContent)
+        {
+            Buttons[index].SingleCharContent = newContent.Substring(0, 1);
+        }
+        
+
+        public string GetAllButtonsText()
         {
             string content = "";
             foreach(var button in Buttons)
@@ -95,19 +100,10 @@ namespace Calc.Desktop
                 content += button.SingleCharContent;
             }
             return content;
-        }
-
-        private void OnItemButtonPropertyChanged(object sender, PropertyChangedEventArgs e)
+        }      
+        private void RefreshButtonList()
         {
-            if(e.PropertyName == "Buttons")
-            {
-
-            }
-        }
-
-        private void RefreshList()
-        {
-            ListContent = GetContent();                   
+            ListContent = GetAllButtonsText();                   
         }
     }
 }
