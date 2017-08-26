@@ -340,6 +340,16 @@ namespace Calc.PositionalSystem
             return str.Substring(0, lenght);
         }
 
+        public string AddZerosToTheLeft(string str, int desiredLength)
+        {
+            if (str.Length > desiredLength)
+                return str;
+            int count = desiredLength - str.Length;
+            for (int i = 0; i < count;i++)
+                str = "0" + str;
+            return str;
+        }
+
         #endregion
 
         #region Floating Point Numbers Precision
