@@ -4,6 +4,8 @@ namespace Calc.PositionalSystem
 {
     public class FloatConverter
     {
+        private BaseConverter bConv = new BaseConverter();
+
         #region Double Conversion
 
         public SingleRepresentation ToSingle(float f)
@@ -60,8 +62,31 @@ namespace Calc.PositionalSystem
             return BitConverter.ToSingle(b, 0);
         }
 
+        public string GetExponentFromValue(int exponent)
+        {
+            // Shift the value by a bias of 127
+            exponent += 127;
+            return GetExponentFromEncoding(exponent);
+        }
+
+        public string GetExponentFromEncoding(int exponent)
+        {
+            if (IsInRange(exponent,0,255))
+            {
+                var binaryExponent = bConv.DecimalIntegerToArbitraryBase(exponent, 2);
+                binaryExponent = bConv.AddZerosToTheLeft(binaryExponent, 8);
+                return binaryExponent;
+            }
+            throw new ArgumentException("The decimal value of exponent must be between 0 and 255");
+        }
+      
+        public bool IsInRange(int value, int lowerLimit, int upperLimit)
+        {
+            return value >= lowerLimit && value <= upperLimit;
+        }
+
         #endregion
 
-       
+
     }
 }
