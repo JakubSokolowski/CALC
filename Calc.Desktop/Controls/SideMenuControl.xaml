@@ -10,7 +10,7 @@
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
             
-            <Border  Background="{StaticResource GrayBrush}">
+            <Border  Background="{StaticResource VeryLightGrayBrush}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
