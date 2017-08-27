@@ -3,20 +3,14 @@
 namespace Calc.PositionalSystem
 {
     public class SingleRepresentation : FloatingPointRepresentation, IFloatingPointValidation
-    {
-        # region Private Members
-
+    {        
         private float decimalValue;
         private static FloatConverter fConverter = new FloatConverter();
      
-
-        #endregion
-
-        #region Public Properties
-
-        public override string Sign { get => binaryString.Substring(0,1); }
-        public override string Exponent { get => binaryString.Substring(1, ExponentLength); }
-        public override string Mantissa { get => binaryString.Substring(1 + ExponentLength, MantissaLenght); }
+       
+        public override string Sign => binaryString.Substring(0,1); 
+        public override string Exponent => binaryString.Substring(1, ExponentLength); 
+        public override string Mantissa => binaryString.Substring(1 + ExponentLength, MantissaLenght); 
 
         public override string BinaryString
         {
@@ -32,7 +26,6 @@ namespace Calc.PositionalSystem
                     throw new ArgumentException("String must be binary and have " + BinarStringLength + " length");
             }
         }
-
         public float DecimalValue
         {
             get => decimalValue;
@@ -43,26 +36,17 @@ namespace Calc.PositionalSystem
             }
         }
 
-        #endregion
-
-        #region IEEE 754 Lengths
 
         protected override int ExponentLength { get; } = 8;
         protected override int MantissaLenght { get; } = 23;
         protected override int BinarStringLength { get; } = 32;
 
         public override double ExponentEncoding => bConverter.ArbitraryBaseToDecimal(Exponent, 2);
-
         public override double MantissaEncoding => NumberConverter.ToBase("0."+ Mantissa, 2, 10).DecimalValue;
 
         public override double ExponentValue => ExponentEncoding - 127;
-
         public override double MantissaValue => MantissaEncoding + 1;
-
-        #endregion
-
-
-        #region Constructors
+        
 
         public SingleRepresentation(float f)
         {         
@@ -73,7 +57,7 @@ namespace Calc.PositionalSystem
             BinaryString = binStr;
         }
 
-        #endregion
+       
         public bool IsBinaryString(string str)
         {
             foreach (var ch in str)
