@@ -9,11 +9,8 @@ namespace Calc.Desktop
    
     public enum ApplicationPage
     {
-        Welcome ,
-        BaseConverterMenu ,
-        BaseConverter ,
-        MenuPage ,
-        FloatRepresentationMenu ,
+        Welcome ,       
+        BaseConverter ,              
         FloatRepresentation ,
 
     }
