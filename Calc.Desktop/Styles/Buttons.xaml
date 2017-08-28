@@ -85,7 +85,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Border x:Name="border"
-                            CornerRadius="10"
+                            CornerRadius="0"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
@@ -162,8 +162,9 @@
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation To="{StaticResource Gray}" Duration="0:0:0.1" Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color"/>
-
+                                    <ColorAnimation To="{StaticResource VeryLightGray}" Duration="0:0:0.1" Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color"/>
+                                    <ColorAnimation To="Black" Duration="0:0:0.1" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)"/>
+                                   
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -172,7 +173,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation To="{StaticResource DarkGray}" Duration="0:0:0.1" Storyboard.TargetName="border" Storyboard.TargetProperty="Background.Color"/>
-
+                                    <ColorAnimation To="White" Duration="0:0:0.1" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
