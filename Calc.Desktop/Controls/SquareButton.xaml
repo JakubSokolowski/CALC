@@ -16,6 +16,7 @@
                         HorizontalContentAlignment="Center"
                         FontSize="18" Padding="0" Margin="0" Content="{Binding Path=SingleCharContent}"
                         Command ="{Binding Path=SquareButtonCommand}"
+                        
                         />
             </Grid>
             
