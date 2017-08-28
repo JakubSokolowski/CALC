@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace Calc.Desktop
 {
@@ -19,10 +14,8 @@ namespace Calc.Desktop
 
         public SquareButtonViewModel( )
         {
-            SquareButtonCommand = new RelayCommand(() => FlipBit());
-            
+            SquareButtonCommand = new RelayCommand(() => FlipBit());            
         }
-
         public void FlipBit()
         {            
             SingleCharContent = (SingleCharContent == "0") ? "1" : "0";
