@@ -16,17 +16,11 @@ namespace Calc.Desktop
             switch((ApplicationPage)value)
             {
                 case ApplicationPage.Welcome:
-                    return new WelcomePage();
-                case ApplicationPage.MenuPage:
-                    return new MenuPage();
-                case ApplicationPage.BaseConverterMenu:
-                    return new BaseConverterMenuPage();
+                    return new WelcomePage();            
                 case ApplicationPage.BaseConverter:
                     return new BaseConverterPage();
                 case ApplicationPage.FloatRepresentation:
-                    return new FloatRepresentationPage();
-                case ApplicationPage.FloatRepresentationMenu:
-                    return new FloatRepresentationMenuPage();
+                    return new FloatRepresentationPage();                
                 default:
                     Debugger.Break();
                     return null;
