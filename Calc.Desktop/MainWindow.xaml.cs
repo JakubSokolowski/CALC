@@ -10,9 +10,7 @@ namespace Calc.Desktop
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new WindowViewModel(this);
+            DataContext = new WindowViewModel(this);
         }
-
-        
     }
 }

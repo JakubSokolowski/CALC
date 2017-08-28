@@ -3,7 +3,7 @@ using System.Windows.Input;
 using System.Threading.Tasks;
 using Calc.PositionalSystem;
 
-namespace Calc.Desktop
+namespace Calc.Core
 {
     public class BaseConverterViewModel : BaseViewModel
     {

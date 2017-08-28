@@ -328,6 +328,20 @@ namespace Calc.PositionalSystem.Tests
         }
         #endregion
 
-        #endregion                
+        #region Converting Integer Part
+
+        #endregion
+
+        #region Converting Fractional Part
+
+
+        #endregion
+
+        #endregion
+
+
+
+
+
     }
 }

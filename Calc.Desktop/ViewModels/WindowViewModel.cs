@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Calc.Core;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Calc.Desktop
@@ -35,9 +36,8 @@ namespace Calc.Desktop
         public CornerRadius WindowCornerRadius => new CornerRadius(OuterMarginSize);  
         
         public int TitleHeight { get; set; } = 42;
-        public GridLength TitleHeightGridLenght => new GridLength(TitleHeight + ResizeBorder);
-       
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.FloatRepresentation;
+        public GridLength TitleHeightGridLenght => new GridLength(TitleHeight + ResizeBorder);       
+        
 
       
         public ICommand MinimizeCommand { get; set; }

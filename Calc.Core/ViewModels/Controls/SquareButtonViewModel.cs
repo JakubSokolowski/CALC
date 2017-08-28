@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace Calc.Desktop
+namespace Calc.Core
 {
     public class SquareButtonViewModel : BaseViewModel
     {

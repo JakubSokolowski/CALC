@@ -1,7 +1,6 @@
 ﻿
+using Calc.Core;
 
-
-using Calc.PositionalSystem;
 
 namespace Calc.Desktop
 {

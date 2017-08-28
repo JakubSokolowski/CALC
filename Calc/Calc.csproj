@@ -58,7 +58,6 @@
     <Compile Include="PositionalSystem\IMathOperations.cs" />
     <Compile Include="PositionalSystem\Number.cs" />
     <Compile Include="PositionalSystem\NumberConverter.cs" />
-    <Compile Include="PositionalSystem\Operation.cs" />
     <Compile Include="PositionalSystem\FloatConversion\SingleRepresentation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

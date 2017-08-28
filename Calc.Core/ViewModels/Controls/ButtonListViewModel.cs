@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Calc.Desktop
+namespace Calc.Core
 {
     public class ButtonListViewModel : BaseViewModel
     {

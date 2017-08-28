@@ -4,11 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Calc.Desktop"
+             xmlns:core="clr-namespace:Calc.Core;assembly=Calc.Core"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
 
     <UserControl.Resources>
-        <local:ButtonListViewModel x:Name="ButtonListViewModel" x:Key="ButtonListViewModel"/>
+        <core:ButtonListViewModel x:Name="ButtonListViewModel" x:Key="ButtonListViewModel"/>
     </UserControl.Resources>
     <Grid d:DataContext="{StaticResource ButtonListViewModel}" Background="{StaticResource ForegroundLightBrush}">
         <Grid.RowDefinitions>

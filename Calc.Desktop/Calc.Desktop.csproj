@@ -51,6 +51,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Calc.Desktop.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Windows.Shell, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Windows.Shell.3.0.1.0\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
@@ -94,8 +97,6 @@
     <Compile Include="Controls\SideMenuControl.xaml.cs">
       <DependentUpon>SideMenuControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\ApplicationPage.cs" />
-    <Compile Include="IoC\IoC.cs" />
     <Compile Include="Pages\FloatRepresentationPage.xaml.cs">
       <DependentUpon>FloatRepresentationPage.xaml</DependentUpon>
     </Compile>
@@ -105,23 +106,10 @@
     </Compile>
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\ValueConverter.cs" />
-    <Compile Include="ViewModels\Mediator\Mediator.cs" />
-    <Compile Include="ViewModels\Mediator\MultiDictionary.cs" />
-    <Compile Include="ViewModels\Mediator\ViewModelMessages.cs" />
-    <Compile Include="ViewModels\Pages\BaseConverterViewModel.cs" />
-    <Compile Include="ViewModels\Controls\ButtonListViewModel.cs" />
-    <Compile Include="ViewModels\Controls\LinePosition.cs" />
-    <Compile Include="ViewModels\Controls\SquareButtonViewModel.cs" />
-    <Compile Include="ViewModels\Pages\FloatRepresentationViewModel.cs" />
-    <Compile Include="ViewModels\Base\BaseViewModel.cs" />
-    <Compile Include="ViewModels\Base\RelayCommand.cs" />
-    <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
-    <Compile Include="ViewModels\TrulyObservableCollection.cs" />
-    <Compile Include="ViewModels\Pages\WelcomeViewModel.cs" />
-    <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Pages\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Window\WindowResizer.cs" />
     <Page Include="Controls\ButtonListControl.xaml">
       <SubType>Designer</SubType>
@@ -239,9 +227,9 @@
     <Folder Include="AttachedProperties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Calc\Calc.csproj">
-      <Project>{43da7711-66e5-4b30-a01d-be931b1bc353}</Project>
-      <Name>Calc</Name>
+    <ProjectReference Include="..\Calc.Core\Calc.Core.csproj">
+      <Project>{e8bcf8e5-c6c7-409f-8299-25c413c6bb4a}</Project>
+      <Name>Calc.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

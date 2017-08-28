@@ -1,11 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using System.Threading.Tasks;
+﻿
 using Calc.PositionalSystem;
-using System.ComponentModel;
 using System;
 
-namespace Calc.Desktop
+namespace Calc.Core
 {
     public class FloatRepresentationViewModel : BaseViewModel
     {
@@ -23,8 +20,7 @@ namespace Calc.Desktop
 
             set
             {
-                float result;
-                if (float.TryParse(value, out result))
+                if (float.TryParse(value, out float result))
                 {
                     var rep = new SingleRepresentation(result);
                     WriteRepresentation(rep);
@@ -66,8 +62,7 @@ namespace Calc.Desktop
             get => InputNumber.SingleRep.ExponentValue.ToString().Split('.')[0];
             set
             {
-                int result;
-                if (Int32.TryParse(value ,out result))
+                if (Int32.TryParse(value, out int result))
                 {
                     var newExponent = fConverter.GetExponentFromValue(result);
                     var rep = CreateRepresentationFromElementString(newExponent);

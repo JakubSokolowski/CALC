@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using System.Threading.Tasks;
 
-namespace Calc.Desktop
+namespace Calc.Core
 {
     public class WelcomeViewModel : BaseViewModel
     {     
