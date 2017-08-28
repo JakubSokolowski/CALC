@@ -6,63 +6,80 @@
       xmlns:local="clr-namespace:Calc.Desktop"
       mc:Ignorable="d" 
       x:Name="Page"
-      d:DesignHeight="500" d:DesignWidth="700"
+      d:DesignHeight="650" d:DesignWidth="900"
       Title="FloatRepresentationPage">
 
-    <Border BorderThickness="0 0.2 0 0">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel Background="{StaticResource WhiteBrush}">
 
-                <!-- Input Number -->
-                <TextBlock Margin="50,50,0,0" Style="{StaticResource SmallText}" Text="Input Number"/>
-                <TextBox x:Name="InputNumberTextBox" Style="{StaticResource UnderlinedTextBox}" Margin="50,0,50,10" Height="40"  Text="{Binding InputString}" />
+    <Border Background="{StaticResource BackgroundLightBrush}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <local:SideMenuControl Grid.Column="0">
                 
-                
-                <TextBlock Margin="50,0,0,0" Style="{StaticResource SmallText}" Text="Value Stored In Float"/>
-                <TextBox x:Name="ActualFloatValue" Style="{StaticResource UnderlinedTextBox}" Margin="50,0,50,10" Height="40"  Text="{Binding InputString}" />
-                
+            </local:SideMenuControl>
+
+            <Border Grid.Column="1" BorderThickness="0,2,0,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+                    <StackPanel Background="{StaticResource WhiteBrush}">
+
+                        <!-- Input Number -->
+                        <TextBlock Margin="50,50,0,0" Style="{StaticResource SmallText}" Text="Input Number"/>
+                        <TextBox x:Name="InputNumberTextBox" Style="{StaticResource UnderlinedTextBox}" Margin="50,0,50,10" Height="40"  Text="{Binding InputString}" />
 
 
-                <StackPanel Margin="50,10,50,10"  Orientation="Horizontal" >
+                        <TextBlock Margin="50,0,0,0" Style="{StaticResource SmallText}" Text="Value Stored In Float"/>
+                        <TextBox x:Name="ActualFloatValue" Style="{StaticResource UnderlinedTextBox}" Margin="50,0,50,10" Height="40"  Text="{Binding InputString}" />
 
-                    <StackPanel Margin="0,0,10,0">
-                        <TextBlock/>
-                        <TextBlock Text="Value:" Margin="0,10,0,0" Style="{StaticResource SmallText}"/>
-                        <TextBlock Text="Encoded As:" Margin="0,10,0,0"  Style="{StaticResource SmallText}"/>
-                        <TextBlock Text="Binary:"  Margin="0,10,0,0" Style="{StaticResource SmallText}"/>
+
+
+                        <StackPanel Margin="50,10,50,0"  Orientation="Horizontal" >
+
+                            <StackPanel Margin="0,0,10,0">
+                                <TextBlock/>
+                                <TextBlock Text="Value:" Margin="0,10,0,0" Style="{StaticResource SmallText}"/>
+                                <TextBlock Text="Encoded As:" Margin="0,10,0,0"  Style="{StaticResource SmallText}"/>
+                                <TextBlock Text="Binary:"  Margin="0,10,0,0" Style="{StaticResource SmallText}"/>
+                            </StackPanel>
+
+                            <!-- Sign -->
+                            <StackPanel Margin="0,0,10,0" Width="Auto">
+                                <TextBlock Style="{StaticResource SmallText}" Text="Sign"/>
+                                <TextBox Style="{StaticResource UnderlinedTextBox}" FontSize="15" Height="20" Margin="0"  Text="{Binding SignInDecimal ,Mode=OneWay}"/>
+                                <TextBox Style="{StaticResource UnderlinedTextBox}" FontSize="15" Margin="0,10,0,0" Height="20"  Text="{Binding SignEncoding, Mode=OneWay}"/>
+                                <local:ButtonListControl x:Name="Sign" Margin="0,15,0,0" DataContext="{Binding Sign}"/>
+                            </StackPanel>
+
+                            <!-- Exponent -->
+                            <StackPanel  Margin="10,0,10,0" Width="Auto">
+                                <TextBlock Style="{StaticResource SmallText}" Text="Exponent"/>
+                                <TextBox  Style="{StaticResource UnderlinedTextBox}" Margin="0" Text="{Binding ExponentInDecimal}"  FontSize="15" Height="20"/>
+                                <TextBox Style="{StaticResource UnderlinedTextBox}" Margin="0,10,0,0" FontSize="15" Height="20"  Text="{Binding ExponentEncoding}"/>
+                                <local:ButtonListControl x:Name="Exponent" Margin="0,15,0,0" DataContext="{Binding Exponent}"/>
+                            </StackPanel>
+
+                            <!-- Mantissa -->
+                            <StackPanel  Margin="10,0,0,0" Width="Auto">
+                                <TextBlock Style="{StaticResource SmallText}" Text="Mantissa"/>
+                                <TextBox Style="{StaticResource UnderlinedTextBox}" Margin="0" FontSize="15" Text="{Binding MantissaInDecimal,Mode=OneWay}" Height="20"/>
+                                <TextBox Style="{StaticResource UnderlinedTextBox}" Margin="0,10,0,0" Height="20" FontSize="15"  Text="{Binding MantissaEncoding,Mode=OneWay}"/>
+                                <local:ButtonListControl x:Name="Mantissa"  Margin="0,15,0,0" DataContext="{Binding Mantissa}"/>
+
+                            </StackPanel>
+                        </StackPanel>
+
+                        <TextBlock Style="{StaticResource SmallText}" Text="{Binding ErrorMessage}"/>
+
+
                     </StackPanel>
-                    
-                    
-                    <StackPanel Margin="0,0,10,0" Width="Auto">
-                        <TextBlock Style="{StaticResource SmallText}" Text="Sign"/>
-                        <TextBox Style="{StaticResource UnderlinedTextBox}" FontSize="15" Height="20" Margin="0"  Text="{Binding SignInDecimal ,Mode=OneWay}"/>
-                        <TextBox Style="{StaticResource UnderlinedTextBox}" FontSize="15" Margin="0,10,0,0" Height="20"  Text="{Binding SignEncoding, Mode=OneWay}"/>
-                        <local:ButtonListControl x:Name="Sign" Margin="0,15,0,0" DataContext="{Binding Sign}"/>
-                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+            
 
-                    <StackPanel  Margin="10,0,10,0" Width="Auto">
-                        <TextBlock Style="{StaticResource SmallText}" Text="Exponent"/>
-                        <TextBox  Style="{StaticResource UnderlinedTextBox}" Margin="0" Text="{Binding ExponentInDecimal,Mode=OneWay}"  FontSize="15" Height="20"/>
-                        <TextBox Style="{StaticResource UnderlinedTextBox}" Margin="0,10,0,0" FontSize="15" Height="20"  Text="{Binding ExponentEncoding,Mode=OneWay}"/>
-                        <local:ButtonListControl x:Name="Exponent" Margin="0,15,0,0" DataContext="{Binding Exponent}"/>
-                        
-                    </StackPanel>
-
-                    <StackPanel  Margin="10,0,0,0" Width="Auto">
-                        <TextBlock Style="{StaticResource SmallText}" Text="Mantissa"/>
-                        <TextBox Style="{StaticResource UnderlinedTextBox}" Margin="0" FontSize="15" Text="{Binding MantissaInDecimal,Mode=OneWay}" Height="20"/>
-                        <TextBox Style="{StaticResource UnderlinedTextBox}" Margin="0,10,0,0" Height="20" FontSize="15"  Text="{Binding MantissaEncoding,Mode=OneWay}"/>
-                        <local:ButtonListControl x:Name="Mantissa"  Margin="0,15,0,0" DataContext="{Binding Mantissa}"/>
-                       
-                    </StackPanel>
-                </StackPanel>
-
-                <TextBlock Style="{StaticResource SmallText}" Text="{Binding ErrorMessage}"/>
-
-
-            </StackPanel>
-        </ScrollViewer>
-    </Border>
+        </Grid>
+    </Border>  
   
      
 
