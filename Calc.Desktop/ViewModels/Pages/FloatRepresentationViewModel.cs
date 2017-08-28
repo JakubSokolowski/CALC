@@ -9,23 +9,18 @@ namespace Calc.Desktop
 {
     public class FloatRepresentationViewModel : BaseViewModel
     {
-        #region Private Members
-
         private FloatConverter fConverter = new FloatConverter();
-        private Number InputNumber { get; set; } = NumberConverter.ToBase(0m, 10);
+        private BaseConverter bConverter = new BaseConverter();      
 
-        private string mSingleRepresentation = "";
+        private string mSingleRepresentation = "";    
 
-        #endregion
+        public Number InputNumber { get; set; } = NumberConverter.ToBase(0.0, 10);
 
-
-        #region Public Properties
-
-
+        // Takes value from InputNumber textbox
         public string InputString
         {
             get => InputNumber.ValueInBase;
-         
+
             set
             {
                 float result;
@@ -41,7 +36,7 @@ namespace Calc.Desktop
                     ErrorMessage = "Invalid Input";
             }
         }
-
+        // Takes value from collection of Numbers
         private string SingleRepresentation
         {
             get => mSingleRepresentation = "";
@@ -49,112 +44,121 @@ namespace Calc.Desktop
             {
                 mSingleRepresentation = value;
                 var rep = new SingleRepresentation(value);
+                WriteRepresentation(rep);
                 InputNumber = NumberConverter.ToBase(rep, InputNumber.Radix);
-                ErrorMessage = "";                
+                ErrorMessage = "";
             }
-        }
+        }        
 
-
-        public string ErrorMessage { get; set; } = "";
-
-      
         public ButtonListViewModel Sign { get; set; }
         public ButtonListViewModel Exponent { get; set; }
         public ButtonListViewModel Mantissa { get; set; }
 
-        public string SignString => Sign.GetContent();
-        public string ExponentString => Exponent.GetContent();
-        public string MantissaString => Mantissa.GetContent();
+        public string SingleValue => SignString + ExponentString + MantissaString;
 
-        public string SingleValue { get => SignString + ExponentString + MantissaString; }
+        public string SignString => Sign.GetAllButtonsText();
+        public string ExponentString => Exponent.GetAllButtonsText();
+        public string MantissaString => Mantissa.GetAllButtonsText();   
 
-
-        
-        public string SignInDecimal { get { return InputNumber.SingleRep.Sign == "1" ? "-1" : "1"; }  set { } }
-        public string ExponentInDecimal { get { return InputNumber.SingleRep.ExponentValue.ToString().Split('.')[0]; } }
+        public string SignInDecimal => InputNumber.SingleRep.Sign == "1" ? "-1" : "1"; 
+        public string ExponentInDecimal
+        {
+            get => InputNumber.SingleRep.ExponentValue.ToString().Split('.')[0];
+            set
+            {
+                int result;
+                if (Int32.TryParse(value ,out result))
+                {
+                    var newExponent = fConverter.GetExponentFromValue(result);
+                    var rep = CreateRepresentationFromElementString(newExponent);
+                    InputNumber = NumberConverter.ToBase(rep, InputNumber.Radix);
+                    SingleRepresentation = InputNumber.SingleBinaryString;
+                    ErrorMessage = "";
+                }
+            }
+        }
         public string MantissaInDecimal { get { return InputNumber.SingleRep.MantissaValue.ToString(); } }
 
-        public string SignEncoding { get { return InputNumber.SingleRep.Sign; } set { } }
-        public string ExponentEncoding { get { return InputNumber.SingleRep.ExponentEncoding.ToString().Split('.')[0]; } }
+        public string SignEncoding => InputNumber.SingleRep.Sign; 
+        public string ExponentEncoding
+        {
+            get => InputNumber.SingleRep.ExponentEncoding.ToString().Split('.')[0];
+            set
+            {
+                int result;
+                if (Int32.TryParse(value, out result))
+                {
+                    var newExponent = fConverter.GetExponentFromEncoding(result);
+                    var rep = CreateRepresentationFromElementString(newExponent);
+                    InputNumber = NumberConverter.ToBase(rep, InputNumber.Radix);
+                    SingleRepresentation = InputNumber.SingleBinaryString;
+                    ErrorMessage = "";
+                }
+            }
+        }
         public string MantissaEncoding { get { return InputNumber.SingleRep.MantissaEncoding.ToString(); } }
+     
 
-      
-        
-
-
-        public ICommand StartCommand { get; set; }
-        public ICommand GetButtonsContent { get; set; }
-        public ICommand AddButton { get; set; }
-
-
-        #endregion
-
-        #region Constructor
+        public string ErrorMessage { get; set; } = "";
 
         public FloatRepresentationViewModel()
         {
             AssignCommands();
             CreateSingleRepresentation();
-            this.PropertyChanged += new PropertyChangedEventHandler(SubPropertyChanged);
-            Mediator.Instance.Register((Object o) =>
-            {
-                SingleRepresentation = SingleValue;
-            }, ViewModelMessages.RepresentationUpdated);
+            RegisterForEvents();
         }
 
+        public void AssignCommands()
+        {
+
+        }
         public void CreateSingleRepresentation()
         {
             Sign = new ButtonListViewModel();
             Exponent = new ButtonListViewModel();
             Mantissa = new ButtonListViewModel();
             WriteRepresentation(InputNumber.SingleRep);
-
         }
-
-        public async Task StartMainPage()
+        public void CreateDoubleRepresentation()
         {
-            await Task.Delay(500);
-           
+
         }
-      
 
-
-      
-        #endregion
-
-        #region Private Helpers
-
-        public void AssignCommands()
-        {
-            StartCommand = new RelayCommand(async () => await StartMainPage());
-           
-        }
+        public void RegisterForEvents()
+        {      
+            // Register the value change, when buttons in Collection are clicked
+            Mediator.Instance.Register((Object o) =>
+            {
+                SingleRepresentation = SingleValue;
+            },  ViewModelMessages.RepresentationUpdated);
+        }                     
 
         public void WriteRepresentation(FloatingPointRepresentation representation)
         {
-            Sign.WriteText(representation.Sign);
-            Exponent.WriteText(representation.Exponent);
-            Mantissa.WriteText(representation.Mantissa);
+            Sign.WriteOnButtons(representation.Sign);
+            Exponent.WriteOnButtons(representation.Exponent);
+            Mantissa.WriteOnButtons(representation.Mantissa);
         }
-
-        private void SubPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "SingleValue")
-                CalculateFromSingleValue();
-            if(e.PropertyName == "Sign")
-            {
-
-            }
-
-        }
-
         private void CalculateFromSingleValue()
         {
             var rep = new SingleRepresentation(SingleValue);
             InputNumber = NumberConverter.ToBase(rep, 10);
         }
-    
-        #endregion
+
+        private SingleRepresentation CreateRepresentationFromElementString(string elementString)
+        {
+            switch(elementString.Length)
+            {
+                case 1:
+                    return new SingleRepresentation(elementString + ExponentString + MantissaString);
+                case 8:
+                    return new SingleRepresentation(SignString + elementString + MantissaString);
+                case 23:
+                    return new SingleRepresentation(SignString + ExponentString + elementString);
+                default:
+                    throw new ArgumentException("The elementString is not Sign exponent or mantissa");
+            }
+        }
 
     }
 }
