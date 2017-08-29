@@ -38,7 +38,7 @@ namespace Calc.PositionalSystem
             int delimeterIndex;
 
             var strList = ConvertToDigitListAndRemoveEmptyDigits(value, radix, out delimeterIndex);
-            var complement = CalculateComplement(ref strList, radix);
+            var complement = CalculateComplement(strList, radix);
 
             if(sufix == String.Empty)
                 complement = RestoreDelimeter(complement, radix, delimeterIndex);
@@ -152,7 +152,7 @@ namespace Calc.PositionalSystem
                 return string.Join(String.Empty, digitList);
         }      
 
-        public string CalculateComplement(ref List<string> strList, int radix)
+        public string CalculateComplement(List<string> strList, int radix)
         {
             for (int i = 0; i < strList.Count; i++)
                 strList[i] = GetDigitComplement(strList[i], radix);
