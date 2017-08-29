@@ -38,7 +38,7 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Foreground="Black" Margin ="45,15,45,15" Content="Start Learning" Style ="{StaticResource TextOnlyButton}" FontFamily="{StaticResource LatoThin}" FontSize="30" Command="{Binding StartMenuCommand}"/>
+                        <Button Foreground="Black" Margin ="45,15,45,15" Content="Start Learning" Style ="{StaticResource TextOnlyButton}" FontFamily="{StaticResource LatoThin}" FontSize="30" Command="{Binding StartCommand}"/>
 
                         <!-- Preferences Stack Panel-->
                         <StackPanel Margin="100 0 100 0">
