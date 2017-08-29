@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using System;
+using Ninject;
 
 namespace Calc.Core
 {
@@ -16,7 +17,13 @@ namespace Calc.Core
         // Bind all Singleton viewmodels
         private static void BindViewModels()
         {
-        
+            Kernel.Bind<ApplicationViewModel>().ToConstant(new ApplicationViewModel());
+        }
+
+        // Get's a service from the IoC
+        public static T Get<T>()
+        {
+            return Kernel.Get<T>();
         }
     }
 
