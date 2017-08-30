@@ -12,7 +12,8 @@ namespace Calc.Core
             StartCommand = new RelayCommand( () =>   StartMainPage());
         }
         public void StartMainPage()
-        {          
+        {
+            IoC.Get<ApplicationViewModel>().SideMenuVisible ^= true;
             IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.FloatRepresentation;           
         }  
 
