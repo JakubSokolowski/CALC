@@ -86,8 +86,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Animation\AnimationStyles.cs" />
+    <Compile Include="Animation\FrameworkElementAnimations.cs" />
     <Compile Include="Animation\PageAnimations.cs" />
     <Compile Include="Animation\StoryboardHelpers.cs" />
+    <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\FrameworkElementAnimation\AnimateBaseProperty.cs" />
+    <Compile Include="AttachedProperties\FrameworkElementAnimation\AnimateSlideInFromLeftProperty.cs" />
     <Compile Include="Controls\ButtonListControl.xaml.cs">
       <DependentUpon>ButtonListControl.xaml</DependentUpon>
     </Compile>
@@ -225,9 +229,7 @@
     <Resource Include="Images\Logo\temp-chip-265x265.png" />
     <Resource Include="Images\Logo\temp-chip-small.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AttachedProperties\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Calc.Core\Calc.Core.csproj">
       <Project>{e8bcf8e5-c6c7-409f-8299-25c413c6bb4a}</Project>
