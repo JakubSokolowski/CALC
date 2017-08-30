@@ -18,7 +18,7 @@ namespace Calc.PositionalSystem
         
         private static BaseDigits digits = new BaseDigits();
         private static ComplementConverter comp = new ComplementConverter();
-        private int formatPrecision = 20;
+        private int formatPrecision = 30;
        
 
         #endregion
