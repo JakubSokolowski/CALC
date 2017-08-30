@@ -12,17 +12,8 @@
 
 
     <Border Background="{StaticResource BackgroundLightBrush}">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <local:SideMenuControl Grid.Column="0">
-                
-            </local:SideMenuControl>
-
-            <Border Grid.Column="1" BorderThickness="0,2,0,0">
+        <Grid>            
+            <Border Grid.Column="0" BorderThickness="0,2,0,0">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
                     <StackPanel Background="{StaticResource WhiteBrush}">
 

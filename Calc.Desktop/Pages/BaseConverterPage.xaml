@@ -12,20 +12,9 @@
 
 
     <Border Background="{StaticResource BackgroundLightBrush}">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Frame Padding="0" Grid.Column="0" x:Name="MenuFrame" Content="{Binding MenuPage, Converter={local:ApplicationPageValueConverter}}"/>
-
-            <!-- Menu -->
-            <local:SideMenuControl Grid.Column="0">
-                
-            </local:SideMenuControl>
-            
+        <Grid> 
             <!-- Base Converter -->            
-            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" BorderThickness="0,0.2,0,0">
+            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" BorderThickness="0,0.2,0,0">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel Background="{StaticResource WhiteBrush}">
 
