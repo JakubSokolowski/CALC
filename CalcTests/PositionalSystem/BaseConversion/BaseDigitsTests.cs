@@ -1,10 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Calc.PositionalSystem;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Calc.PositionalSystem.Tests
 {
@@ -104,12 +99,6 @@ namespace Calc.PositionalSystem.Tests
             var actual = digits.GetValue("10");
         }
 
-        #endregion
-
-        [TestMethod()]
-        public void GetValueTest()
-        {
-
-        }
+        #endregion       
     }
 }

@@ -57,9 +57,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="PositionalSystem\BaseConversion\BaseDigitsTests.cs" />
-    <Compile Include="PositionalSystem\BaseConversion\BaseRepresentationTests.cs" />
     <Compile Include="PositionalSystem\BaseConversion\BaseConverterTests.cs" />
     <Compile Include="PositionalSystem\ComplementConversion\ComplementConverterTests.cs" />
+    <Compile Include="PositionalSystem\ConversionHelpersTests.cs" />
     <Compile Include="PositionalSystem\FloatConversion\DoubleRepresentationTests.cs" />
     <Compile Include="PositionalSystem\FloatConversion\FloatConverterTests.cs" />
     <Compile Include="PositionalSystem\FloatConversion\SingleRepresentationTests.cs" />

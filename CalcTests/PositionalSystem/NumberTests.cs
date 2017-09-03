@@ -108,18 +108,7 @@ namespace Calc.PositionalSystem.Tests
             var expected = 0.0;
 
             Assert.AreEqual(num3.DecimalValue, expected);
-        }
-
-        [TestMethod()]
-        [ExpectedException(typeof(OverflowException))]
-        public void Addition_Overflow_Fail()
-        {
-            var left = long.MaxValue;
-            var right = long.MaxValue;
-            var num1 = NumberConverter.ToBase(left, 10);
-            var num2 = NumberConverter.ToBase(right, 10);
-            var num3 = num1 + num2;
-        }
+        }       
 
         #endregion
         #region Substraction Tests
@@ -206,18 +195,7 @@ namespace Calc.PositionalSystem.Tests
             var expected = 0.0;
 
             Assert.AreEqual(num3.DecimalValue, expected);
-        }
-
-        [TestMethod()]
-        [ExpectedException(typeof(OverflowException))]
-        public void Substraction_Overflow_Fail()
-        {
-            var left = long.MinValue + 100;
-            var right = 10000;
-            var num1 = NumberConverter.ToBase(left, 10);
-            var num2 = NumberConverter.ToBase(right, 10);
-            var num3 = num1 - num2;
-        }
+        }        
 
         #endregion
 
