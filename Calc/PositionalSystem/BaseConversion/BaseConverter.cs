@@ -66,7 +66,7 @@ namespace Calc.PositionalSystem
         /// <returns>The<see cref="Number"/> in given base</returns>
         public  BaseRepresentation ToBase(BaseRepresentation number, int resultBase)
         {
-            return ToBase(number.DecimalValue, number.Radix);
+            return ToBase(number.DecimalValue, resultBase);
         }
         /// <summary>
         /// Converts from decimal to arbitrary base <see cref="Number"/>.
