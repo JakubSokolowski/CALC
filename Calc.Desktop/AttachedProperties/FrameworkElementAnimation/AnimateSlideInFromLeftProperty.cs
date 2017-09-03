@@ -12,9 +12,9 @@ namespace Calc.Desktop
         protected override async void Animate(FrameworkElement element, bool value)
         {
             if (value)
-                await element.SlideAndFadeInFromLeft(FirstLoad ? 0 : 0.3f, keepMargin: false);
+                await element.SlideAndFadeInFromDirection(FirstLoad ? 0f : 0.4f, SlideDirection.Left, keepMargin: true);
             else
-                await element.SlideAndFadeOutToLeft(FirstLoad ? 0 : 0.3f, keepMargin: false);
+                await element.SlideAndFadeOutToDirection(FirstLoad ? 0: 0.4f, SlideDirection.Right, keepMargin: false);
         }
     }
 }
