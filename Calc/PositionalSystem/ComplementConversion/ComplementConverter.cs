@@ -116,7 +116,7 @@ namespace Calc.PositionalSystem
         public List<string> ConvertToDigitListAndRemoveEmptyDigits(string number, int radix, out int delimeterIndex)
         {
             var value = RemoveDelimeter(number, radix, out delimeterIndex);
-            var digitList = ConversionHelpers.RepresentationStringToStringList(value, radix);
+            var digitList = ConversionHelpers.RepresentationStringToListOfStrings(value, radix);
             digitList.RemoveAll(x => x == " ");
             return digitList;
         }

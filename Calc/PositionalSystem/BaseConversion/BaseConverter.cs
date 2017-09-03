@@ -157,7 +157,7 @@ namespace Calc.PositionalSystem
 
                     // Digits at positions in some representation are represented by multiple characters,
                     // so it's necessary to convert valueString to list of strings
-                    var strList = ConversionHelpers.RepresentationStringToStringList(valueString, radix);
+                    var strList = ConversionHelpers.RepresentationStringToListOfStrings(valueString, radix);
 
                     // The value at each position is calculated by taking the value of digit 
                     // and multiplying it by the base of number to the power of exponent
@@ -262,7 +262,7 @@ namespace Calc.PositionalSystem
             double decimalFraction = 0.0;
             double exponent = 1.0;
 
-            var strList = ConversionHelpers.RepresentationStringToStringList(fractionStr, radix);
+            var strList = ConversionHelpers.RepresentationStringToListOfStrings(fractionStr, radix);
             digits.CurrentBase = radix;
 
             // The value at each position is calculated by taking the value of digit 

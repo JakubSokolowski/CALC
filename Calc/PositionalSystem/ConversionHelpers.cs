@@ -8,7 +8,7 @@ namespace Calc.PositionalSystem
 {
     public static class ConversionHelpers
     {
-        public static List<string> RepresentationStringToStringList(string str, int radix)
+        public static List<string> RepresentationStringToListOfStrings(string str, int radix)
         {
             var strList = new List<String>();
             if (radix <= 36)
