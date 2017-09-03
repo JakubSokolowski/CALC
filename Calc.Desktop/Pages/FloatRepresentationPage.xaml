@@ -11,23 +11,23 @@
       Title="FloatRepresentationPage">
 
 
-    <Border Background="{StaticResource BackgroundLightBrush}">
+    <Border Background="{StaticResource WhiteBrush}">
         <Grid>            
             <Border Grid.Column="0" BorderThickness="0,2,0,0">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
-                    <StackPanel Background="{StaticResource WhiteBrush}">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Margin="30" Background="{StaticResource WhiteBrush}">
 
                         <!-- Input Number -->
-                        <TextBlock Margin="50,50,0,0" Style="{StaticResource SmallText}" Text="Input Number"/>
-                        <TextBox x:Name="InputNumberTextBox" Style="{StaticResource UnderlinedTextBox}" Margin="50,0,50,10" Height="40"  Text="{Binding InputString}" />
+                        <TextBlock Style="{StaticResource SmallText}" Text="Input Number"/>
+                        <TextBox x:Name="InputNumberTextBox" Style="{StaticResource UnderlinedTextBox}" Margin="0,0,0,10" Height="40"  Text="{Binding InputString}" />
 
 
-                        <TextBlock Margin="50,0,0,0" Style="{StaticResource SmallText}" Text="Value Stored In Float"/>
-                        <TextBox x:Name="ActualFloatValue" Style="{StaticResource UnderlinedTextBox}" Margin="50,0,50,10" Height="40"  Text="{Binding InputString}" />
+                        <TextBlock Margin="0,0,0,0" Style="{StaticResource SmallText}" Text="Value Stored In Float"/>
+                        <TextBox x:Name="ActualFloatValue" Style="{StaticResource UnderlinedTextBox}" Margin="0,0,0,10" Height="40"  Text="{Binding InputString}" />
 
 
 
-                        <StackPanel Margin="50,10,50,0"  Orientation="Horizontal" >
+                        <StackPanel Margin="0,10,0,0"  Orientation="Horizontal" >
 
                             <StackPanel Margin="0,0,10,0">
                                 <TextBlock/>
