@@ -18,7 +18,18 @@ namespace Calc.Core
         private static void BindViewModels()
         {
             Kernel.Bind<ApplicationViewModel>().ToConstant(new ApplicationViewModel());
+            Kernel.Bind<WelcomeViewModel>().ToConstant(new WelcomeViewModel());
+            Kernel.Bind<BaseConverterViewModel>().ToConstant(new BaseConverterViewModel());
+            Kernel.Bind<FloatRepresentationViewModel>().ToConstant(new FloatRepresentationViewModel());
         }
+
+        private static void BindPages()
+        {
+        
+        }
+       
+
+
 
         // Get's a service from the IoC
         public static T Get<T>()
