@@ -331,6 +331,22 @@ namespace Calc.PositionalSystem.Tests
 
         #endregion
 
+        #region Special Cases
+
+        [TestMethod()]
+        public void ToBase_InputBaseSameAsOutputBase_Pass()
+        {
+            var input = "01 36.00";
+            string expected = "01 36.00";
+            string expectedComplement = "(00)01 36.00";
+            int radix = 64;
+            BaseRepresentation result = bc.ToBase(input,radix, radix);
+            Assert.AreEqual(expected, result.ValueInBase);
+            Assert.AreEqual(expectedComplement, result.Complement);
+        }
+
+        #endregion
+
         #endregion
 
 
