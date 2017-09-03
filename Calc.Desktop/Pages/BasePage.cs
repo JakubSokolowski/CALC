@@ -12,16 +12,16 @@ namespace Calc.Desktop
     {
         private VM mViewModel;
 
-        public AnimationStyles LoadAnimation { get; set; } = AnimationStyles.FadeIn;
+        public AnimationStyles LoadAnimation { get; set; } = AnimationStyles.SlideAndFadeFromBottom;
         public AnimationStyles UnloadAnimation { get; set; } = AnimationStyles.SlideAndFadeOutToBottom;
 
 
-        public float SlideTimeSeconds { get; set; } = 0.8f;
+        public float SlideTimeSeconds { get; set; } = 0.4f;
         public float FadeTimeSeconds { get; set; } = 0.8f;
 
         public VM ViewModel
         {
-            get { return mViewModel; }
+            get => ViewModel;
             set
             {
                 // If nothing has changed, return
@@ -36,16 +36,17 @@ namespace Calc.Desktop
             }
         }
 
-
+        
         public BasePage()
         {
             // If this page has any animation, start with the page hidden
-            if (this.LoadAnimation != AnimationStyles.None)
-                this.Visibility = Visibility.Collapsed;
+            if (LoadAnimation != AnimationStyles.None)
+                Visibility = Visibility.Collapsed;
 
             // Listen out for page loading
-            this.Loaded += BasePage_Loaded;
-            this.ViewModel = new VM();
+            Loaded += BasePage_Loaded;
+            //ViewModel = new VM();
+            ViewModel = IoC.Get<VM>();
         }
 
         private async void BasePage_Loaded(object sender, RoutedEventArgs e)
@@ -55,32 +56,32 @@ namespace Calc.Desktop
 
         public async Task AnimateIn()
         {
-            if (this.LoadAnimation == AnimationStyles.None)
+            if (LoadAnimation == AnimationStyles.None)
                 return;
 
-            switch(this.LoadAnimation)
+            switch(LoadAnimation)
             {
                 case AnimationStyles.SlideAndFadeFromBottom:
-                    await this.SlideAndFadeInFromTheBottom(this.SlideTimeSeconds);
+                    await this.SlideAndFadeInFromDirection(SlideTimeSeconds, SlideDirection.Bottom, keepMargin: true);
                     break;
                 case AnimationStyles.FadeIn:
-                    await this.FadeIn(this.SlideTimeSeconds);
+                    await this.FadeIn(SlideTimeSeconds);
                     break;
             }
         }
 
         public async Task AnimateOut()
         {
-            if (this.UnloadAnimation == AnimationStyles.None)
+            if (UnloadAnimation == AnimationStyles.None)
                 return;
 
-            switch (this.UnloadAnimation)
+            switch (UnloadAnimation)
             {
                 case AnimationStyles.SlideAndFadeOutToBottom:
-                    await this.SlideAndFadeOutToBottom(this.SlideTimeSeconds);
+                    await this.SlideAndFadeOutToDirection(SlideTimeSeconds, SlideDirection.Bottom, keepMargin: true);
                     break;
                 case AnimationStyles.FadeIn:
-                    await this.FadeOut(this.SlideTimeSeconds);
+                    await this.FadeOut(SlideTimeSeconds);
                     break;
             }
         }
