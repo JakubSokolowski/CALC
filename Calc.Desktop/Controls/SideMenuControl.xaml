@@ -7,11 +7,11 @@
              xmlns:core="clr-namespace:Calc.Core;assembly=Calc.Core"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="250">
-
+    
     <UserControl.Template>
-        <ControlTemplate TargetType="UserControl">
+        <ControlTemplate TargetType="UserControl"> 
             
-            <Border  Background="{StaticResource VeryLightGrayBrush}">
+            <Border Background="{StaticResource VeryLightGrayBrush}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -28,9 +28,9 @@
 
                         <!-- Main Buttons -->
                         <StackPanel Orientation="Horizontal">
-                            <Button Style="{StaticResource IconButton}" Content ="{StaticResource FontAwesomeExchange}"/>
-                            <Button Style="{StaticResource IconButton}" Content ="{StaticResource FontAwesomeCalculator}"/>
-                            <Button Style="{StaticResource IconButton}" Content ="0.8"/>
+                            <Button x:Name="BaseConverterButton"  Style="{StaticResource SideMenuButton}" Content ="{StaticResource FontAwesomeExchange}" Command="{Binding Path=GoToBaseConverterCommand}"/>
+                            <Button x:Name="CalculatorButton" Style="{StaticResource SideMenuButton}" Content ="{StaticResource FontAwesomeCalculator}" Command="{Binding Path=GoToCalulatorCommand}"/>
+                            <Button x:Name="FloatConverterButton"  Style="{StaticResource SideMenuButton}" Content ="0.8" Command="{Binding Path=GoToFloatConverterCommand}"/>
                         </StackPanel>
                         
                         <!-- Settings Button -->

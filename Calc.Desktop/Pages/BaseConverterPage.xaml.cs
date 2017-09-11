@@ -1,6 +1,4 @@
-﻿
-
-using Calc.Core;
+﻿using Calc.Core;
 
 namespace Calc.Desktop
 {

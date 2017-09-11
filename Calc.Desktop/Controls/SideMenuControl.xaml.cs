@@ -22,7 +22,8 @@ namespace Calc.Desktop
     {
         public SideMenuControl()
         {
-            InitializeComponent();
-        }
+            InitializeComponent();          
+        }      
+       
     }
 }
