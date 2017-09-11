@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Calc.PositionalSystem
 {
-    interface IMathOperations
+    public interface IMathOperations<T>
+        where T: class
     {
-       
+        T Add(T left);
+        T Subtract(T left);
+        T Multiply(T left);
+        T Divide(T left);
+        
     }
 }
