@@ -316,7 +316,7 @@ namespace Calc.PositionalSystem
                 if (radix > 36)
                     builder.Append(" ");
             }
-            return RemoveTrailingZeros(builder.ToString());
+            return ConversionHelpers.RemoveTrailingZeros(builder.ToString());
         }
 
         #endregion
@@ -326,20 +326,7 @@ namespace Calc.PositionalSystem
        
         private static bool IsFloatingPointStr(string str) { return str.Contains("."); }
 
-        private static string RemoveTrailingZeros(string str)
-        {
-            int lenght = str.Length - 1;
-            for (int i = str.Length - 1; i >= 0; i--)
-            {
-                if (str.ElementAt(i) == '0' || str.ElementAt(i) == ' ')
-                    lenght = i;
-                else
-                    break;
-            }
-
-            return str.Substring(0, lenght);
-        }
-
+       
         public string AddZerosToTheLeft(string str, int desiredLength)
         {
             if (str.Length > desiredLength)
