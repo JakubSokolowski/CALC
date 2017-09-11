@@ -49,7 +49,7 @@ namespace Calc.Core
                     try
                     {
                         InputNumber = NumberConverter.ToBase(InputString, mInputBase, mInputBase);
-                        OutputNumber = NumberConverter.ToBase(InputNumber, mOutputBase);
+                        OutputNumber = NumberConverter.ToBase(InputNumber.DecimalValue, mOutputBase);
 
                         mHistory.AddEntry(InputNumber, OutputNumber);
 

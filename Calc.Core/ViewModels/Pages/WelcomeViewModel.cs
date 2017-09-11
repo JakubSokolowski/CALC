@@ -16,6 +16,5 @@ namespace Calc.Core
             IoC.Get<ApplicationViewModel>().SideMenuVisible ^= true;
             IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.FloatRepresentation;           
         }  
-
     }
 }

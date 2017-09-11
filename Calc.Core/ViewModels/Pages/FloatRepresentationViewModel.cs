@@ -1,4 +1,4 @@
-﻿
+﻿using Calc.FloatingPointNumbers;
 using Calc.PositionalSystem;
 using System;
 
@@ -9,29 +9,54 @@ namespace Calc.Core
         private FloatConverter fConverter = new FloatConverter();
         private BaseConverter bConverter = new BaseConverter();      
 
-        private string mSingleRepresentation = "";    
+        private string mSingleRepresentation = "";
+        private string mInputString = "";
 
-        public Number InputNumber { get; set; } = NumberConverter.ToBase(0.0, 10);
+        private SingleRepresentation mInputRepresentation;
+
+        public SingleRepresentation InputRepresentation { get => mInputRepresentation; set => mInputRepresentation = value; }
 
         // Takes value from InputNumber textbox
         public string InputString
         {
-            get => InputNumber.ValueInBase;
+            get => mInputString;
 
             set
-            {
+            {                
                 if (float.TryParse(value, out float result))
                 {
-                    var rep = new SingleRepresentation(result);
-                    WriteRepresentation(rep);
-                    InputNumber = NumberConverter.ToBase(rep, InputNumber.Radix);
-                    SingleRepresentation = InputNumber.SingleBinaryString;
+                    InputRepresentation = fConverter.ToSingle(result);
+                    mInputString = InputRepresentation.DecimalValue.ToString("F20");                   
+                    mSingleRepresentation = InputRepresentation.BinaryString;
+                    WriteRepresentation(InputRepresentation);
                     ErrorMessage = "";
                 }
                 else
                     ErrorMessage = "Invalid Input";
             }
         }
+
+        public string ExactValue
+        {
+            get
+            {
+                var exp = Math.Pow(2, InputRepresentation.ExponentValue);
+                try
+                {                    
+                    decimal rep = (decimal)(exp * InputRepresentation.MantissaValue);
+                    return ConversionHelpers.RemoveTrailingZeros(rep.ToString());
+                }
+                catch(Exception ex)
+                {
+                    // UHHHHH
+                    ErrorMessage = "The Value is too large";
+                    return " ";
+                   
+                }
+               
+            }            
+        }
+
         // Takes value from collection of Numbers
         private string SingleRepresentation
         {
@@ -39,9 +64,9 @@ namespace Calc.Core
             set
             {
                 mSingleRepresentation = value;
-                var rep = new SingleRepresentation(value);
-                WriteRepresentation(rep);
-                InputNumber = NumberConverter.ToBase(rep, InputNumber.Radix);
+                InputRepresentation = fConverter.ToSingle(value);                
+                WriteRepresentation(InputRepresentation);
+                InputString = InputRepresentation.DecimalValue.ToString();
                 ErrorMessage = "";
             }
         }        
@@ -56,51 +81,49 @@ namespace Calc.Core
         public string ExponentString => Exponent.GetAllButtonsText();
         public string MantissaString => Mantissa.GetAllButtonsText();   
 
-        public string SignInDecimal => InputNumber.SingleRep.Sign == "1" ? "-1" : "1"; 
+        public string SignInDecimal => InputRepresentation.Sign == "1" ? "-1" : "1"; 
         public string ExponentInDecimal
         {
-            get => InputNumber.SingleRep.ExponentValue.ToString().Split('.')[0];
+            get => InputRepresentation.ExponentValue.ToString().Split('.')[0];
             set
             {
                 if (Int32.TryParse(value, out int result))
                 {
                     var newExponent = fConverter.GetExponentFromValue(result);
-                    var rep = CreateRepresentationFromElementString(newExponent);
-                    InputNumber = NumberConverter.ToBase(rep, InputNumber.Radix);
-                    SingleRepresentation = InputNumber.SingleBinaryString;
+                    InputRepresentation = CreateRepresentationFromElementString(newExponent);                   
+                    SingleRepresentation = InputRepresentation.BinaryString;
                     ErrorMessage = "";
                 }
             }
         }
-        public string MantissaInDecimal { get { return InputNumber.SingleRep.MantissaValue.ToString(); } }
-
-        public string SignEncoding => InputNumber.SingleRep.Sign; 
+        public string MantissaInDecimal => InputRepresentation.MantissaValue.ToString(); 
+        public string SignEncoding => InputRepresentation.Sign; 
         public string ExponentEncoding
         {
-            get => InputNumber.SingleRep.ExponentEncoding.ToString().Split('.')[0];
+            get => InputRepresentation.ExponentEncoding.ToString().Split('.')[0];
             set
             {
-                int result;
-                if (Int32.TryParse(value, out result))
+                if (Int32.TryParse(value, out int result))
                 {
                     var newExponent = fConverter.GetExponentFromEncoding(result);
-                    var rep = CreateRepresentationFromElementString(newExponent);
-                    InputNumber = NumberConverter.ToBase(rep, InputNumber.Radix);
-                    SingleRepresentation = InputNumber.SingleBinaryString;
+                    InputRepresentation = CreateRepresentationFromElementString(newExponent);                   
+                    SingleRepresentation = InputRepresentation.BinaryString;
                     ErrorMessage = "";
                 }
             }
         }
-        public string MantissaEncoding { get { return InputNumber.SingleRep.MantissaEncoding.ToString(); } }
+        public string MantissaEncoding => InputRepresentation.MantissaEncoding.ToString(); 
      
 
         public string ErrorMessage { get; set; } = "";
 
         public FloatRepresentationViewModel()
         {
+            mInputRepresentation = fConverter.ToSingle(0f);
+            mInputString = mInputRepresentation.DecimalValue.ToString();
             AssignCommands();
             CreateSingleRepresentation();
-            RegisterForEvents();
+            RegisterForEvents();            
         }
 
         public void AssignCommands()
@@ -112,13 +135,12 @@ namespace Calc.Core
             Sign = new ButtonListViewModel();
             Exponent = new ButtonListViewModel();
             Mantissa = new ButtonListViewModel();
-            WriteRepresentation(InputNumber.SingleRep);
+            WriteRepresentation(InputRepresentation);
         }
         public void CreateDoubleRepresentation()
         {
 
         }
-
         public void RegisterForEvents()
         {      
             // Register the value change, when buttons in Collection are clicked
@@ -136,8 +158,7 @@ namespace Calc.Core
         }
         private void CalculateFromSingleValue()
         {
-            var rep = new SingleRepresentation(SingleValue);
-            InputNumber = NumberConverter.ToBase(rep, 10);
+            InputRepresentation = fConverter.ToSingle(SingleValue); 
         }
 
         private SingleRepresentation CreateRepresentationFromElementString(string elementString)
@@ -145,14 +166,33 @@ namespace Calc.Core
             switch(elementString.Length)
             {
                 case 1:
-                    return new SingleRepresentation(elementString + ExponentString + MantissaString);
+                    return fConverter.ToSingle(elementString + ExponentString + MantissaString);
                 case 8:
-                    return new SingleRepresentation(SignString + elementString + MantissaString);
+                    return fConverter.ToSingle(SignString + elementString + MantissaString);
                 case 23:
-                    return new SingleRepresentation(SignString + ExponentString + elementString);
+                    return fConverter.ToSingle(SignString + ExponentString + elementString);
                 default:
                     throw new ArgumentException("The elementString is not Sign exponent or mantissa");
             }
+        }
+
+        private bool IsSpecialValue(string value)
+        {
+            switch(value)
+            {
+                case "NaN":
+                    return true;
+                case "+Inf":
+                    return true;
+                case "-Inf":
+                    return true;
+                case "+Zero":
+                    return true;
+                case "-Zero":
+                    return true;
+                default:
+                    return false;
+            }           
         }
 
     }
