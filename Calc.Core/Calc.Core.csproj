@@ -59,6 +59,7 @@
     <Compile Include="ViewModels\Base\RelayParameterizedCommand.cs" />
     <Compile Include="ViewModels\Controls\ButtonListViewModel.cs" />
     <Compile Include="ViewModels\Controls\LinePosition.cs" />
+    <Compile Include="ViewModels\Controls\SideMenuViewModel.cs" />
     <Compile Include="ViewModels\Controls\SquareButtonViewModel.cs" />
     <Compile Include="ViewModels\Mediator\Mediator.cs" />
     <Compile Include="ViewModels\Mediator\MultiDictionary.cs" />
