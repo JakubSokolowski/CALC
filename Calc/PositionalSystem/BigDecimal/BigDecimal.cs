@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Calc.PositionalSystem.BigDecimal
 {
-    public class BigDecimal : IFormattable, IComparable, IComparable<BigDecimal>, IEquatable<BigDecimal>
+    public class BigDecimal : IComparable, IComparable<BigDecimal>, IEquatable<BigDecimal>, IMathOperations<BigDecimal>
     {
         private BigInteger mIntegerValue;
         private int mScale;
@@ -25,12 +25,9 @@ namespace Calc.PositionalSystem.BigDecimal
                 return mPrecision;
             }                
         }
-
         public int Scale => mScale;
         public int Sign => mIntegerValue.Sign;
-        public BigInteger UnscaledValue => mIntegerValue;
-        
-
+        public BigInteger UnscaledValue => mIntegerValue;  
 
         public static BigDecimal Zero = new BigDecimal(BigInteger.Zero, 0);
         public static BigDecimal One = new BigDecimal(BigInteger.One, 0);
@@ -40,6 +37,12 @@ namespace Calc.PositionalSystem.BigDecimal
             mIntegerValue = new BigInteger(val);
             mScale = 0;
         }
+        public BigDecimal(long val)
+        {
+            mIntegerValue = new BigInteger(val);
+            mScale = 0;
+        }
+
         public BigDecimal(int val, MathContext mc)
             : this(val)
         {
@@ -118,7 +121,8 @@ namespace Calc.PositionalSystem.BigDecimal
 
             if(dot >= 0)
             {
-                val = num.Substring(start, dot) + num.Substring(dot + 1, point);
+                var parts = num.Split('.');
+                val = parts[0] + parts[1];
                 mScale = point - 1 - dot;
             }
             else
@@ -130,11 +134,12 @@ namespace Calc.PositionalSystem.BigDecimal
             if (val.Length == 0)
                 throw new FormatException("no digits seen");
 
-            if (negative)
-                val = "-" + val;
-            mIntegerValue = BigInteger.Parse(val);
+           
+            var value = BigInteger.Parse(val);
+            
+            mIntegerValue = value;
 
-            if(point < len)
+            if (point < len)
             {
                 point++;
                 if (num.ElementAt(point) == '+')
@@ -146,15 +151,12 @@ namespace Calc.PositionalSystem.BigDecimal
                 { 
                     mScale -= Int32.Parse(num.Substring(point));
                 }
-                catch(FormatException ex)
+                catch(FormatException)
                 {
                     throw new FormatException("malformed exponent");
                 }
             }
-        }
-
-      
-
+        }     
         public BigDecimal(BigInteger num, int scale, MathContext mc)
             : this(num,scale)
         {
@@ -218,6 +220,9 @@ namespace Calc.PositionalSystem.BigDecimal
 
         public BigDecimal Add(BigDecimal val)
         {
+            if (val.Equals(Zero))
+                return this;
+
             BigInteger op1 = mIntegerValue;
             BigInteger op2 = val.mIntegerValue;
             if (mScale < val.mScale)
@@ -240,7 +245,6 @@ namespace Calc.PositionalSystem.BigDecimal
         {
             return Subtract(val).Round(mc);
         }          
-
 
         public BigDecimal Multiply(BigDecimal val)
         {
@@ -267,7 +271,7 @@ namespace Calc.PositionalSystem.BigDecimal
                 power = 0;
             }
 
-            BigInteger dividend = BigInteger.Multiply(mIntegerValue, BigInteger.Pow(new BigInteger(10), -power));
+            BigInteger dividend = BigInteger.Multiply(mIntegerValue, BigInteger.Pow(new BigInteger(10), power));
             BigInteger unrounded =  BigInteger.DivRem(dividend, valIntVal, out BigInteger reminder);
 
             if (reminder.Sign == 0)
@@ -314,14 +318,23 @@ namespace Calc.PositionalSystem.BigDecimal
         public BigDecimal Divide(BigDecimal val, RoundingMode roundingMode)
         {
             return Divide(val, mScale, roundingMode);
-        }
-       
+        }       
         public BigDecimal Divide(BigDecimal divisor)
         {
             return Divide(divisor, mScale, RoundingMode.Unnecessary);
         }
 
-
+        public BigDecimal[] DivideAndReminder(BigDecimal val)
+        {
+            BigDecimal[] result = new BigDecimal[2];
+            result[0] = DivideToIntegralValue(val);
+            result[1] = Subtract(result[0].Multiply(val));
+            return result;
+        }
+        public BigDecimal DivideToIntegralValue(BigDecimal val)
+        {
+            return Divide(val, RoundingMode.Down).Floor().SetScale(mScale - val.mScale, RoundingMode.Down);
+        }
 
 
         public BigDecimal Round(MathContext mc)
@@ -338,20 +351,6 @@ namespace Calc.PositionalSystem.BigDecimal
             rounded.mPrecision = mcPrecision;
             return rounded;
         }
-
-        public BigDecimal[] DivideAndReminder(BigDecimal val)
-        {
-            BigDecimal[] result = new BigDecimal[2];
-            result[0] = DivideToIntegralValue(val);
-            result[1] = Subtract(result[0].Multiply(val));
-            return result;
-        }
-
-        public BigDecimal DivideToIntegralValue(BigDecimal val)
-        {
-            return Divide(val, RoundingMode.Down).Floor().SetScale(mScale - val.mScale, RoundingMode.Down);
-        }
-
         private BigDecimal Floor()
         {
             if (mScale <= 0)
@@ -390,20 +389,10 @@ namespace Calc.PositionalSystem.BigDecimal
             return Divide(One, scale, roundingMode);
         }
 
-
-        
-
-       
-
- 
-        
-
-
-
         public int CompareTo(BigDecimal other)
         {
             if (mScale == other.mScale)
-                return mIntegerValue.CompareTo(other);
+                return mIntegerValue.CompareTo(other.mIntegerValue);
 
             BigInteger thisResult = BigInteger.DivRem(mIntegerValue, BigInteger.Pow(new BigInteger(10), mScale), out BigInteger thisReminder);
             BigInteger otherResult = BigInteger.DivRem(other.mIntegerValue, BigInteger.Pow(new BigInteger(10), other.mScale), out BigInteger otherReminder);
@@ -421,21 +410,70 @@ namespace Calc.PositionalSystem.BigDecimal
                 otherReminder = BigInteger.Multiply(otherReminder, BigInteger.Pow(new BigInteger(10), (mScale - other.mScale)));
             return thisReminder.CompareTo(otherReminder);
         }
-
         public int CompareTo(object obj)
         {
-            throw new NotImplementedException();
+            return CompareTo((BigDecimal)obj);
         }
-
         public bool Equals(BigDecimal other)
         {
-            throw new NotImplementedException();
+            return mIntegerValue == other.mIntegerValue && mScale == other.mScale;
+        }
+       
+
+        public override string ToString()
+        {
+            string bigStr = mIntegerValue.ToString();
+            if (mScale == 0)
+                return bigStr;
+            bool negative = (bigStr[0] == '-');
+            int point = bigStr.Length - mScale - (negative ? 1 : 0);
+            StringBuilder val = new StringBuilder();
+            if (mScale >= 0 && (point - 1) > -6)
+            {
+                if(point <= 0)
+                {
+                    if (negative)
+                        val.Append('-');
+                    val.Append('0').Append('.');
+
+                    while(point < 0)
+                    {
+                        val.Append('0');
+                        point++;
+                    }
+                    val.Append(bigStr.Substring(negative ? 1 : 0));                   
+                }
+                else
+                {
+                    val.Append(bigStr);
+                    val.Insert(point + (negative ? 1 : 0),'.');
+                }
+            }
+            else
+            {
+                val.Append(bigStr);
+                if (bigStr.Length > 1)
+                    val.Insert((negative ? 2 : 1), '.');
+                val.Append('E');
+                if (point - 1 >= 0)
+                    val.Append('+');
+                val.Append(point - 1);
+            }
+
+            var stringVal = val.ToString();
+          
+            stringVal = ConversionHelpers.RemoveTrailingZeros(stringVal);
+            
+
+            return stringVal;
+        }
+        public double ToDouble()
+        {
+            return Double.Parse(ToString());
         }
 
-        public string ToString(string format, IFormatProvider formatProvider)
-        {
-            throw new NotImplementedException();
-        }
-      
+        
+       
     }
+    
 }
