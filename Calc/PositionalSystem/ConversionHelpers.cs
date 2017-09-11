@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Calc.PositionalSystem
 {
@@ -21,5 +19,19 @@ namespace Calc.PositionalSystem
             }
             return strList;
         }
+
+        public static string RemoveTrailingZeros(string str)
+        {
+            
+            str = str.TrimEnd('0');
+
+            //If all we are left with is a decimal point
+            if (str.EndsWith(".")) //then remove it
+                str = str.TrimEnd('.');
+            
+
+            return str;
+        }
+
     }
 }
