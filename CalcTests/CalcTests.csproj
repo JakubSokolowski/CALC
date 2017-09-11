@@ -46,6 +46,8 @@
       <HintPath>..\packages\MSTest.TestFramework.1.1.11\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -58,16 +60,29 @@
   <ItemGroup>
     <Compile Include="PositionalSystem\BaseConversion\BaseDigitsTests.cs" />
     <Compile Include="PositionalSystem\BaseConversion\BaseConverterTests.cs" />
+    <Compile Include="PositionalSystem\BigDecimal\BigDecimalTests.cs" />
     <Compile Include="PositionalSystem\ComplementConversion\ComplementConverterTests.cs" />
     <Compile Include="PositionalSystem\ConversionHelpersTests.cs" />
-    <Compile Include="PositionalSystem\FloatConversion\DoubleRepresentationTests.cs" />
-    <Compile Include="PositionalSystem\FloatConversion\FloatConverterTests.cs" />
-    <Compile Include="PositionalSystem\FloatConversion\SingleRepresentationTests.cs" />
+    <Compile Include="FloatingPointNumbers\FloatConversion\DoubleRepresentationTests.cs" />
+    <Compile Include="FloatingPointNumbers\FloatConversion\FloatConverterTests.cs" />
+    <Compile Include="FloatingPointNumbers\FloatConversion\SingleRepresentationTests.cs" />
     <Compile Include="PositionalSystem\NumberTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestData\BigDecimalDivideTestCases.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\BigDecimalMultiplyTestCases.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\BigDecimalSubtractTestCases.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\BigDecimalAddTestCases.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Calc\Calc.csproj">

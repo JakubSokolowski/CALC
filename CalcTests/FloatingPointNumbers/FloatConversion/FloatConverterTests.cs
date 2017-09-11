@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Calc.FloatingPointNumbers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Calc.PositionalSystem.Tests
 {

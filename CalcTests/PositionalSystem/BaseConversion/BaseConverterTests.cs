@@ -349,9 +349,5 @@ namespace Calc.PositionalSystem.Tests
 
         #endregion
 
-
-
-
-
     }
 }
