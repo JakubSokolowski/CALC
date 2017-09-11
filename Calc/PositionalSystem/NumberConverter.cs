@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Calc.FloatingPointNumbers;
+
 
 namespace Calc.PositionalSystem
 {
@@ -11,14 +8,7 @@ namespace Calc.PositionalSystem
         private static FloatConverter fc = new FloatConverter();
         private static ComplementConverter cc = new ComplementConverter();
         private static BaseConverter bc = new BaseConverter();
-
-        public static Number ToBase(Number num, int resultBase)
-        {
-            var baseRep = bc.ToBase(num.DecimalValue, resultBase);
-            var sRep = fc.ToSingle((float)num.DecimalValue);
-            var dRep = fc.ToDouble((double)num.DecimalValue);
-            return new Number(baseRep,sRep,dRep);
-        }
+    
         public static Number ToBase(double value, int resultBase)
         {
             var baseRep = bc.ToBase(value, resultBase);
@@ -32,15 +22,7 @@ namespace Calc.PositionalSystem
             var sRep = fc.ToSingle((float)baseRep.DecimalValue);
             var dRep = fc.ToDouble((double)baseRep.DecimalValue);
             return new Number(baseRep, sRep, dRep);
-        }
-        public static Number ToBase(SingleRepresentation representation, int resultBase)
-        {
-            return ToBase(representation.DecimalValue, resultBase);
-        }
-        public static Number ToBase(DoubleRepresentation representation, int resultBase)
-        {
-            return ToBase(representation.DecimalValue, resultBase);
-        }
+        }   
 
         public static string MaxValueForBase(int radix)
         {

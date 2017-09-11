@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Calc.PositionalSystem
 {
     public class ComplementConverter
     {
-        private BaseDigits representation = new BaseDigits();
-        
+        private BaseDigits representation = new BaseDigits();        
 
         public BaseComplement GetComplement(string number, int radix)
         {            

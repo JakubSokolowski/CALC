@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Calc.FloatingPointNumbers;
+using System;
 
 namespace Calc.PositionalSystem
 {

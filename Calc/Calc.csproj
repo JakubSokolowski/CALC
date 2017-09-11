@@ -42,25 +42,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FloatingPointNumbers\FloatingPointProperty.cs" />
     <Compile Include="PositionalSystem\BaseConversion\BaseConverter.cs" />
     <Compile Include="PositionalSystem\BaseConversion\BaseDigits.cs" />
     <Compile Include="PositionalSystem\BaseConversion\BaseRepresentation.cs" />
+    <Compile Include="PositionalSystem\BigDecimal\BigDecimal.cs" />
+    <Compile Include="PositionalSystem\BigDecimal\MathContext.cs" />
     <Compile Include="PositionalSystem\ComplementConversion\BaseComplement.cs" />
     <Compile Include="PositionalSystem\ComplementConversion\ComplementConverter.cs" />
     <Compile Include="PositionalSystem\ConversionHelpers.cs" />
     <Compile Include="PositionalSystem\ConversionHistory.cs" />
-    <Compile Include="PositionalSystem\FloatConversion\DoubleRepresentation.cs" />
-    <Compile Include="PositionalSystem\FloatConversion\FloatConverter.cs" />
-    <Compile Include="PositionalSystem\FloatConversion\FloatingPointRepresentation.cs" />
+    <Compile Include="FloatingPointNumbers\FloatConversion\DoubleRepresentation.cs" />
+    <Compile Include="FloatingPointNumbers\FloatConversion\FloatConverter.cs" />
+    <Compile Include="FloatingPointNumbers\FloatConversion\FloatingPointRepresentation.cs" />
     <Compile Include="PositionalSystem\BaseConversion\IBaseConversion.cs" />
-    <Compile Include="PositionalSystem\FloatConversion\IFloatingPointValidation.cs" />
+    <Compile Include="FloatingPointNumbers\FloatConversion\IFloatingPointValidation.cs" />
     <Compile Include="PositionalSystem\IInputValidation.cs" />
     <Compile Include="PositionalSystem\IMathOperations.cs" />
     <Compile Include="PositionalSystem\Number.cs" />
     <Compile Include="PositionalSystem\NumberConverter.cs" />
-    <Compile Include="PositionalSystem\FloatConversion\SingleRepresentation.cs" />
+    <Compile Include="FloatingPointNumbers\FloatConversion\SingleRepresentation.cs" />
+    <Compile Include="PositionalSystem\BigDecimal\RoundingMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>
