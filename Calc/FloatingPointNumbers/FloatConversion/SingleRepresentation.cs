@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Calc.PositionalSystem;
+using System;
 
-namespace Calc.PositionalSystem
+namespace Calc.FloatingPointNumbers
 {
     public class SingleRepresentation : FloatingPointRepresentation, IFloatingPointValidation
     {        
         private float decimalValue;
         private static FloatConverter fConverter = new FloatConverter();
-     
-       
+
+        public override FloatingPointProperty SpecialProperty { get;  protected set;}
+
         public override string Sign => binaryString.Substring(0,1); 
         public override string Exponent => binaryString.Substring(1, ExponentLength); 
         public override string Mantissa => binaryString.Substring(1 + ExponentLength, MantissaLenght); 
@@ -15,25 +17,12 @@ namespace Calc.PositionalSystem
         public override string BinaryString
         {
             get => binaryString;
-            set
-            {
-                if (IsBinaryString(value) && value.Length == BinarStringLength)
-                {
-                    binaryString = value;
-                    decimalValue = fConverter.BinaryStringToSingle(value);
-                }
-                else
-                    throw new ArgumentException("String must be binary and have " + BinarStringLength + " length");
-            }
+            protected set => binaryString = value;            
         }
         public float DecimalValue
         {
             get => decimalValue;
-            set
-            {
-                decimalValue = value;
-                binaryString = fConverter.SingleToBinaryString(value);
-            }
+            protected set => decimalValue = value;           
         }
 
 
@@ -48,16 +37,13 @@ namespace Calc.PositionalSystem
         public override double MantissaValue => MantissaEncoding + 1;
         
 
-        public SingleRepresentation(float f)
+        public SingleRepresentation(float f, string str, FloatingPointProperty property)
         {         
             DecimalValue = f;
-        }
-        public SingleRepresentation(string binStr)
-        {
-            BinaryString = binStr;
-        }
+            BinaryString = str;
+            SpecialProperty = property;
+        }  
 
-       
         public bool IsBinaryString(string str)
         {
             foreach (var ch in str)

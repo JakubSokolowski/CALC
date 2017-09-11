@@ -1,17 +1,14 @@
-﻿using System;
+﻿using Calc.PositionalSystem;
 
-namespace Calc.PositionalSystem
+namespace Calc.FloatingPointNumbers
 {
     public class DoubleRepresentation : FloatingPointRepresentation, IFloatingPointValidation
-    {
-        #region Private Members
-
+    {       
         private double decimalValue;
-        private static FloatConverter fConverter = new FloatConverter();
 
-        #endregion
-
-        #region Public Properties
+        protected override int BinarStringLength => 64;
+        protected override int ExponentLength => 11;
+        protected override int MantissaLenght => 52;
 
         public override string Sign { get => binaryString.Substring(0, 1); }
         public override string Exponent { get => binaryString.Substring(1, ExponentLength); }
@@ -20,60 +17,29 @@ namespace Calc.PositionalSystem
         public override string BinaryString
         {
             get => binaryString;
-            set
-            {
-                if (IsBinaryString(value) && value.Length == BinarStringLength)
-                {
-                    binaryString = value;
-                    decimalValue = fConverter.BinaryStringToDouble(value);
-                }
-                else
-                    throw new ArgumentException("String must be binary and have " + BinarStringLength + " length");
-            }
+            protected set => binaryString = value;
+           
         }
         public double DecimalValue
         {
             get => decimalValue;
-            set
-            {
-                decimalValue = value;
-                binaryString = fConverter.DoubleToBinaryString(value);
-            }
-        }
-
-        #endregion
-
-        #region IEEE 754 Lenghts
-
-        protected override int BinarStringLength => 64;
-
-        protected override int ExponentLength => 11;
-
-        protected override int MantissaLenght => 52;
+            private set => decimalValue = value;            
+        }       
+     
+       
 
         public override double ExponentEncoding => bConverter.ArbitraryBaseToDecimal(Exponent, 2);
-
         public override double MantissaEncoding => NumberConverter.ToBase("1." + Mantissa, 2, 10).DecimalValue;
-
         public override double ExponentValue => ExponentEncoding - 1023;
-
         public override double MantissaValue => MantissaEncoding - 1;
 
-        #endregion
-
-
-        #region Constructors
-
-        public DoubleRepresentation(double d)
+        public override FloatingPointProperty SpecialProperty { get; protected set; }
+        public DoubleRepresentation(double d, string binaryStr, FloatingPointProperty property)
         {
             DecimalValue = d;
-        }
-        public DoubleRepresentation(string binStr)
-        {
-            BinaryString = binStr;
-        }
-
-        #endregion
+            BinaryString = binaryStr;
+            SpecialProperty = property;
+        }   
 
         public bool IsBinaryString(string str)
         {

@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Calc.PositionalSystem;
 
-namespace Calc.PositionalSystem
+
+namespace Calc.FloatingPointNumbers
 {
     public abstract class FloatingPointRepresentation
     {
         protected string binaryString;
         protected BaseConverter bConverter = new BaseConverter();
-        
+
+        public abstract FloatingPointProperty SpecialProperty { get; protected set; }
+        public abstract string BinaryString { get; protected set; }
+
         public abstract string Sign { get;  }
         public abstract string Exponent { get;  }
         public abstract string Mantissa { get;  }
-
-        public abstract string BinaryString { get; set; }
+       
         
         protected abstract int BinarStringLength { get; }
         protected abstract int ExponentLength { get; }
